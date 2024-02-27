@@ -34,10 +34,10 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: const EdgeInsets.all(8.0),
       child: BlocConsumer<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
-          if (state is Authorized) {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => const HomeScreen()));
-          }
+          // if (state is Authorized) {
+          //   Navigator.of(context).pushReplacement(
+          //       MaterialPageRoute(builder: (_) => const HomeScreen()));
+          // }
         },
         builder: (context, state) {
           return Form(
@@ -47,21 +47,36 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (state is AuthLoding) const CircularProgressIndicator(),
                 if (state is AuthError) const Text('Error'),
                 Padding(
-                  padding: const EdgeInsets.only(top: 50),
+                  padding: const EdgeInsets.only(top: 45),
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.22,
-                    child: const Stack(
+                    height: MediaQuery.of(context).size.height * 0.32,
+                    child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Text(
-                          'Be',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 50,
-                              fontWeight: FontWeight.bold),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 70),
+                          child: Container(
+                            // color: Colors.amber,
+                            height: 200,
+                            width: 300,
+                            child: Image.asset(
+                              "assets/images/Mobile login2.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 70),
+                          padding: EdgeInsets.only(top: 155),
+                          child: Text(
+                            'Be',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 50,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 210),
                           child: Text(
                             'Green',
                             style: TextStyle(

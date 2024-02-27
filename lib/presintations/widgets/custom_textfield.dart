@@ -7,7 +7,8 @@ class CustomTextField extends StatelessWidget {
   final String hint;
   final IconData icon;
 
-  CustomTextField({required this.icon, required this.hint, this.controller});
+  const CustomTextField(
+      {super.key, required this.icon, required this.hint, this.controller});
 
   String? _errorMessage(String str) {
     switch (hint) {
@@ -54,15 +55,15 @@ class CustomTextField extends StatelessWidget {
           fillColor: kSecondaryColor,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: const BorderSide(color: Colors.white),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: const BorderSide(color: Colors.white),
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: const BorderSide(color: Colors.white),
           ),
         ),
       ),

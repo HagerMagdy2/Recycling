@@ -37,10 +37,10 @@ class _SignupScreenState extends State<SignupScreen> {
       padding: const EdgeInsets.all(8.0),
       child: BlocConsumer<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
-          // if (state is Authorized) {
-          //   Navigator.of(context).pushReplacement(
-          //       MaterialPageRoute(builder: (_) => const HomeScreen()));
-          // }
+          if (state is Authorized) {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (_) => const HomeScreen()));
+          }
         },
         builder: (context, state) {
           print(state);

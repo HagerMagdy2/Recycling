@@ -1,13 +1,15 @@
 import 'package:firstly/constants.dart';
 import 'package:firstly/presintations/bloc/authentication_bloc.dart';
 import 'package:firstly/presintations/screens/signup_screen.dart';
-import 'package:firstly/presintations/screens/start_screen.dart';
+import 'package:firstly/presintations/screens/home_screen.dart';
 import 'package:firstly/presintations/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = 'LoginScreen';
+
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -34,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) {
           if (state is Authorized) {
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => const StartScreen()));
+                MaterialPageRoute(builder: (_) => const HomeScreen()));
           }
         },
         builder: (context, state) {
@@ -46,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (state is AuthError) const Text('Error'),
                 Padding(
                   padding: const EdgeInsets.only(top: 50),
-                  child: Container(
+                  child: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.22,
                     child: const Stack(
                       alignment: Alignment.center,
@@ -111,8 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               context: context,
                               builder: (context) => AlertDialog(
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      15.0), 
+                                  borderRadius: BorderRadius.circular(15.0),
                                 ),
                                 title: const Text('Sign Up Required'),
                                 content: const Text(
@@ -121,7 +122,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 actions: [
                                   TextButton(
                                     onPressed: () => Navigator.pop(context),
-                                    child: const Text('OK',style: TextStyle(color:kMainColor ),),
+                                    child: const Text(
+                                      'OK',
+                                      style: TextStyle(color: kMainColor),
+                                    ),
                                   ),
                                 ],
                               ),

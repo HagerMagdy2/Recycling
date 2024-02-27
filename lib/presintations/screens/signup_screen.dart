@@ -1,6 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:firstly/presintations/bloc/authentication_bloc.dart';
 import 'package:firstly/presintations/screens/login_screen.dart';
-import 'package:firstly/presintations/screens/start_screen.dart';
+import 'package:firstly/presintations/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,6 +11,8 @@ import '../widgets/custom_textfield.dart';
 
 class SignupScreen extends StatefulWidget {
   static String id = 'SignupScreen';
+
+  const SignupScreen({super.key});
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -33,10 +37,10 @@ class _SignupScreenState extends State<SignupScreen> {
       padding: const EdgeInsets.all(8.0),
       child: BlocConsumer<AuthenticationBloc, AuthenticationState>(
         listener: (context, state) {
-          if (state is Authorized) {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => const StartScreen()));
-          }
+          // if (state is Authorized) {
+          //   Navigator.of(context).pushReplacement(
+          //       MaterialPageRoute(builder: (_) => const HomeScreen()));
+          // }
         },
         builder: (context, state) {
           print(state);
@@ -47,21 +51,36 @@ class _SignupScreenState extends State<SignupScreen> {
                 if (state is AuthLoding) const CircularProgressIndicator(),
                 if (state is AuthError) const Text('Error'),
                 Padding(
-                  padding: const EdgeInsets.only(top: 50),
+                  padding: const EdgeInsets.only(top: 45),
                   child: Container(
-                    height: MediaQuery.of(context).size.height * 0.22,
-                    child: const Stack(
+                    height: MediaQuery.of(context).size.height * 0.32,
+                    child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Text(
-                          'Be',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 50,
-                              fontWeight: FontWeight.bold),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 70),
+                          child: Container(
+                            // color: Colors.amber,
+                            height: 200,
+                            width: 300,
+                            child: Image.asset(
+                              "assets/images/Mobile login2.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 70),
+                          padding: EdgeInsets.only(top: 155),
+                          child: Text(
+                            'Be',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 50,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 210),
                           child: Text(
                             'Green',
                             style: TextStyle(

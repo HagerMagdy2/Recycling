@@ -1,13 +1,16 @@
 import 'package:firstly/constants.dart';
 import 'package:firstly/presintations/bloc/authentication_bloc.dart';
 import 'package:firstly/presintations/screens/signup_screen.dart';
-import 'package:firstly/presintations/screens/start_screen.dart';
+import 'package:firstly/presintations/screens/home_screen.dart';
 import 'package:firstly/presintations/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = 'LoginScreen';
+
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -34,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) {
           if (state is Authorized) {
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => const StartScreen()));
+                MaterialPageRoute(builder: (_) => const HomeScreen()));
           }
         },
         builder: (context, state) {
@@ -42,24 +45,45 @@ class _LoginScreenState extends State<LoginScreen> {
             key: _globalKey,
             child: ListView(
               children: [
-                if (state is AuthLoding) const CircularProgressIndicator(),
+                if (state is AuthLoding)
+                  Lottie.asset(
+                    'assets/images/Animation loading1.json',
+                    height: 200,
+                    width: 200,
+                    repeat: true,
+                  ),
                 if (state is AuthError) const Text('Error'),
                 Padding(
-                  padding: const EdgeInsets.only(top: 50),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.22,
-                    child: const Stack(
+                  padding: const EdgeInsets.only(top: 45),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.32,
+                    child: Stack(
                       alignment: Alignment.center,
                       children: [
-                        Text(
-                          'Be',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 50,
-                              fontWeight: FontWeight.bold),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 70),
+                          child: Container(
+                            // color: Colors.amber,
+                            height: 200,
+                            width: 300,
+                            child: Image.asset(
+                              "assets/images/Mobile login2.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 70),
+                          padding: EdgeInsets.only(top: 155),
+                          child: Text(
+                            'Be',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 50,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 210),
                           child: Text(
                             'Green',
                             style: TextStyle(
@@ -111,8 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               context: context,
                               builder: (context) => AlertDialog(
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      15.0), 
+                                  borderRadius: BorderRadius.circular(15.0),
                                 ),
                                 title: const Text('Sign Up Required'),
                                 content: const Text(
@@ -121,7 +144,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 actions: [
                                   TextButton(
                                     onPressed: () => Navigator.pop(context),
-                                    child: const Text('OK',style: TextStyle(color:kMainColor ),),
+                                    child: const Text(
+                                      'OK',
+                                      style: TextStyle(color: kMainColor),
+                                    ),
                                   ),
                                 ],
                               ),

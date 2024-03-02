@@ -3,6 +3,7 @@ import 'package:firstly/data/authentication_remote_data_source.dart';
 import 'package:firstly/presintations/bloc/authentication_bloc.dart';
 import 'package:firstly/presintations/screens/login_screen.dart';
 import 'package:firstly/presintations/screens/signup_screen.dart';
+import 'package:firstly/presintations/screens/start_screen.dart';
 import 'package:firstly/presintations/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,8 +28,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: SignupScreen.id,
+      initialRoute: StartScreen.id,
       routes: {
+        StartScreen.id: (context) => StartScreen(),
         SignupScreen.id: (context) => SignupScreen(),
         LoginScreen.id: (context) => LoginScreen(),
       },

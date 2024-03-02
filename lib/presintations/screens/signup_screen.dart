@@ -5,6 +5,7 @@ import 'package:firstly/presintations/screens/login_screen.dart';
 import 'package:firstly/presintations/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../constants.dart';
 import '../widgets/custom_textfield.dart';
@@ -48,7 +49,13 @@ class _SignupScreenState extends State<SignupScreen> {
             key: _globalKey,
             child: ListView(
               children: [
-                if (state is AuthLoding) const CircularProgressIndicator(),
+                if (state is AuthLoding)
+                  Lottie.asset(
+                    'assets/images/Animation loading1.json',
+                    height: 200,
+                    width: 200,
+                    repeat: true,
+                  ),
                 if (state is AuthError) const Text('Error'),
                 Padding(
                   padding: const EdgeInsets.only(top: 45),

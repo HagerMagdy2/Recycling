@@ -14,20 +14,49 @@ class Page2 extends StatelessWidget {
       children: [
         Container(
           alignment: Alignment.center,
-          height: 500,
+          height: 425,
           child: Lottie.asset('assets/images/Animation2.json'),
         ),
-        Text(
-          'welcome to be green ',
-          style: TextStyle(
-              color: Colors.black, fontSize: 40, fontWeight: FontWeight.bold),
+        SizedBox(
+          height: 32,
         ),
-        Text(
-          'we are HAM!! ',
-          textAlign: TextAlign.left,
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.w500),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Text(
+              'Welcome ',
+              style: TextStyle(
+                  fontFamily: 'Pacifico',
+                  fontSize: 50,
+                  color: kMainColor1,
+                  fontWeight: FontWeight.w500),
+            ),
+          ),
         ),
+        Padding(
+          padding: const EdgeInsets.all(23.0),
+          child: Column(
+            children: [
+              Text(
+                'We are Be Green, dedicated to fostering a greener world through recycling.',
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Together, we can make a lasting impact.',
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        )
       ],
     );
   }
@@ -46,10 +75,37 @@ class Page3 extends StatelessWidget {
           child: Lottie.asset('assets/images/Animation3.json'),
         ),
         Text(
-          'Bknlnefknklfnekl b v   fnlkfe',
+          'Be part of the solution !',
           style: TextStyle(
-              color: Colors.black, fontSize: 40, fontWeight: FontWeight.bold),
+              color: kMainColor1, fontSize: 30, fontWeight: FontWeight.w900),
         ),
+        SizedBox(
+          height: 20,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            children: [
+              Text(
+                'Our mission is to inspire and empower individuals to make environmentally conscious choices.',
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                ' Start your recycling journey here..          ',
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+        )
       ],
     );
   }

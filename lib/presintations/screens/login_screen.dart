@@ -1,11 +1,13 @@
 import 'package:firstly/constants.dart';
 import 'package:firstly/presintations/bloc/authentication_bloc.dart';
+import 'package:firstly/presintations/provider/adminMode.dart';
 import 'package:firstly/presintations/screens/signup_screen.dart';
 import 'package:firstly/presintations/screens/home_screen.dart';
 import 'package:firstly/presintations/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = 'LoginScreen';
@@ -20,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
   TextEditingController EmailC = TextEditingController();
   TextEditingController PasswordC = TextEditingController();
+  bool isAdmin = false;
 
   @override
   void initState() {
@@ -181,6 +184,38 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontWeight: FontWeight.bold),
                         ))
                   ],
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: GestureDetector(
+                        onTap: () {
+                          Provider.of<AdminMode>(context,listen: false).changeIsAdmin(false);
+                        },
+                        child: Text(
+                          'I\'m an admin',
+                          style: TextStyle(
+                            color: Provider.of<AdminMode>(context).isAdmin? kMainColor:Colors.white,
+                          ),
+                        ),
+                      )),
+                      Expanded(
+                          child: GestureDetector(
+                        onTap: () {
+                            Provider.of<AdminMode>(context,listen: false).changeIsAdmin(true);
+                        },
+                        child: Text(
+                          'I\'m a user',
+                          style: TextStyle(
+                            color: Provider.of<AdminMode>(context).isAdmin? Colors.white:kMainColor,
+                          ),
+                        ),
+                      )),
+                    ],
+                  ),
                 )
               ],
             ),

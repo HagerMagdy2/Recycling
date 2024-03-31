@@ -17,6 +17,6 @@ class SignUpEvent extends AuthenticationEvent {
 
 class SignOutEvent extends AuthenticationEvent {}
 
-class SignInAnonEvent extends AuthenticationEvent {}
+class SignInWithGoogleEvent extends AuthenticationEvent {}
 
 class IsSignedInEvent extends AuthenticationEvent {}

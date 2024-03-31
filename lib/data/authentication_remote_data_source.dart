@@ -11,7 +11,7 @@ abstract class AuthenticationRemoteDs {
   ///throw a[FirebaseAuthException] if the process fails
   Future<void> signIn(String email, String password);
 
-  ///sign In As A Guest 
+  ///sign In As A Guest
   Future<void> signInAnon();
 
   ///sign out if user signed in

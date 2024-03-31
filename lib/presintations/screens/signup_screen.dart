@@ -21,6 +21,7 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
+  TextEditingController NameC = TextEditingController();
   TextEditingController EmailC = TextEditingController();
   TextEditingController PasswordC = TextEditingController();
 
@@ -104,7 +105,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: height * 0.1,
                 ),
                 CustomTextField(
-                    hint: 'Enter your name', icon: Icons.perm_identity),
+                    controller: NameC,
+                    hint: 'Enter your name',
+                    icon: Icons.perm_identity),
                 SizedBox(
                   height: height * 0.02,
                 ),
@@ -137,7 +140,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         onPressed: () {
                           if (_globalKey.currentState!.validate()) {
                             context.read<AuthenticationBloc>().add(SignUpEvent(
-                                email: EmailC.text, password: PasswordC.text));
+                                  email: EmailC.text,
+                                  password: PasswordC.text,
+                                ));
                           }
                         },
                         child: const Text(

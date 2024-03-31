@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:firstly/data/authentication_remote_data_source.dart';
 import 'package:meta/meta.dart';
 
-
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 

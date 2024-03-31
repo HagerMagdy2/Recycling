@@ -52,8 +52,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 if (state is AuthLoding)
                   Lottie.asset(
                     'assets/images/Animation loading1.json',
-                    height: 200,
-                    width: 200,
+                    height: 100,
+                    width: 100,
                     repeat: true,
                   ),
                 if (state is AuthError) const Text('Error'),
@@ -101,7 +101,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: height * 0.1,
+                  height: height * 0.07
                 ),
                 CustomTextField(
                     hint: 'Enter your name', icon: Icons.perm_identity),
@@ -122,7 +122,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   icon: Icons.lock,
                 ),
                 SizedBox(
-                  height: height * 0.05,
+                  height: 10,
                 ),
                 if (state is UnAuthorized)
                   Padding(
@@ -146,7 +146,60 @@ class _SignupScreenState extends State<SignupScreen> {
                         )),
                   ),
                 SizedBox(
-                  height: height * 0.05,
+                  height: 10,
+                ),
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'SignUp ',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: kMainColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'with others',
+                          style: TextStyle(color: Colors.black, fontSize: 16),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            context
+                                .read<AuthenticationBloc>()
+                                .add(SignInWithGoogleEvent());
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: kSecondaryColor,
+                            radius: 25,
+                            backgroundImage:
+                                AssetImage("assets/images/google.png"),
+                          ),
+                        ),
+                        SizedBox(width: 20),
+                        InkWell(
+                          onTap: () {},
+                          child: CircleAvatar(
+                            radius: 25,
+                            backgroundImage:
+                                AssetImage("assets/images/facebook.png"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -165,9 +218,9 @@ class _SignupScreenState extends State<SignupScreen> {
                               fontSize: 16,
                               color: kMainColor,
                               fontWeight: FontWeight.bold),
-                        ))
+                        )),
                   ],
-                )
+                ),
               ],
             ),
           );

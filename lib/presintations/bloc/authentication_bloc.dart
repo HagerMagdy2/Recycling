@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:firstly/data/authentication_remote_data_source.dart';
 import 'package:meta/meta.dart';
 
-
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
@@ -21,9 +20,9 @@ class AuthenticationBloc
           emit(AuthLoding());
           await remoteDs.signIn(event.email, event.password);
           emit(Authorized());
-        } else if (event is SignInAnonEvent) {
+        } else if (event is SignInWithGoogleEvent) {
           emit(AuthLoding());
-          await remoteDs.signInAnon();
+          await remoteDs.signInWithGoogle();
           emit(Authorized());
         } else if (event is SignOutEvent) {
           emit(AuthLoding());
@@ -35,7 +34,9 @@ class AuthenticationBloc
           emit(isSignedIn ? Authorized() : UnAuthorized());
         }
       } catch (e) {
+        
         emit(AuthError(errorMessage: e.toString()));
+        print('error:'+e.toString());
       }
     });
   }

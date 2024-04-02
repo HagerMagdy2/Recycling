@@ -1,10 +1,9 @@
-import 'package:firstly/constants.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Matrial extends StatefulWidget {
   const Matrial({super.key, required this.title, required this.icon});
   final String title;
+
   final Widget icon;
   @override
   State<Matrial> createState() => _MatrialState();

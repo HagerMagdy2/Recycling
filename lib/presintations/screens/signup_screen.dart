@@ -50,7 +50,13 @@ class _SignupScreenState extends State<SignupScreen> {
             key: _globalKey,
             child: ListView(
               children: [
-                if (state is AuthLoding) const CircularProgressIndicator(),
+                if (state is AuthLoding)
+                  Lottie.asset(
+                    'assets/images/Animation loading1.json',
+                    height: 200,
+                    width: 200,
+                    repeat: true,
+                  ),
                 if (state is AuthError) const Text('Error'),
                 Padding(
                   padding: const EdgeInsets.only(top: 45),
@@ -95,7 +101,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: height * 0.07),
+                SizedBox(
+                  height: height * 0.1,
+                ),
                 CustomTextField(
                     controller: NameC,
                     hint: 'Enter your name',

@@ -35,7 +35,6 @@ class AuthenticationBloc
         }
       } catch (e) {
         emit(AuthError(errorMessage: e.toString()));
-        print('error:' + e.toString());
       }
     });
   }

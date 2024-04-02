@@ -6,7 +6,6 @@ abstract class AuthenticationRemoteDs {
   ///
   ///throw a[FirebaseAuthException] if the process fails
   Future<void> signUp(String email, String password, String name);
-  Future<void> sendVerificationEmail();
 
   ///sign in a user with email and password
   ///
@@ -16,8 +15,12 @@ abstract class AuthenticationRemoteDs {
   ///sign In As A Guest
   Future<void> signInAnon();
 
+  ///sign In As with google
+  Future signInWithGoogle();
+
   ///sign out if user signed in
   Future<void> signOut();
+  Future<void> sendVerificationEmail();
 
   ///check if the user is signUp or signIn
   bool isSignedIn();

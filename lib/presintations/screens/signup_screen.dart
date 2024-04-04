@@ -55,6 +55,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     'assets/images/Animation loading1.json',
                     height: 200,
                     width: 200,
+                    repeat: true,
                   ),
                 if (state is AuthError) const Text('Error'),
                 Padding(
@@ -100,7 +101,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: height * 0.07),
+                SizedBox(
+                  height: height * 0.1,
+                ),
                 CustomTextField(
                     controller: NameC,
                     hint: 'Enter your name',
@@ -139,6 +142,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             context.read<AuthenticationBloc>().add(SignUpEvent(
                                   email: EmailC.text,
                                   password: PasswordC.text,
+                                  name: NameC.text,
                                 ));
                           }
                         },

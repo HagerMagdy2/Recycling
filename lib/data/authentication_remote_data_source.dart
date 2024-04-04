@@ -5,8 +5,7 @@ abstract class AuthenticationRemoteDs {
   ///sign up a user with email and password
   ///
   ///throw a[FirebaseAuthException] if the process fails
-  Future<void> signUp(String email, String password);
-  Future<void> sendVerificationEmail();
+  Future<void> signUp(String email, String password, String name);
 
   ///sign in a user with email and password
   ///
@@ -21,6 +20,7 @@ abstract class AuthenticationRemoteDs {
 
   ///sign out if user signed in
   Future<void> signOut();
+  Future<void> sendVerificationEmail();
 
   ///check if the user is signUp or signIn
   bool isSignedIn();
@@ -61,11 +61,32 @@ class AuthenticationRemoteDsImp extends AuthenticationRemoteDs {
   }
 
   @override
-  Future<void> signUp(String email, String password) async {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+  Future<void> signUp(String email, String password, String name) async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // Once the user is created, update their display name
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await user.updateDisplayName(name);
+      } else {
+        // Handle the case where user is null (should not happen)
+        throw FirebaseAuthException(
+          code: 'user-not-found',
+          message: 'User not found after sign-up.',
+        );
+      }
+
+      // Optionally, you can also update additional user data in Firestore here
+    } catch (e) {
+      // Handle any errors that occur during sign-up
+      print('Error signing up: $e');
+      // You may want to throw the error or handle it in a different way
+      throw e;
+    }
   }
 
   @override

@@ -53,6 +53,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     'assets/images/Animation loading1.json',
                     height: 200,
                     width: 200,
+
+                    height: 100,
+                    width: 100,
+
                     repeat: true,
                   ),
                 if (state is AuthError) const Text('Error'),
@@ -216,6 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           Provider.of<AdminMode>(context, listen: false)
                               .changeIsAdmin(true);
+
                         },
                         child: Text(
                           'I\'m a user',

@@ -16,6 +16,7 @@ abstract class AuthenticationRemoteDs {
   ///sign In As A Guest
   Future<void> signInAnon();
 
+
   ///sign In As with google
   Future signInWithGoogle();
 

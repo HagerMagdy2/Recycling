@@ -52,6 +52,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 if (state is AuthLoding)
                   Lottie.asset(
                     'assets/images/Animation loading1.json',
+                    height: 200,
+                    width: 200,
                     height: 100,
                     width: 100,
                     repeat: true,
@@ -100,9 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: height * 0.07
-                ),
+                SizedBox(height: height * 0.07),
                 CustomTextField(
                     hint: 'Enter your name', icon: Icons.perm_identity),
                 SizedBox(

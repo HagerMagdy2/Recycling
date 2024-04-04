@@ -51,8 +51,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (state is AuthLoding)
                   Lottie.asset(
                     'assets/images/Animation loading1.json',
+                    height: 200,
+                    width: 200,
+
                     height: 100,
                     width: 100,
+
                     repeat: true,
                   ),
                 if (state is AuthError) const Text('Error'),
@@ -195,6 +199,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                           Provider.of<AdminMode>(context, listen: false)
                               .changeIsAdmin(false);
+
+                          Provider.of<AdminMode>(context, listen: false)
+                              .changeIsAdmin(false);
                         },
                         child: Text(
                           'I\'m an admin',
@@ -210,6 +217,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                           Provider.of<AdminMode>(context, listen: false)
                               .changeIsAdmin(true);
+
+                          Provider.of<AdminMode>(context, listen: false)
+                              .changeIsAdmin(true);
+
                         },
                         child: Text(
                           'I\'m a user',

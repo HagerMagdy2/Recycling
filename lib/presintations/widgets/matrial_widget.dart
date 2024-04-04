@@ -8,8 +8,6 @@ class Matrial extends StatefulWidget {
 
   final Widget icon;
 
-    final IconData icon;
-
   @override
   State<Matrial> createState() => _MatrialState();
 }
@@ -17,20 +15,10 @@ class Matrial extends StatefulWidget {
 class _MatrialState extends State<Matrial> {
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [widget.icon, Text(widget.title)],
-
-  
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [Icon(widget.icon,size: 60,color: kMainColor,),
-          
-        Text(widget.title)],
-
       ),
     );
   }

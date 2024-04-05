@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firstly/core/firebase-service.dart';
 import 'package:flutter/material.dart';
+import 'package:firstly/constants.dart';
+import 'package:firstly/core/firebase-service.dart';
+import 'package:firstly/core/storage_helper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/presintations/screens/edit-profile-screen.dart';
 import 'package:firstly/presintations/widgets/add_profile-photo.dart';
-import 'package:firstly/core/storage_helper.dart';
-import 'package:firstly/constants.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -14,19 +14,20 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String userId = StorageHelperImpl().getCurrentUserId();
+  late String userId;
   String? profilePhotoUrl;
   String? userName;
   String? userEmail;
-  TextEditingController _phoneController =
-      TextEditingController(); // Controller for phone number input
+  String? userPhone;
   bool _isSavingPhoneNumber = false;
 
   @override
   void initState() {
     super.initState();
+    userId = StorageHelperImpl().getCurrentUserId();
     loadProfileData();
     loadProfilePhotoUrl();
+    loadPhoneNumber(); // Call loadPhoneNumber here
     StorageHelperImpl().profilePhotoStream.listen((String newUrl) {
       setState(() {
         profilePhotoUrl = newUrl;
@@ -49,15 +50,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  Future<void> updateProfileData(String newName, String newEmail) async {
+  Future<void> loadPhoneNumber() async {
+    userPhone = await FirebaseService.getUserPhoneNumber(userId);
+    setState(() {});
+  }
+
+  Future<void> updateProfileData(
+      String newName, String newEmail, String newPhone) async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
         await user.updateDisplayName(newName);
         await user.updateEmail(newEmail);
+        await FirebaseService.saveUserPhoneNumber(userId, newPhone);
         setState(() {
           userName = newName;
           userEmail = newEmail;
+          userPhone = newPhone; // Update local state with the new phone number
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Profile updated successfully')),
@@ -76,17 +85,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _isSavingPhoneNumber = true;
     });
     try {
-      // Verify phone number and get the verification ID
       String? verificationId =
           await FirebaseService.verifyPhoneNumber(phoneNumber);
-      // If you need to handle verification ID, you can use it here
-      // For simplicity, I'm assuming verification ID is not needed in this scenario
+      if (verificationId != null) {
+        await FirebaseService.saveUserPhoneNumber(phoneNumber, verificationId);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Phone number saved successfully')),
+        );
+        print('Current user phone number: $userPhone');
 
-      // Implement the UI for entering verification code
-      // Once the verification code is entered, call FirebaseService.savePhoneNumber with the verification code
-      // Example:
-      // String verificationCode = ... // Get the verification code from the user input
-      // await FirebaseService.savePhoneNumber(phoneNumber, verificationId!, verificationCode);
+        await loadPhoneNumber(); // Reload phone number after saving
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to send verification code')),
+        );
+      }
     } catch (e) {
       print("Failed to verify phone number: $e");
       ScaffoldMessenger.of(context).showSnackBar(
@@ -109,13 +122,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             GestureDetector(
               onTap: () async {
-                // Display the add photo dialog
                 await showDialog(
                   context: context,
                   builder: (context) => AddProfilePhoto(),
                 );
-                // Reload profile data after adding photo
-                await loadProfileData(); // Wait for the profile data to be reloaded
+                await loadProfileData();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Profile photo set successfully')),
                 );
@@ -140,13 +151,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     MaterialButton(
                       onPressed: () async {
-                        // Display the add photo dialog
                         await showDialog(
                           context: context,
                           builder: (context) => AddProfilePhoto(),
                         );
-                        // Reload profile data after adding photo
-                        await loadProfileData(); // Wait for the profile data to be reloaded
+                        await loadProfileData();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                               content: Text('Profile photo set successfully')),
@@ -180,45 +189,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: Colors.grey,
               ),
             ),
-            SizedBox(height: 20),
-            TextFormField(
-              controller: _phoneController,
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                labelText: 'Phone Number',
-                border: OutlineInputBorder(),
+            SizedBox(height: 10),
+            Text(
+              userPhone ?? 'User Phone Number',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
               ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _isSavingPhoneNumber
-                  ? null
-                  : () {
-                      // Save the phone number when the button is pressed
-                      savePhoneNumber(_phoneController.text.trim());
-                    },
-              child: _isSavingPhoneNumber
-                  ? CircularProgressIndicator() // Show loading indicator while saving
-                  : Text('Save Phone Number'),
-            ),
-            SizedBox(height: 40),
-            ElevatedButton(
               onPressed: () async {
-                // Navigate to the edit profile screen and await the result
                 final result = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => EditProfileScreen(
                       currentName: userName ?? '',
                       currentEmail: userEmail ?? '',
+                      currentPhone: userPhone ?? '',
                     ),
                   ),
                 );
 
-                // Handle the result from the edit profile screen
                 if (result != null && result is Map<String, String>) {
-                  // Update the profile data with the new values
-                  await updateProfileData(result['name']!, result['email']!);
+                  await updateProfileData(
+                    result['name']!,
+                    result['email']!,
+                    result['phone']!,
+                  );
                 }
               },
               child: Text('Edit Profile'),

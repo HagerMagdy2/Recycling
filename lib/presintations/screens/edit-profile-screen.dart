@@ -5,11 +5,13 @@ import 'package:firstly/presintations/screens/change-pass.dart';
 class EditProfileScreen extends StatefulWidget {
   final String currentName;
   final String currentEmail;
+  final String? currentPhone; // Add current phone number
 
   const EditProfileScreen({
     Key? key,
     required this.currentName,
     required this.currentEmail,
+    this.currentPhone, // Update constructor
   }) : super(key: key);
 
   @override
@@ -19,18 +21,22 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
+  late TextEditingController _phoneController; // Add phone controller
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.currentName);
     _emailController = TextEditingController(text: widget.currentEmail);
+    _phoneController = TextEditingController(
+        text: widget.currentPhone ?? ''); // Initialize phone controller
   }
 
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose(); // Dispose phone controller
     super.dispose();
   }
 
@@ -58,6 +64,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               controller: _emailController,
               decoration: InputDecoration(
                 labelText: 'Email',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              // Add phone number field
+              controller: _phoneController,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                labelText: 'Phone Number',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -89,6 +105,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 Navigator.pop(context, {
                   'name': _nameController.text.trim(),
                   'email': _emailController.text.trim(),
+                  'phone': _phoneController.text.trim(), // Include phone number
                 });
               },
               child: Text('Save'),

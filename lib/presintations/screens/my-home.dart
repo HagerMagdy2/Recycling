@@ -1,14 +1,9 @@
 import 'package:firstly/constants.dart';
-import 'package:firstly/controller/home-page-controller.dart';
-import 'package:firstly/presintations/screens/add_product.dart';
-import 'package:firstly/presintations/widgets/bottom-bar.dart';
-import 'package:firstly/presintations/widgets/drawer.dart';
+
 import 'package:firstly/presintations/widgets/item.dart';
 import 'package:firstly/presintations/widgets/matrial_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});

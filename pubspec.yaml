@@ -47,6 +47,7 @@ dependencies:
   get: ^4.6.6
   provider: ^6.1.2
   google_sign_in: ^5.4.2
+  encrypt: ^5.0.0
 
 
 

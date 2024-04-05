@@ -1,4 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+import 'package:encrypt/encrypt.dart' as encrypt;
 
 class FirebaseService {
   static Future<String?> verifyPhoneNumber(String phoneNumber) async {
@@ -42,5 +45,67 @@ class FirebaseService {
       print("Failed to verify phone number: $e");
       throw e;
     }
+  }
+
+  static Future<String?> getUserPhoneNumber(String userId) async {
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
+      final encryptedPhoneNumber = snapshot['phoneNumber'];
+      if (encryptedPhoneNumber != null) {
+        return EncryptionService.decryptPhoneNumber(encryptedPhoneNumber);
+      }
+      return null;
+    } catch (e) {
+      print("Failed to get user phone number: $e");
+      throw e;
+    }
+  }
+
+  static Future<void> saveUserPhoneNumber(
+      String userId, String phoneNumber) async {
+    try {
+      final encryptedPhoneNumber =
+          EncryptionService.encryptPhoneNumber(phoneNumber);
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .update({'phoneNumber': encryptedPhoneNumber});
+    } catch (e) {
+      print("Failed to save user phone number: $e");
+      throw e;
+    }
+  }
+
+  static Future<void> updateProfileData(
+      String userId, String newName, String newEmail) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await user.updateDisplayName(newName);
+        await user.updateEmail(newEmail);
+      }
+    } catch (e) {
+      print("Failed to update profile: $e");
+      throw e;
+    }
+  }
+}
+
+class EncryptionService {
+  static final key = encrypt.Key.fromLength(32); // 32 bytes key for AES-256
+  static final iv = encrypt.IV.fromLength(16); // 16 bytes IV for AES-256-CBC
+  static final encrypter = encrypt.Encrypter(encrypt.AES(key));
+
+  static String encryptPhoneNumber(String phoneNumber) {
+    final encrypted = encrypter.encrypt(phoneNumber, iv: iv);
+    return encrypted.base64;
+  }
+
+  static String decryptPhoneNumber(String encryptedPhoneNumber) {
+    final encrypted = encrypt.Encrypted.fromBase64(encryptedPhoneNumber);
+    return encrypter.decrypt(encrypted, iv: iv);
   }
 }

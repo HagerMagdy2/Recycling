@@ -21,7 +21,6 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
-  TextEditingController NameC = TextEditingController();
   TextEditingController EmailC = TextEditingController();
   TextEditingController PasswordC = TextEditingController();
 
@@ -53,13 +52,10 @@ class _SignupScreenState extends State<SignupScreen> {
                 if (state is AuthLoding)
                   Lottie.asset(
                     'assets/images/Animation loading1.json',
-
                     height: 200,
                     width: 200,
-
                     height: 100,
                     width: 100,
-
                     repeat: true,
                   ),
                 if (state is AuthError) const Text('Error'),
@@ -106,13 +102,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: height * 0.07
-                ),
+                SizedBox(height: height * 0.07),
                 CustomTextField(
-                    controller: NameC,
-                    hint: 'Enter your name',
-                    icon: Icons.perm_identity),
+                    hint: 'Enter your name', icon: Icons.perm_identity),
                 SizedBox(
                   height: height * 0.02,
                 ),
@@ -145,9 +137,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         onPressed: () {
                           if (_globalKey.currentState!.validate()) {
                             context.read<AuthenticationBloc>().add(SignUpEvent(
-                                  email: EmailC.text,
-                                  password: PasswordC.text,
-                                ));
+                                email: EmailC.text, password: PasswordC.text));
                           }
                         },
                         child: const Text(

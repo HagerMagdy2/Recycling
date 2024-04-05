@@ -6,6 +6,7 @@ class Matrial extends StatefulWidget {
   const Matrial({super.key, required this.title, required this.icon});
   final String title;
 
+
   final Widget icon;
 
     final IconData icon;
@@ -17,7 +18,6 @@ class Matrial extends StatefulWidget {
 class _MatrialState extends State<Matrial> {
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(

@@ -51,7 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (state is AuthLoding)
                   Lottie.asset(
                     'assets/images/Animation loading1.json',
-
                     height: 200,
                     width: 200,
 
@@ -198,31 +197,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       Expanded(
                           child: GestureDetector(
                         onTap: () {
-
-                          Provider.of<AdminMode>(context,listen: false).changeIsAdmin(false);
-
                           Provider.of<AdminMode>(context, listen: false)
                               .changeIsAdmin(false);
 
+                          Provider.of<AdminMode>(context, listen: false)
+                              .changeIsAdmin(false);
                         },
                         child: Text(
                           'I\'m an admin',
                           style: TextStyle(
-
-                            color: Provider.of<AdminMode>(context).isAdmin? kMainColor:Colors.white,
-
                             color: Provider.of<AdminMode>(context).isAdmin
                                 ? kMainColor
                                 : Colors.white,
-
                           ),
                         ),
                       )),
                       Expanded(
                           child: GestureDetector(
                         onTap: () {
-
-                            Provider.of<AdminMode>(context,listen: false).changeIsAdmin(true);
+                          Provider.of<AdminMode>(context, listen: false)
+                              .changeIsAdmin(true);
 
                           Provider.of<AdminMode>(context, listen: false)
                               .changeIsAdmin(true);
@@ -231,13 +225,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           'I\'m a user',
                           style: TextStyle(
-
-                            color: Provider.of<AdminMode>(context).isAdmin? Colors.white:kMainColor,
-
                             color: Provider.of<AdminMode>(context).isAdmin
                                 ? Colors.white
                                 : kMainColor,
-
                           ),
                         ),
                       )),

@@ -14,7 +14,7 @@ class AuthenticationBloc
       try {
         if (event is SignUpEvent) {
           emit(AuthLoding());
-          await remoteDs.signUp(event.email, event.password);
+          await remoteDs.signUp(event.email, event.password, event.name);
           emit(Authorized());
         } else if (event is SignInEvent) {
           emit(AuthLoding());

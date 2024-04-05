@@ -1,7 +1,5 @@
 import 'package:firstly/constants.dart';
 import 'package:firstly/controller/home-page-controller.dart';
-import 'package:firstly/presintations/screens/add_product.dart';
-import 'package:firstly/presintations/widgets/bottom-bar.dart';
 import 'package:firstly/presintations/widgets/drawer.dart';
 import 'package:firstly/presintations/widgets/item.dart';
 import 'package:firstly/presintations/widgets/matrial_widget.dart';

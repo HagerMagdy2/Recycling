@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
+
 
 abstract class StorageHelper {
   Future<String?> uploadImageFromFile(File file);
@@ -15,7 +15,7 @@ abstract class StorageHelper {
 }
 
 class StorageHelperImpl implements StorageHelper {
-  DatabaseReference ref = FirebaseDatabase.instance.ref().child("User");
+
   @override
   Future<String?> uploadImageFromFile(File file) async {
     String? image;

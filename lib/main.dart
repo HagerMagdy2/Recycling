@@ -5,12 +5,9 @@ import 'package:firstly/presintations/provider/adminMode.dart';
 import 'package:firstly/presintations/screens/login_screen.dart';
 import 'package:firstly/presintations/screens/signup_screen.dart';
 import 'package:firstly/presintations/screens/start_screen.dart';
-import 'package:firstly/presintations/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_core/firebase_core.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

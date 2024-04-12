@@ -34,9 +34,7 @@ class AuthenticationBloc
           emit(isSignedIn ? Authorized() : UnAuthorized());
         }
       } catch (e) {
-        
         emit(AuthError(errorMessage: e.toString()));
-        print('error:'+e.toString());
       }
     });
   }

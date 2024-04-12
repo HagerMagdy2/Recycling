@@ -24,7 +24,6 @@ if (flutterVersionName == null) {
 }
 
 android {
-    compileSdkVersion 34
     namespace "com.example.firstly"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
@@ -67,4 +66,5 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0'}
+    

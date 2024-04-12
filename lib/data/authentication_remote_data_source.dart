@@ -101,5 +101,5 @@ class AuthenticationRemoteDsImp extends AuthenticationRemoteDs {
   Future<void> signInAnon() {
     // TODO: implement signInAnon
     throw UnimplementedError();
-  }
+}
 }

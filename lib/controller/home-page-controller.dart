@@ -25,5 +25,5 @@ class HomeControllerImp extends HomeController {
     // TODO: implement changePage
     currentPage = page;
     update();
-  }
+ }
 }

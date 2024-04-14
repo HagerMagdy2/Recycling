@@ -221,7 +221,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
               child: Text('Edit Profile'),
               style: ElevatedButton.styleFrom(
-                primary: kMainColor,
+                backgroundColor: kMainColor,
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),

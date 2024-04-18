@@ -193,7 +193,11 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         SizedBox(width: 20),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            context
+                                .read<AuthenticationBloc>()
+                                .add(signInWithFacebookEvent());
+                          },
                           child: CircleAvatar(
                             radius: 25,
                             backgroundImage:
@@ -232,6 +236,6 @@ class _SignupScreenState extends State<SignupScreen> {
           );
         },
       ),
-));
-}
+    ));
+  }
 }

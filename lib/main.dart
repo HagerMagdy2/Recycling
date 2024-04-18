@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firstly/data/authentication_remote_data_source.dart';
+import 'package:firstly/data/product_remote_data_source.dart';
 import 'package:firstly/presintations/bloc/authentication_bloc.dart';
+import 'package:firstly/presintations/bloc/products_bloc.dart';
 import 'package:firstly/presintations/provider/adminMode.dart';
 import 'package:firstly/presintations/screens/login_screen.dart';
 import 'package:firstly/presintations/screens/signup_screen.dart';
@@ -18,6 +20,9 @@ void main() async {
     providers: [
       BlocProvider<AuthenticationBloc>(
         create: (context) => AuthenticationBloc(AuthenticationRemoteDsImp()),
+      ),
+      BlocProvider<ProductBloc>(
+        create: (context) => ProductBloc(ProductRemoteDsImp()),
       ),
     ],
     child: MyApp(),

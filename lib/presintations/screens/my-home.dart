@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/controller/home-page-controller.dart';
 import 'package:firstly/core/storage_helper.dart';
-import 'package:firstly/presintations/screens/add_product.dart';
+import 'package:firstly/presintations/screens/glasses_category.dart';
 import 'package:firstly/presintations/widgets/bottom-bar.dart';
 import 'package:firstly/presintations/widgets/drawer.dart';
 import 'package:firstly/presintations/widgets/item.dart';
@@ -31,13 +31,14 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         profilePhotoUrl = newUrl;
       });
-    }
-    );
+    });
   }
+
   Future<void> loadProfilePhotoUrl() async {
     profilePhotoUrl = await StorageHelperImpl().getProfilePhotoUrl(userId);
     setState(() {});
   }
+
   Future<void> loadProfileData() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -46,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,14 +82,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     SizedBox(
                       height: 10,
                     ),
-                  Text(
-              userName ?? 'User Name',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white
-              ),
-            ),
+                    Text(
+                      userName ?? 'User Name',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
                   ],
                 ),
                 height: 200,
@@ -113,17 +114,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 120,
                       width: 400,
                       child: Padding(
-                        
                         padding: const EdgeInsets.all(8.0),
                         child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: [
-                              Matrial(
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            GlassesCategoryPage()),
+                                  );
+                                },
+                                child:  Matrial(
                                   title: "Glasses",
                                   icon: Image.asset(
                                     "assets/images/icons-glasses.png",
                                     height: 50,
                                   )),
+                              ),
+                             
                               Matrial(
                                   title: "Plastic",
                                   icon: Image.asset(
@@ -156,17 +167,16 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
             Column(
-              //  mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "For you",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500, fontSize: 18, color: Gray),
-                ),
-              ]
-            ),
+                //  mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "For you",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500, fontSize: 18, color: Gray),
+                  ),
+                ]),
             Container(
                 height: 320,
                 width: 400,

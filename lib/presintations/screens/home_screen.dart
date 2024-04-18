@@ -1,7 +1,6 @@
 import 'package:firstly/constants.dart';
 import 'package:firstly/controller/home-page-controller.dart';
-import 'package:firstly/presintations/screens/ProfilePage.dart';
-import 'package:firstly/presintations/screens/add_product.dart';
+
 import 'package:firstly/presintations/screens/favorite_screen.dart';
 import 'package:firstly/presintations/screens/learn_screen.dart';
 import 'package:firstly/presintations/screens/my-home.dart';
@@ -54,12 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 FloatingActionButtonLocation.miniCenterDocked,
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddProduct(),
-                  ),
-                );
+                //  Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => AddProduct(),
+                //   ),
+                // );
               },
               child: Icon(Icons.add,color: Colors.white,),
               backgroundColor: kMainColor,

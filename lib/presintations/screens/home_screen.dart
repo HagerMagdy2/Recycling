@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   [
     MyHomePage(),
     FavoriteScreen(),
-    ProfilePage(),
+    LearnScreen(),
     ProfileScreen(),
   ];
   @override

@@ -1,16 +1,22 @@
 import 'package:firstly/constants.dart';
 import 'package:firstly/controller/home-page-controller.dart';
+import 'package:firstly/presintations/screens/add_produc.dart';
+import 'package:firstly/presintations/screens/glasses_category.dart';
+import 'package:firstly/presintations/widgets/bottom-bar.dart';
 import 'package:firstly/presintations/widgets/drawer.dart';
 import 'package:firstly/presintations/widgets/item.dart';
 import 'package:firstly/presintations/widgets/matrial_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,10 +70,21 @@ class MyHomePage extends StatelessWidget {
                         child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: [
-                              Matrial(
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            GlassesCategoryPage()),
+                                  );
+                                },
+                                child: Matrial(
                                   title: "Glasses",
                                   icon: Image.asset(
-                                      "assets/images/icons-glass.png")),
+                                      "assets/images/icons-glass.png"),
+                                ),
+                              ),
                               Matrial(
                                   title: "Plastic",
                                   icon: Image.asset(
@@ -103,7 +120,8 @@ class MyHomePage extends StatelessWidget {
                 ))
           ],
         ),
-     ),
-);
-
-  }}
+      ),
+      
+    );
+  }
+}

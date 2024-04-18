@@ -24,7 +24,13 @@ class AuthenticationBloc
           emit(AuthLoding());
           await remoteDs.signInWithGoogle();
           emit(Authorized());
-        } else if (event is SignOutEvent) {
+        } 
+        else if (event is signInWithFacebookEvent) {
+          emit(AuthLoding());
+          await remoteDs.signInWithFacebook();
+          emit(Authorized());
+        }
+         else if (event is SignOutEvent) {
           emit(AuthLoding());
           await remoteDs.signOut();
           emit(UnAuthorized());
@@ -34,9 +40,7 @@ class AuthenticationBloc
           emit(isSignedIn ? Authorized() : UnAuthorized());
         }
       } catch (e) {
-        
         emit(AuthError(errorMessage: e.toString()));
-        print('error:'+e.toString());
       }
     });
   }

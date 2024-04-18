@@ -1,5 +1,9 @@
 import 'package:firstly/constants.dart';
 import 'package:firstly/controller/home-page-controller.dart';
+
+import 'package:firstly/presintations/screens/my-home.dart';
+import 'package:firstly/presintations/screens/profile-screen.dart';
+import 'package:firstly/presintations/widgets/bottom-bar.dart';
 import 'package:firstly/presintations/widgets/drawer.dart';
 import 'package:firstly/presintations/widgets/item.dart';
 import 'package:firstly/presintations/widgets/matrial_widget.dart';
@@ -8,108 +12,95 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int currentIndex = 0;
+  List<Widget> screens = [
+    MyHomePage(),
+    // FavoriteScreen(),
+    // ProfilePage(),
+    ProfileScreen(),
+  ];
   @override
   Widget build(BuildContext context) {
     Get.put(HomeControllerImp());
     return GetBuilder<HomeControllerImp>(
-      builder: (controller) => Scaffold(
-        drawer: AppDrawer(),
-        appBar: AppBar(
-          foregroundColor: kMainColor,
-          backgroundColor: Colors.white,
-          title: const Text(
-            'Be Green',
-            style: TextStyle(fontWeight: FontWeight.bold, color: kMainColor),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        body: controller.pagesList.elementAt(controller.currentPage),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.add),
-          backgroundColor: kMainColor,
-          elevation: 10,
-        ),
-        bottomNavigationBar: BottomAppBar(
-          height: 50.0,
-          notchMargin: 5.0,
-          shape: CircularNotchedRectangle(),
-          color: Colors.white,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 0),
-                  child: MaterialButton(
-                    onPressed: () => controller.changePage(0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.home,
-                          color: Colors.grey,
-                        ),
-                        Text('Home', style: TextStyle(color: Colors.grey))
-                      ],
-                    ),
-                  ),
+        builder: (controller) => Scaffold(
+              drawer: AppDrawer(),
+              appBar: AppBar(
+                foregroundColor: kMainColor,
+                backgroundColor: Colors.white,
+                title: const Text(
+                  'Be Green',
+                  style:
+                      TextStyle(fontWeight: FontWeight.bold, color: kMainColor),
+                  textAlign: TextAlign.center,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: MaterialButton(
-                    onPressed: () => controller.changePage(1),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
+              ),
+              body: screens[currentIndex],
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.miniCenterDocked,
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  //  Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => AddProduct(),
+                  //   ),
+                  // );
+                },
+                child: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                backgroundColor: kMainColor,
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              bottomNavigationBar: Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  currentIndex: currentIndex,
+                  selectedItemColor: kMainColor,
+                  onTap: (index) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(
+                        Icons.home,
+                      ),
+                      label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                        icon: Icon(
                           Icons.favorite,
-                          color: Colors.grey,
                         ),
-                        Text('Favorite', style: TextStyle(color: Colors.grey))
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: MaterialButton(
-                    onPressed: () => controller.changePage(2),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
+                        label: 'Favorite'),
+                    BottomNavigationBarItem(
+                        icon: Icon(
                           Icons.lightbulb,
-                          color: Colors.grey,
                         ),
-                        Text('Learn', style: TextStyle(color: Colors.grey))
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: MaterialButton(
-                    onPressed: () => controller.changePage(3),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
+                        label: 'Learn'),
+                    BottomNavigationBarItem(
+                        icon: Icon(
                           Icons.person,
-                          color: Colors.grey,
                         ),
-                        Text('Profile', style: TextStyle(color: Colors.grey))
-                      ],
-                    ),
-                  ),
+                        label: 'Profile'),
+                  ],
                 ),
-              ]),
-        ),
-      ),
-    );
+              ),
+            ));
   }
 }

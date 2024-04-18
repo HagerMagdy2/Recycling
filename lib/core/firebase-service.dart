@@ -107,6 +107,5 @@ class EncryptionService {
   static String decryptPhoneNumber(String encryptedPhoneNumber) {
     final encrypted = encrypt.Encrypted.fromBase64(encryptedPhoneNumber);
     return encrypter.decrypt(encrypted, iv: iv);
-
-}
+  }
 }

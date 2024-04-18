@@ -112,65 +112,70 @@ class Page3 extends StatelessWidget {
 }
 
 class Page4 extends StatelessWidget {
-  const Page4({super.key});
+  const Page4({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          alignment: Alignment.center,
-          height: 500,
-          child: Lottie.asset('assets/images/Animation5.json'),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: Text(
-            'Let\'s Start',
-            style: TextStyle(
-                fontSize: 50, color: kMainColor1, fontWeight: FontWeight.w900),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            alignment: Alignment.center,
+            height: 400, // Adjusted height
+            child: Lottie.asset('assets/images/Animation5.json'),
           ),
-        ),
-        SizedBox(
-          height: 120,
-        ),
-        Container(
-          width: 250,
-          child: TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: kMainColor,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
+          SizedBox(height: 40), // Adjusted spacing
+          Container(
+            alignment: Alignment.center,
+            child: Text(
+              'Let\'s Start',
+              style: TextStyle(
+                  fontSize: 36,
+                  color: kMainColor1,
+                  fontWeight: FontWeight.w900),
+            ),
+          ),
+          SizedBox(height: 60), // Adjusted spacing
+          Container(
+            width: 250,
+            child: TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: kMainColor,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
                 ),
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, LoginScreen.id);
-              },
-              child: const Text(
-                'Sign In',
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
-        ),
-        Container(
-          width: 250,
-          child: TextButton(
-              style: TextButton.styleFrom(
-                surfaceTintColor: kMainColor,
-                side: BorderSide(width: 2, color: kMainColor),
-                //   backgroundColor: kMainColor,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                onPressed: () {
+                  Navigator.pushNamed(context, LoginScreen.id);
+                },
+                child: const Text(
+                  'Sign In',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                )),
+          ),
+          SizedBox(height: 20), // Adjusted spacing
+          Container(
+            width: 250,
+            child: TextButton(
+                style: TextButton.styleFrom(
+                  surfaceTintColor: kMainColor,
+                  side: BorderSide(width: 2, color: kMainColor),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
                 ),
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, SignupScreen.id);
-              },
-              child: const Text(
-                'Creat Account',
-                style: TextStyle(color: kMainColor, fontSize: 18),
-              )),
-        ),
-      ],
+                onPressed: () {
+                  Navigator.pushNamed(context, SignupScreen.id);
+                },
+                child: const Text(
+                  'Create Account',
+                  style: TextStyle(color: kMainColor, fontSize: 18),
+                )),
+          ),
+          SizedBox(height: 40), // Adjusted spacing
+        ],
+      ),
     );
   }
 }

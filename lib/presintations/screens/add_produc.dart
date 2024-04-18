@@ -61,7 +61,6 @@ class _AddProductPageState extends State<AddProductPage> {
                       decoration: InputDecoration(
                         labelText: ('name'),
                       ),
-                      style: TextStyle(color: Colors.white),
                     ),
                     SizedBox(
                       height: 15,
@@ -78,7 +77,6 @@ class _AddProductPageState extends State<AddProductPage> {
                       decoration: InputDecoration(
                         labelText: ('price'),
                       ),
-                      style: TextStyle(color: Colors.white),
                     ),
                     SizedBox(
                       height: 10,
@@ -95,7 +93,6 @@ class _AddProductPageState extends State<AddProductPage> {
                       decoration: InputDecoration(
                         labelText: ('image'),
                       ),
-                      style: TextStyle(color: Colors.white),
                     ),
                     SizedBox(
                       height: 10,
@@ -112,7 +109,6 @@ class _AddProductPageState extends State<AddProductPage> {
                       decoration: InputDecoration(
                         labelText: ('id'),
                       ),
-                      style: TextStyle(color: Colors.white),
                     ),
                     SizedBox(
                       height: 10,

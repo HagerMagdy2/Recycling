@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/controller/home-page-controller.dart';
-import 'package:firstly/presintations/screens/add_product.dart';
+import 'package:firstly/core/storage_helper.dart';
+import 'package:firstly/presintations/screens/glasses_category.dart';
 import 'package:firstly/presintations/widgets/bottom-bar.dart';
 import 'package:firstly/presintations/widgets/drawer.dart';
 import 'package:firstly/presintations/widgets/item.dart';
@@ -11,6 +12,41 @@ import 'package:flutter/widgets.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String? profilePhotoUrl;
+  late String userId;
+  String? userName;
+  @override
+  void initState() {
+    super.initState();
+    userId = StorageHelperImpl().getCurrentUserId();
+    loadProfilePhotoUrl();
+    loadProfileData(); // Call loadPhoneNumber here
+    StorageHelperImpl().profilePhotoStream.listen((String newUrl) {
+      setState(() {
+        profilePhotoUrl = newUrl;
+      });
+    });
+  }
+
+  Future<void> loadProfilePhotoUrl() async {
+    profilePhotoUrl = await StorageHelperImpl().getProfilePhotoUrl(userId);
+    setState(() {});
+  }
+
+  Future<void> loadProfileData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        userName = user.displayName;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +82,13 @@ class MyHomePage extends StatefulWidget {
                     SizedBox(
                       height: 10,
                     ),
-                  Text(
-              userName ?? 'User Name',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white
-              ),
-            ),
+                    Text(
+                      userName ?? 'User Name',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
                   ],
                 ),
                 height: 200,
@@ -79,7 +114,6 @@ class MyHomePage extends StatefulWidget {
                       height: 120,
                       width: 400,
                       child: Padding(
-                        
                         padding: const EdgeInsets.all(8.0),
                         child: ListView(
                             scrollDirection: Axis.horizontal,
@@ -93,10 +127,14 @@ class MyHomePage extends StatefulWidget {
                                             GlassesCategoryPage()),
                                   );
                                 },
-                                child: Matrial(
+                                child:  Matrial(
                                   title: "Glasses",
                                   icon: Image.asset(
-                                      "assets/images/icons-glass.png")),
+                                    "assets/images/icons-glasses.png",
+                                    height: 50,
+                                  )),
+                              ),
+                             
                               Matrial(
                                   title: "Plastic",
                                   icon: Image.asset(
@@ -129,17 +167,16 @@ class MyHomePage extends StatefulWidget {
               ],
             ),
             Column(
-              //  mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "For you",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500, fontSize: 18, color: Gray),
-                ),
-              ]
-            ),
+                //  mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "For you",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500, fontSize: 18, color: Gray),
+                  ),
+                ]),
             Container(
                 height: 320,
                 width: 400,
@@ -158,7 +195,6 @@ class MyHomePage extends StatefulWidget {
           ],
         ),
       ),
-      
     );
   }
 }

@@ -90,7 +90,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               },
               child: Text('Change Password'),
               style: OutlinedButton.styleFrom(
-                foregroundColor: kMainColor,
+                primary: kMainColor,
                 padding: EdgeInsets.symmetric(vertical: 16.0),
                 side: BorderSide(color: kMainColor),
                 shape: RoundedRectangleBorder(
@@ -110,7 +110,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               },
               child: Text('Save'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: kMainColor,
+                primary: kMainColor,
                 padding: EdgeInsets.symmetric(vertical: 16.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),

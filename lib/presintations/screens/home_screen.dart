@@ -54,7 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 FloatingActionButtonLocation.miniCenterDocked,
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                
+                 Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddProduct(),
+                  ),
+                );
               },
               child: Icon(Icons.add,color: Colors.white,),
               backgroundColor: kMainColor,

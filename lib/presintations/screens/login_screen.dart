@@ -265,6 +265,6 @@ class _LoginScreenState extends State<LoginScreen> {
     } on FirebaseAuthException catch (e) {
       print('Error: $e');
       return false;
-    }
-  }
+}
+}
 }

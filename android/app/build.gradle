@@ -66,7 +66,5 @@ flutter {
     source '../..'
 }
 
-dependencies {implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0'
-implementation 'com.google.firebase:firebase-core:20.0.0'
-}
+dependencies {implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0'}
     

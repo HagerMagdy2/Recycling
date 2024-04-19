@@ -124,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               onTap: () async {
                 await showDialog(
                   context: context,
-                  builder: (context) => AddProfilePhoto(),
+                  builder: (context) => AddPhoto(),
                 );
                 await loadProfileData();
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -153,7 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onPressed: () async {
                         await showDialog(
                           context: context,
-                          builder: (context) => AddProfilePhoto(),
+                          builder: (context) => AddPhoto(),
                         );
                         await loadProfileData();
                         ScaffoldMessenger.of(context).showSnackBar(

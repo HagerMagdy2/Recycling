@@ -1,14 +1,14 @@
 // ignore_for_file: avoid_print
 
 import 'package:firstly/presintations/bloc/authentication_bloc.dart';
-import 'package:firstly/presintations/screens/login_screen.dart';
-import 'package:firstly/presintations/screens/home_screen.dart';
+import 'package:firstly/presintations/screens/start/login_screen.dart';
+import 'package:firstly/presintations/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../constants.dart';
-import '../widgets/custom_textfield.dart';
+import '../../../constants.dart';
+import '../../widgets/custom_textfield.dart';
 
 class SignupScreen extends StatefulWidget {
   static String id = 'SignupScreen';
@@ -193,7 +193,11 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         SizedBox(width: 20),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            context
+                                .read<AuthenticationBloc>()
+                                .add(signInWithFacebookEvent());
+                          },
                           child: CircleAvatar(
                             radius: 25,
                             backgroundImage:
@@ -232,6 +236,6 @@ class _SignupScreenState extends State<SignupScreen> {
           );
         },
       ),
-));
-}
+    ));
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class AuthenticationRemoteDs {
@@ -17,6 +18,9 @@ abstract class AuthenticationRemoteDs {
 
   ///sign In As with google
   Future signInWithGoogle();
+
+  ///sign In As with facebook
+  Future signInWithFacebook();
 
   ///sign out if user signed in
   Future<void> signOut();
@@ -39,6 +43,26 @@ class AuthenticationRemoteDsImp extends AuthenticationRemoteDs {
   @override
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
+  }
+
+  @override
+  Future signInWithFacebook() async {
+    try {
+      // Trigger the sign-in flow
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+
+      // Create a credential from the access token
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+      // Once signed in, return the UserCredential
+      return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+    } catch (e) {
+      // Handle any errors that occur during sign-up
+      print('Error signing up with facebook: $e');
+      // You may want to throw the error or handle it in a different way
+      throw e;
+    }
   }
 
   @override
@@ -101,5 +125,5 @@ class AuthenticationRemoteDsImp extends AuthenticationRemoteDs {
   Future<void> signInAnon() {
     // TODO: implement signInAnon
     throw UnimplementedError();
-}
+  }
 }

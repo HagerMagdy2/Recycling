@@ -125,7 +125,7 @@ class _AddPapersPageState extends State<AddPapersPage> {
                   ElevatedButton(
                     onPressed: () {
                       if (key.currentState!.validate()) {
-                        Navigator.pushReplacement(
+                        Navigator.pop(
                           context,
                           MaterialPageRoute(
                             builder: (context) => PapersCategoryPage(),

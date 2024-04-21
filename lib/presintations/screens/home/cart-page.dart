@@ -32,7 +32,7 @@ class _cartPageState extends State<cartPage> {
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
-          'cart Page',
+          'carttt Page',
           style: TextStyle(color: Colors.white),
         ),
       ),

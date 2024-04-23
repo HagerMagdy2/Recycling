@@ -1,6 +1,6 @@
-import 'package:firstly/presintations/screens/home_screen.dart';
-import 'package:firstly/presintations/screens/my-home.dart';
-import 'package:firstly/presintations/screens/profile-screen.dart';
+import 'package:firstly/presintations/screens/home/home_screen.dart';
+import 'package:firstly/presintations/screens/home/my-home.dart';
+import 'package:firstly/presintations/screens/home/profile-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,5 +25,5 @@ class HomeControllerImp extends HomeController {
     // TODO: implement changePage
     currentPage = page;
     update();
- }
+  }
 }

@@ -26,9 +26,9 @@ class Product {
 
   factory Product.fromDoc(QueryDocumentSnapshot<Map<String, dynamic>> doc) {
     return Product(
-        id: doc.id,
         image: doc.data()['image'],
         name: doc.data()['name']!,
+        id: doc.id,
         price: doc.data()['price'],
         quantity: doc.data()['quantity']);
   }

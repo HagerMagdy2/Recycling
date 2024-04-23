@@ -1,7 +1,6 @@
 import 'package:firstly/data/models/product.dart';
 import 'package:flutter/material.dart';
 
-
 @immutable
 sealed class ProductEvent {}
 
@@ -26,6 +25,7 @@ class RemoveProduct extends ProductEvent {
 
   RemoveProduct({required this.id});
 }
+
 class RemoveProductFromCart extends ProductEvent {
   final String id;
 

@@ -2,27 +2,27 @@ import 'package:firstly/constants.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
 import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
-import 'package:firstly/presintations/screens/add_produc.dart';
-import 'package:firstly/presintations/widgets/show_category.dart';
+import 'package:firstly/presintations/widgets/show_product.dart';
+import 'package:firstly/presintations/widgets/show_in_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-class GlassesCategoryPage extends StatefulWidget {
-  const GlassesCategoryPage({
+class cartPage extends StatefulWidget {
+  const cartPage({
     super.key,
   });
 
   @override
-  State<GlassesCategoryPage> createState() => _GlassesCategoryPageState();
+  State<cartPage> createState() => _cartPageState();
 }
 
-class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
+class _cartPageState extends State<cartPage> {
   @override
   void initState() {
     super.initState();
-    context.read<ProductBloc>().add(GetProduct());
+    context.read<ProductBloc>().add(GetCartProduct());
   }
 
   @override
@@ -33,7 +33,7 @@ class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
-          'Glasses Page',
+          'cart Page',
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -60,24 +60,24 @@ class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
                           shrinkWrap: true,
                           itemCount: state.products.length,
                           itemBuilder: (context, i) =>
-                              ShowProducts(product: state.products[i])),
+                              ShowInCart(product: state.products[i])),
                     )
                 ],
               ));
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: kMainColor,
-        onPressed: () async {
-          await Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddProductPage()));
-          setState(() {});
-        },
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: kMainColor,
+      //   onPressed: () async {
+      //     await Navigator.push(context,
+      //         MaterialPageRoute(builder: (context) => AddProductPage()));
+      //     setState(() {});
+      //   },
+      //   child: const Icon(
+      //     Icons.add,
+      //     color: Colors.white,
+      //   ),
+      // ),
     );
   }
 }

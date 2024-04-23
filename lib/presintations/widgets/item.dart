@@ -14,13 +14,9 @@ class _ItemsGrideTailState extends State<ItemsGrideTail> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListTile(
-        leading: Image.asset("assets/images/icons-glass.png"),
-        title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text("Title"),
-          Row(
-            children: [Text("data   "), Text("data    "), Text("data   ")],
-          )
-        ]),
+    leading: Image.asset("assets/images/icons-glass.png"),
+    title: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [Text("Title"),
+    Row(children: [Text("data   "),Text("data    "),Text("data   ")],)]),
       ),
     );
   }

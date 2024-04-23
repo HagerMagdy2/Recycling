@@ -1,5 +1,5 @@
 import 'package:firstly/constants.dart';
-import 'package:firstly/presintations/screens/signup_screen.dart';
+import 'package:firstly/presintations/screens/start/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -26,8 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Colors.white,
-      
+      backgroundColor: Colors.white,
       body: Center(
         child: Container(
           height: 100,

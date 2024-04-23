@@ -4,15 +4,20 @@ import 'package:firstly/presintations/bloc/authentication_bloc.dart';
 import 'package:firstly/presintations/screens/ProfilePage.dart';
 import 'package:firstly/presintations/screens/home_screen.dart';
 import 'package:firstly/presintations/screens/login_screen.dart';
+import 'package:firstly/presintations/screens/paypal.dart';
 import 'package:firstly/presintations/screens/signup_screen.dart';
 import 'package:firstly/presintations/screens/start_screen.dart';
+import 'package:firstly/presintations/screens/stripe_screen.dart';
+import 'package:firstly/stripe_payment/stripe_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+//import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'package:provider/provider.dart';
 
 
 void main() async {
+//   Stripe.publishableKey=ApiKeys.pusblishableKey;
   WidgetsFlutterBinding.ensureInitialized();
    await Firebase.initializeApp();
   runApp(MultiBlocProvider(
@@ -33,13 +38,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
        initialRoute: StartScreen.id,
-      //initialRoute: ProfilePage.id,
+      //initialRoute: CheckoutPage.id,
+      //initialRoute: StripeScreen.id,
       routes: {
         StartScreen.id: (context) => StartScreen(),
         SignupScreen.id: (context) => SignupScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         // HomeScreen.id: (context) => HomeScreen(),
-        ProfilePage.id: (context) => ProfilePage(),
+        CheckoutPage.id: (context) => CheckoutPage(),
       },
     );
   }

@@ -112,7 +112,7 @@ class _ShowInCartState extends State<ShowInCart> {
                     },
                     child: const Text('Remove from cart'),
                     style: OutlinedButton.styleFrom(
-                      primary: Colors.white,
+                     // primary: Colors.white,
                       backgroundColor: kMainColor,
                       side: BorderSide(color: kMainColor),
                       shape: RoundedRectangleBorder(

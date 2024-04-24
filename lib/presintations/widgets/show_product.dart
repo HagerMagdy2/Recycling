@@ -85,7 +85,7 @@ class _ShowProductsState extends State<ShowProducts> {
                           },
                           child: Text(isInCart ? 'Remove from cart' : 'Add to cart'),
                           style: OutlinedButton.styleFrom(
-                            primary: isInCart ? Colors.white : kMainColor,
+                            //primary: isInCart ? Colors.white : kMainColor,
                             backgroundColor: isInCart ? kMainColor : Colors.white,
                             side: BorderSide(color: isInCart ? kMainColor : kMainColor),
                             shape: RoundedRectangleBorder(

@@ -1,3 +1,5 @@
+// show_in_cart.dart
+
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
@@ -11,7 +13,7 @@ class ShowInCart extends StatefulWidget {
   final Product product;
 
   @override
-  State<ShowInCart> createState() => _ShowInCartState();
+  State<StatefulWidget> createState() => _ShowInCartState();
 }
 
 class _ShowInCartState extends State<ShowInCart> {
@@ -78,6 +80,11 @@ class _ShowInCartState extends State<ShowInCart> {
                           setState(() {
                             if (widget.product.quantity > 1) {
                               widget.product.quantity--;
+                              // Update the product quantity in the cart
+                              context.read<ProductBloc>().add(
+                                  UpdateCartProduct(product: widget.product));
+                              print(
+                                  'Decreased quantity: ${widget.product.quantity}');
                             }
                           });
                         },
@@ -93,7 +100,13 @@ class _ShowInCartState extends State<ShowInCart> {
                       IconButton(
                         onPressed: () {
                           setState(() {
+                            // Increment the product quantity
                             widget.product.quantity++;
+                            // Update the product quantity in the cart
+                            context.read<ProductBloc>().add(
+                                UpdateCartProduct(product: widget.product));
+                            print(
+                                'Increased quantity: ${widget.product.quantity}');
                           });
                         },
                         icon: const Icon(Icons.add),

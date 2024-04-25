@@ -5,14 +5,21 @@ import 'package:firstly/presintations/bloc/products_state.dart';
 import 'package:firstly/presintations/widgets/show_product.dart';
 import 'package:firstly/presintations/widgets/show_in_cart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:firstly/constants.dart';
+import 'package:firstly/data/models/product.dart';
+import 'package:firstly/presintations/bloc/products_bloc.dart';
+import 'package:firstly/presintations/bloc/products_event.dart';
+import 'package:firstly/presintations/bloc/products_state.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
 class cartPage extends StatefulWidget {
   const cartPage({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<cartPage> createState() => _cartPageState();
@@ -23,6 +30,14 @@ class _cartPageState extends State<cartPage> {
   void initState() {
     super.initState();
     context.read<ProductBloc>().add(GetCartProduct());
+  }
+
+  double calculateTotalPrice(List<Product> products) {
+    double totalPrice = 0.0;
+    for (var product in products) {
+      totalPrice += product.price * product.quantity;
+    }
+    return totalPrice;
   }
 
   @override
@@ -39,9 +54,10 @@ class _cartPageState extends State<cartPage> {
       ),
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
-          return Padding(
+          return SingleChildScrollView(
+            child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListView(
+              child: Column(
                 children: [
                   if (state is ProductLoadingState)
                     Lottie.asset(
@@ -55,29 +71,48 @@ class _cartPageState extends State<cartPage> {
                   if (state is ProductLoaded)
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: state.products.length,
-                          itemBuilder: (context, i) =>
-                              ShowInCart(product: state.products[i])),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: state.products.length,
+                            itemBuilder: (context, i) =>
+                                ShowInCart(product: state.products[i]),
+                          ),
+                          SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Total Price: ${calculateTotalPrice(state.products)} EGP',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  // Implement your checkout logic here
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary:
+                                      kMainColor, // Use kMainColor as button background color
+                                ),
+                                child: Text('Checkout'),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     )
                 ],
-              ));
+              ),
+            ),
+          );
         },
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: kMainColor,
-      //   onPressed: () async {
-      //     await Navigator.push(context,
-      //         MaterialPageRoute(builder: (context) => AddProductPage()));
-      //     setState(() {});
-      //   },
-      //   child: const Icon(
-      //     Icons.add,
-      //     color: Colors.white,
-      //   ),
-      // ),
     );
   }
 }

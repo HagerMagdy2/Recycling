@@ -4,7 +4,8 @@ import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
-  ProductRemoteDs remoteDs;
+  final ProductRemoteDs remoteDs;
+
   ProductBloc(this.remoteDs) : super(ProductInitial()) {
     on<ProductEvent>((event, emit) async {
       try {
@@ -36,6 +37,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           emit(ProductLoadingState());
           await remoteDs.updateProduct(event.product);
           add(GetProduct());
+        } else if (event is UpdateCartProduct) {
+          emit(ProductLoadingState());
+          await remoteDs.updateCartProduct(event.product);
+          add(GetCartProduct());
         }
       } catch (e) {
         emit(ProductErrorState(errorMessage: e.toString()));

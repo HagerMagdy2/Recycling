@@ -1,8 +1,8 @@
+// product_remote_ds.dart
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firstly/data/models/product.dart';
-
 
 abstract class ProductRemoteDs {
   Future<void> addProduct(Product product);
@@ -12,6 +12,7 @@ abstract class ProductRemoteDs {
   Future<void> removeProduct(String id);
   Future<void> removeProductFromCart(String id);
   Future<void> updateProduct(Product product);
+  Future<void> updateCartProduct(Product product);
 }
 
 class ProductRemoteDsImp extends ProductRemoteDs {
@@ -130,6 +131,28 @@ class ProductRemoteDsImp extends ProductRemoteDs {
       }
     } catch (e) {
       print("Error removing from cart: $e");
+    }
+  }
+
+  @override
+  Future<void> updateCartProduct(Product product) async {
+    try {
+      final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+      var currentUser = firebaseAuth.currentUser;
+
+      if (currentUser != null) {
+        await FirebaseFirestore.instance
+            .collection("users-cart-items")
+            .doc(currentUser.email)
+            .collection("items")
+            .doc(product.id)
+            .update(product.toMap());
+        print("Product quantity updated in cart");
+      } else {
+        print("User not signed in.");
+      }
+    } catch (e) {
+      print("Error updating product quantity in cart: $e");
     }
   }
 }

@@ -32,4 +32,19 @@ class Product {
         price: doc.data()['price'],
         quantity: doc.data()['quantity']);
   }
+  Product copyWith({
+    String? id,
+    String? name,
+    String? image,
+    double? price,
+    num? quantity,
+  }) {
+    return Product(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      image: image ?? this.image,
+      price: price ?? this.price,
+      quantity: quantity != null ? quantity.toInt() : this.quantity,
+    );
+  }
 }

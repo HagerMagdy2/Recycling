@@ -16,16 +16,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-class cartPage extends StatefulWidget {
-  const cartPage({
+class CartPage extends StatefulWidget {
+  const CartPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<cartPage> createState() => _cartPageState();
+  State<CartPage> createState() => _CartPageState();
 }
 
-class _cartPageState extends State<cartPage> {
+class _CartPageState extends State<CartPage> {
   @override
   void initState() {
     super.initState();

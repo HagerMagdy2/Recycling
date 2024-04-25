@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.center,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(bottom: 70),
+                            padding: const EdgeInsets.only(bottom: 70),
                             child: Container(
                               height: 200,
                               width: 300,
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(top: 155),
                             child: Text(
                               'Be',
@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(top: 210),
                             child: Text(
                               'Green',
@@ -121,10 +121,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Visibility(
                     visible: isPasswordIncorrect,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 20.0),
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 16),
+                        padding: EdgeInsets.only(left: 16),
                         child: Row(
                           children: [
                             Icon(
@@ -152,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextButton(
                       style: TextButton.styleFrom(
                         backgroundColor: kMainColor,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
                       ),

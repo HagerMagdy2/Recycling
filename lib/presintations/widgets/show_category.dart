@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/remotDs/product_remote_data_source.dart';
 import 'package:firstly/data/models/product.dart';
@@ -96,8 +94,8 @@ class _ShowProductsState extends State<ShowProducts> {
                     ],
                   ),
                 ),
-                child: Image.file(
-                  File(widget.product.image), // Use the product image file path
+                child: Image.network(
+                  widget.product.image, // Use the product image URL
                   fit: BoxFit.cover,
                 ),
               ),

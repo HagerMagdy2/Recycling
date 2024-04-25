@@ -11,8 +11,8 @@ import 'package:lottie/lottie.dart';
 
 class GlassesCategoryPage extends StatefulWidget {
   const GlassesCategoryPage({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<GlassesCategoryPage> createState() => _GlassesCategoryPageState();
@@ -39,9 +39,11 @@ class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
       ),
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
-          return Padding(
+          return SingleChildScrollView(
+            // Wrap with SingleChildScrollView
+            child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListView(
+              child: Column(
                 children: [
                   if (state is ProductLoadingState)
                     Lottie.asset(
@@ -53,17 +55,18 @@ class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
                   if (state is ProductErrorState)
                     Text('Error: ${state.errorMessage}'),
                   if (state is ProductLoaded)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: state.products.length,
-                          itemBuilder: (context, i) =>
-                              ShowProducts(product: state.products[i])),
-                    )
+                    ListView.builder(
+                      physics:
+                          NeverScrollableScrollPhysics(), // Disable scrolling of inner ListView
+                      shrinkWrap: true,
+                      itemCount: state.products.length,
+                      itemBuilder: (context, i) =>
+                          ShowProducts(product: state.products[i]),
+                    ),
                 ],
-              ));
+              ),
+            ),
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(

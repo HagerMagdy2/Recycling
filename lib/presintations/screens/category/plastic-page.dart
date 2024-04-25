@@ -41,8 +41,9 @@ class _PlasticCategoryPageState extends State<PlasticCategoryPage> {
       body: BlocBuilder<PlasticBloc, PlasticState>(
         builder: (context, state) {
           return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView(
+            padding: const EdgeInsets.all(8.0),
+            child: SingleChildScrollView(
+              child: Column(
                 children: [
                   if (state is PlasticLoadingState)
                     Lottie.asset(
@@ -54,24 +55,28 @@ class _PlasticCategoryPageState extends State<PlasticCategoryPage> {
                   if (state is PlasticErrorState)
                     Text('Error: ${state.errorMessage}'),
                   if (state is PlasticLoaded)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: state.products.length,
-                          itemBuilder: (context, i) =>
-                              ShowProducts(product: state.products[i])),
-                    )
+                    ListView.builder(
+                      physics:
+                          NeverScrollableScrollPhysics(), // Disable scrolling of inner list
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: state.products.length,
+                      itemBuilder: (context, i) =>
+                          ShowProducts(product: state.products[i]),
+                    ),
                 ],
-              ));
+              ),
+            ),
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: kMainColor,
         onPressed: () async {
-          await Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddPlasticPage()));
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddPlasticPage()),
+          );
           setState(() {});
         },
         child: const Icon(

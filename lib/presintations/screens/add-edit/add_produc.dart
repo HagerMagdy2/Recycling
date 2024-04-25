@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/core/storage_helper.dart';
 import 'package:firstly/data/models/product.dart';
@@ -23,7 +24,24 @@ class _AddProductPageState extends State<AddProductPage> {
   TextEditingController nameC = TextEditingController();
   TextEditingController priceC = TextEditingController();
   TextEditingController idC = TextEditingController();
-  String? imagePath;
+  String? imageURL;
+
+  Future<void> _uploadImage(File imageFile) async {
+    try {
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child('product_images/$fileName.jpg');
+      UploadTask uploadTask = firebaseStorageRef.putFile(imageFile);
+      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+      String url = await taskSnapshot.ref.getDownloadURL();
+      setState(() {
+        imageURL = url;
+      });
+    } catch (e) {
+      print('Error uploading image: $e');
+      // Handle error
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,27 +64,27 @@ class _AddProductPageState extends State<AddProductPage> {
                 children: [
                   GestureDetector(
                     onTap: () async {
-                      await showDialog(
+                      File? imageFile = await showDialog(
                         context: context,
                         builder: (context) => AddPhoto(),
-                      ).then((value) {
-                        setState(() {
-                          imagePath = value?.path;
-                        });
-                      });
+                      );
+                      if (imageFile != null) {
+                        await _uploadImage(imageFile);
+                      }
                     },
                     child: Container(
                       height: 250,
                       decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(10),
-                          image: imagePath != null
-                              ? DecorationImage(
-                                  image: FileImage(File(imagePath!)),
-                                  fit: BoxFit.cover,
-                                )
-                              : null),
-                      child: imagePath == null
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(10),
+                        image: imageURL != null
+                            ? DecorationImage(
+                                image: NetworkImage(imageURL!),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
+                      ),
+                      child: imageURL == null
                           ? Center(
                               child: Icon(
                                 Icons.add_photo_alternate,
@@ -134,7 +152,7 @@ class _AddProductPageState extends State<AddProductPage> {
                         context.read<ProductBloc>().add(
                               AddProduct(
                                 product: Product(
-                                  image: imagePath ?? '',
+                                  image: imageURL ?? '',
                                   name: nameC.text,
                                   id: idC.text,
                                   price: num.parse(priceC.text),

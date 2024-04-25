@@ -2,7 +2,8 @@ import 'package:firstly/constants.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
 import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
-import 'package:firstly/presintations/widgets/show_category.dart';
+import 'package:firstly/presintations/widgets/show_product.dart';
+import 'package:firstly/presintations/widgets/show_in_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +33,7 @@ class _cartPageState extends State<cartPage> {
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
-          'carttt Page',
+          'cart Page',
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -59,7 +60,7 @@ class _cartPageState extends State<cartPage> {
                           shrinkWrap: true,
                           itemCount: state.products.length,
                           itemBuilder: (context, i) =>
-                              ShowProducts(product: state.products[i])),
+                              ShowInCart(product: state.products[i])),
                     )
                 ],
               ));

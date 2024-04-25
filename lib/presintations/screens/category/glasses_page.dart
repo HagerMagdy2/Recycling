@@ -2,8 +2,8 @@ import 'package:firstly/constants.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
 import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
-import 'package:firstly/presintations/screens/add-edit/add_produc.dart';
-import 'package:firstly/presintations/widgets/show_category.dart';
+import 'package:firstly/presintations/screens/add-edit/add_glasses.dart';
+import 'package:firstly/presintations/widgets/show_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,7 +73,7 @@ class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
         backgroundColor: kMainColor,
         onPressed: () async {
           await Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddProductPage()));
+              MaterialPageRoute(builder: (context) => AddGlassesPage()));
           setState(() {});
         },
         child: const Icon(

@@ -46,12 +46,13 @@ class _AddPapersPageState extends State<AddPapersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       appBar: AppBar(
+        foregroundColor: Colors.white,
         backgroundColor: kMainColor,
-        title: Text(
+        title:  Text(
           'Add New Product',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
       body: BlocBuilder<PapersBloc, PapersState>(

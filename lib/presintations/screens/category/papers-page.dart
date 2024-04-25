@@ -4,8 +4,7 @@ import 'package:firstly/presintations/bloc/papers_event.dart';
 import 'package:firstly/presintations/bloc/papers_state.dart';
 import 'package:firstly/presintations/screens/add-edit/add-papers.dart';
 
-import 'package:firstly/presintations/screens/add-edit/add_produc.dart';
-import 'package:firstly/presintations/widgets/show_category.dart';
+import 'package:firstly/presintations/widgets/show_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

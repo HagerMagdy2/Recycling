@@ -2,14 +2,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/controller/home-page-controller.dart';
 import 'package:firstly/core/storage_helper.dart';
+import 'package:firstly/data/models/product.dart';
 import 'package:firstly/presintations/screens/category/compost-page.dart';
-import 'package:firstly/presintations/screens/category/glasses_category.dart';
+import 'package:firstly/presintations/screens/category/glasses_page.dart';
 import 'package:firstly/presintations/screens/category/papers-page.dart';
 import 'package:firstly/presintations/screens/category/plastic-page.dart';
 import 'package:firstly/presintations/widgets/bottom-bar.dart';
 import 'package:firstly/presintations/widgets/drawer.dart';
 import 'package:firstly/presintations/widgets/item.dart';
 import 'package:firstly/presintations/widgets/matrial_widget.dart';
+import 'package:firstly/presintations/widgets/show_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -214,14 +216,30 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: 400,
                 child: ListView(
                   children: [
-                    ItemsGrideTail(),
-                    ItemsGrideTail(),
-                    ItemsGrideTail(),
-                    ItemsGrideTail(),
-                    ItemsGrideTail(),
-                    ItemsGrideTail(),
-                    ItemsGrideTail(),
-                    ItemsGrideTail()
+                    ShowProducts(
+                        product: Product(
+                            image:
+                                "https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713739135580.jpg?alt=media&token=ae6a4ef6-6d62-432b-8968-ced8cfcfa6ab",
+                            name: "Crystal Glass Cup",
+                            id: "id",
+                            price: 250,
+                            quantity: 1)),
+                    ShowProducts(
+                        product: Product(
+                            image:
+                                "https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713741072235.jpg?alt=media&token=0654e890-f6a1-4345-8531-847c6fb9e8ea",
+                            name: "plastic food containers",
+                            id: "id",
+                            price: 55,
+                            quantity: 1)),
+                    ShowProducts(
+                        product: Product(
+                            image:
+                                "https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713741794884.jpg?alt=media&token=6d02d1cc-0cbb-4d7b-b851-52771e762335",
+                            name: "Pepper Caffeine Container",
+                            id: "id",
+                            price: 30,
+                            quantity: 1))
                   ],
                 ))
           ],

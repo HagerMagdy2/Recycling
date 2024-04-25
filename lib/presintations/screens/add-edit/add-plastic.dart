@@ -48,10 +48,11 @@ class _AddPlasticPageState extends State<AddPlasticPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
           'Add New Product',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
       body: BlocBuilder<PlasticBloc, PlasticState>(

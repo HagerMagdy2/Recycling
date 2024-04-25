@@ -24,11 +24,13 @@ class AuthenticationBloc
           emit(AuthLoding());
           await remoteDs.signInWithGoogle();
           emit(Authorized());
-        } else if (event is signInWithFacebookEvent) {
+        } 
+        else if (event is signInWithFacebookEvent) {
           emit(AuthLoding());
           await remoteDs.signInWithFacebook();
           emit(Authorized());
-        } else if (event is SignOutEvent) {
+        }
+         else if (event is SignOutEvent) {
           emit(AuthLoding());
           await remoteDs.signOut();
           emit(UnAuthorized());

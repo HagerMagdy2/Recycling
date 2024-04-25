@@ -7,19 +7,19 @@ import 'package:firstly/data/models/product.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
 import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
-import 'package:firstly/presintations/screens/category/glasses_category.dart';
+import 'package:firstly/presintations/screens/category/glasses_page.dart';
 import 'package:firstly/presintations/widgets/add_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddProductPage extends StatefulWidget {
-  const AddProductPage({Key? key}) : super(key: key);
+class AddGlassesPage extends StatefulWidget {
+  const AddGlassesPage({Key? key}) : super(key: key);
 
   @override
-  State<AddProductPage> createState() => _AddProductPageState();
+  State<AddGlassesPage> createState() => _AddGlassesPageState();
 }
 
-class _AddProductPageState extends State<AddProductPage> {
+class _AddGlassesPageState extends State<AddGlassesPage> {
   GlobalKey<FormState> key = GlobalKey();
   TextEditingController nameC = TextEditingController();
   TextEditingController priceC = TextEditingController();
@@ -48,10 +48,11 @@ class _AddProductPageState extends State<AddProductPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
           'Add New Product',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
       body: BlocBuilder<ProductBloc, ProductState>(

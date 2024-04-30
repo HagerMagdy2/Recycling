@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'dart:convert';
 import 'package:encrypt/encrypt.dart' as encrypt;
 
@@ -90,6 +91,36 @@ class FirebaseService {
     } catch (e) {
       print("Failed to update profile: $e");
       throw e;
+    }
+  }
+
+  Future<User?> getUserInfo(String userId) async {
+    try {
+      // Query Firestore for the user document based on the provided user ID
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
+          .collection('users')
+          .doc(userId)
+          .get();
+
+      // Check if the document exists
+      if (snapshot.exists) {
+        // Extract user data from the document
+        Map<String, dynamic> userData = snapshot.data()!;
+        // Retrieve the user object using Firebase Authentication
+        User? user = FirebaseAuth.instance.currentUser;
+        // Return the user object
+        return user;
+      } else {
+        // Throw an error if the user document doesn't exist
+        throw FirebaseAuthException(
+          code: 'user-not-found',
+          message: 'No user found with this ID.',
+        );
+      }
+    } catch (e) {
+      print("Error retrieving user information: $e");
+      return null;
     }
   }
 }

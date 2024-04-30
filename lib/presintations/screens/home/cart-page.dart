@@ -2,27 +2,33 @@ import 'package:firstly/constants.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
 import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
-import 'package:firstly/presintations/widgets/show_product.dart';
-import 'package:firstly/presintations/widgets/show_in_cart.dart';
+import 'package:firstly/presintations/widgets/show_category.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-class cartPage extends StatefulWidget {
-  const cartPage({
-    super.key,
-  });
+class CartPage extends StatefulWidget {
+  const CartPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  State<cartPage> createState() => _cartPageState();
+  State<CartPage> createState() => _CartPageState();
 }
 
-class _cartPageState extends State<cartPage> {
+class _CartPageState extends State<CartPage> {
   @override
   void initState() {
     super.initState();
     context.read<ProductBloc>().add(GetCartProduct());
+  }
+
+  double calculateTotalPrice(List<Product> products) {
+    double totalPrice = 0.0;
+    for (var product in products) {
+      totalPrice += product.price * product.quantity;
+    }
+    return totalPrice;
   }
 
   @override
@@ -39,9 +45,10 @@ class _cartPageState extends State<cartPage> {
       ),
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
-          return Padding(
+          return SingleChildScrollView(
+            child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ListView(
+              child: Column(
                 children: [
                   if (state is ProductLoadingState)
                     Lottie.asset(
@@ -60,7 +67,7 @@ class _cartPageState extends State<cartPage> {
                           shrinkWrap: true,
                           itemCount: state.products.length,
                           itemBuilder: (context, i) =>
-                              ShowInCart(product: state.products[i])),
+                              ShowProducts(product: state.products[i])),
                     )
                 ],
               ));

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/core/storage_helper.dart';
 import 'package:firstly/data/models/product.dart';
@@ -23,25 +22,10 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
   GlobalKey<FormState> key = GlobalKey();
   TextEditingController nameC = TextEditingController();
   TextEditingController priceC = TextEditingController();
-  TextEditingController idC = TextEditingController();
-  String? imageURL;
+  TextEditingController quantityC = TextEditingController();
 
-  Future<void> _uploadImage(File imageFile) async {
-    try {
-      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-      Reference firebaseStorageRef =
-          FirebaseStorage.instance.ref().child('product_images/$fileName.jpg');
-      UploadTask uploadTask = firebaseStorageRef.putFile(imageFile);
-      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
-      String url = await taskSnapshot.ref.getDownloadURL();
-      setState(() {
-        imageURL = url;
-      });
-    } catch (e) {
-      print('Error uploading image: $e');
-      // Handle error
-    }
-  }
+  TextEditingController idC = TextEditingController();
+  String? imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -127,18 +111,33 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
-                    controller: idC,
+                    controller: quantityC,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter product ID';
+                        return 'Please enter price';
                       }
                       return null;
                     },
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: 'Product ID',
+                      labelText: 'quantity',
                       border: OutlineInputBorder(),
                     ),
                   ),
+                  SizedBox(height: 20),
+                  // TextFormField(
+                  //   controller: idC,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please enter product ID';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   decoration: InputDecoration(
+                  //     labelText: 'Product ID',
+                  //     border: OutlineInputBorder(),
+                  //   ),
+                  // ),
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
@@ -149,7 +148,7 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
                             builder: (context) => GlassesCategoryPage(),
                           ),
                         );
-
+                      
                         context.read<ProductBloc>().add(
                               AddProduct(
                                 product: Product(
@@ -157,7 +156,9 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
                                   name: nameC.text,
                                   id: idC.text,
                                   price: num.parse(priceC.text),
-                                  quantity: 1,
+                                  quantity: num.parse(quantityC.text),
+                                  availableQuantity: num.parse(quantityC.text),
+                                  userId: userId, // Pass the userId here
                                 ),
                               ),
                             );

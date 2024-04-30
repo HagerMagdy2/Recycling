@@ -49,6 +49,10 @@ dependencies:
   google_sign_in: ^5.4.2
   flutter_facebook_auth: ^3.5.0
   encrypt: ^5.0.0
+  animate_do: ^3.1.2
+  flutter_staggered_grid_view: ^0.4.0
+
+
 
 
 

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/core/storage_helper.dart';
 import 'package:firstly/data/models/product.dart';
@@ -24,24 +25,7 @@ class _AddCompostPageState extends State<AddCompostPage> {
   TextEditingController nameC = TextEditingController();
   TextEditingController priceC = TextEditingController();
   TextEditingController idC = TextEditingController();
-  String? imageURL;
-
-  Future<void> _uploadImage(File imageFile) async {
-    try {
-      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-      Reference firebaseStorageRef =
-          FirebaseStorage.instance.ref().child('product_images/$fileName.jpg');
-      UploadTask uploadTask = firebaseStorageRef.putFile(imageFile);
-      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
-      String url = await taskSnapshot.ref.getDownloadURL();
-      setState(() {
-        imageURL = url;
-      });
-    } catch (e) {
-      print('Error uploading image: $e');
-      // Handle error
-    }
-  }
+  String? imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +111,20 @@ class _AddCompostPageState extends State<AddCompostPage> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    controller: quantityC,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter price';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'quantity',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  TextFormField(
                     controller: idC,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -149,7 +147,8 @@ class _AddCompostPageState extends State<AddCompostPage> {
                             builder: (context) => CompostCategoryPage(),
                           ),
                         );
-
+                        final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+                        var currentUser = firebaseAuth.currentUser;
                         context.read<CompostBloc>().add(
                               AddCompost(
                                 product: Product(
@@ -157,7 +156,9 @@ class _AddCompostPageState extends State<AddCompostPage> {
                                   name: nameC.text,
                                   id: idC.text,
                                   price: num.parse(priceC.text),
-                                  quantity: 1,
+                                  quantity: num.parse(quantityC.text),
+                                  availableQuantity: num.parse(quantityC.text),
+                                  userId: currentUser!.uid,
                                 ),
                               ),
                             );

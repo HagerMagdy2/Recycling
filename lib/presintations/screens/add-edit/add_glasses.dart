@@ -28,7 +28,10 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
 
   TextEditingController idC = TextEditingController();
   String? imageURL;
-  late String userId; // Add a variable to store the user ID
+  late String userId,
+      userName,
+      userEmail,
+      userPhone; // Add a variable to store the user ID
 
   @override
   void initState() {
@@ -42,6 +45,9 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
       if (user != null) {
         setState(() {
           userId = user.uid;
+          userName = user.displayName ?? ''; // Ensure userName is not null
+          userEmail = user.email ?? ''; // Ensure userEmail is not null
+          userPhone = user.phoneNumber ?? ''; // Ensure userPhone is not null
         });
       } else {
         print("User not found.");
@@ -189,7 +195,7 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
                             builder: (context) => GlassesCategoryPage(),
                           ),
                         );
-                      
+                        print(userName);
                         context.read<ProductBloc>().add(
                               AddProduct(
                                 product: Product(
@@ -199,7 +205,10 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
                                   price: num.parse(priceC.text),
                                   quantity: num.parse(quantityC.text),
                                   availableQuantity: num.parse(quantityC.text),
-                                  userId: userId, // Pass the userId here
+                                  userId: userId, 
+                                  userName: userName,
+                                  userEmail: userEmail,
+                                  userPhone: userPhone, // Pass the userId here
                                 ),
                               ),
                             );

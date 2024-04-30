@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -85,8 +86,10 @@ class AuthenticationRemoteDsImp extends AuthenticationRemoteDs {
   }
 
   @override
+  @override
   Future<void> signUp(String email, String password, String name) async {
     try {
+      // Create the user with email and password
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -94,8 +97,17 @@ class AuthenticationRemoteDsImp extends AuthenticationRemoteDs {
 
       // Once the user is created, update their display name
       User? user = FirebaseAuth.instance.currentUser;
+
       if (user != null) {
         await user.updateDisplayName(name);
+
+        // Add user data to Firestore userinfo collection
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'name': name,
+          'email': email,
+
+          // Add any additional user data fields here
+        });
       } else {
         // Handle the case where user is null (should not happen)
         throw FirebaseAuthException(

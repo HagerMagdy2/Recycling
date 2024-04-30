@@ -47,6 +47,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         userName = user.displayName;
         userEmail = user.email;
       });
+      // Load phone number after loading profile data
+      await loadPhoneNumber();
     }
   }
 

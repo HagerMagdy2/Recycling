@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstly/constants.dart';
+import 'package:firstly/core/firebase-service.dart';
 import 'package:firstly/data/models/product.dart';
 
 import 'package:firstly/presintations/bloc/papers_bloc.dart';
@@ -29,6 +30,39 @@ class _AddPapersPageState extends State<AddPapersPage> {
   TextEditingController quantityC = TextEditingController();
 
   String? imageURL;
+  String? userId,
+      userName,
+      userEmail,
+      userPhone; // Add a variable to store the user ID
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserID(); // Call function to retrieve the user ID
+  }
+
+  Future<void> _getUserID() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        setState(() {
+          userId = user.uid;
+          userName = user.displayName;
+          userEmail = user.email;
+        });
+      } else {
+        print("User not found.");
+      }
+    } catch (e) {
+      print("Error fetching user information: $e");
+    }
+  }
+
+  Future<void> loadPhoneNumber() async {
+    userPhone = await FirebaseService.getUserPhoneNumber(userId!);
+    setState(() {});
+  }
+
   Future<void> _uploadImage(File imageFile) async {
     try {
       String fileName = DateTime.now().millisecondsSinceEpoch.toString();
@@ -151,8 +185,8 @@ class _AddPapersPageState extends State<AddPapersPage> {
                             builder: (context) => PapersCategoryPage(),
                           ),
                         );
-                        final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-                        var currentUser = firebaseAuth.currentUser;
+                        print(userName);
+
                         context.read<PapersBloc>().add(
                               AddPapers(
                                 product: Product(
@@ -162,7 +196,12 @@ class _AddPapersPageState extends State<AddPapersPage> {
                                   price: num.parse(priceC.text),
                                   quantity: num.parse(quantityC.text),
                                   availableQuantity: num.parse(quantityC.text),
-                                  userId: currentUser!.uid,
+                                  userId: userId!,
+                                  userName: userName ??
+                                      '', // Ensure userName is not null
+                                  userEmail: userEmail ??
+                                      '', // Ensure userEmail is not null
+                                  userPhone: userPhone ?? '',
                                 ),
                               ),
                             );

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
 
@@ -24,7 +26,25 @@ class _AddPapersPageState extends State<AddPapersPage> {
   TextEditingController nameC = TextEditingController();
   TextEditingController priceC = TextEditingController();
   TextEditingController idC = TextEditingController();
-  String? imagePath;
+  TextEditingController quantityC = TextEditingController();
+
+  String? imageURL;
+  Future<void> _uploadImage(File imageFile) async {
+    try {
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child('product_images/$fileName.jpg');
+      UploadTask uploadTask = firebaseStorageRef.putFile(imageFile);
+      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+      String url = await taskSnapshot.ref.getDownloadURL();
+      setState(() {
+        imageURL = url;
+      });
+    } catch (e) {
+      print('Error uploading image: $e');
+      // Handle error
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +53,7 @@ class _AddPapersPageState extends State<AddPapersPage> {
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
-        title:  Text(
+        title: Text(
           'Add New Product',
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),

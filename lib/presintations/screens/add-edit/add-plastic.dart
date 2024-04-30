@@ -25,7 +25,26 @@ class _AddPlasticPageState extends State<AddPlasticPage> {
   TextEditingController nameC = TextEditingController();
   TextEditingController priceC = TextEditingController();
   TextEditingController idC = TextEditingController();
-  String? imagePath;
+  TextEditingController quantityC = TextEditingController();
+
+  String? imageURL;
+
+  Future<void> _uploadImage(File imageFile) async {
+    try {
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child('product_images/$fileName.jpg');
+      UploadTask uploadTask = firebaseStorageRef.putFile(imageFile);
+      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+      String url = await taskSnapshot.ref.getDownloadURL();
+      setState(() {
+        imageURL = url;
+      });
+    } catch (e) {
+      print('Error uploading image: $e');
+      // Handle error
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

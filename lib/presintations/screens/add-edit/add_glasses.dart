@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/core/storage_helper.dart';
 import 'package:firstly/data/models/product.dart';
@@ -25,7 +27,46 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
   TextEditingController quantityC = TextEditingController();
 
   TextEditingController idC = TextEditingController();
-  String? imagePath;
+  String? imageURL;
+  late String userId; // Add a variable to store the user ID
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserID(); // Call function to retrieve the user ID
+  }
+
+  Future<void> _getUserID() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        setState(() {
+          userId = user.uid;
+        });
+      } else {
+        print("User not found.");
+      }
+    } catch (e) {
+      print("Error fetching user information: $e");
+    }
+  }
+
+  Future<void> _uploadImage(File imageFile) async {
+    try {
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child('product_images/$fileName.jpg');
+      UploadTask uploadTask = firebaseStorageRef.putFile(imageFile);
+      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+      String url = await taskSnapshot.ref.getDownloadURL();
+      setState(() {
+        imageURL = url;
+      });
+    } catch (e) {
+      print('Error uploading image: $e');
+      // Handle error
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -100,13 +100,24 @@ class _ShowInCartState extends State<ShowInCart> {
                       IconButton(
                         onPressed: () {
                           setState(() {
-                            // Increment the product quantity
-                            widget.product.quantity++;
-                            // Update the product quantity in the cart
-                            context.read<ProductBloc>().add(
-                                UpdateCartProduct(product: widget.product));
-                            print(
-                                'Increased quantity: ${widget.product.quantity}');
+                            // Check if increasing quantity exceeds available stock
+                            if (widget.product.quantity <
+                                widget.product.availableQuantity) {
+                              // Increment the product quantity
+                              widget.product.quantity++;
+                              // Update the product quantity in the cart
+                              context.read<ProductBloc>().add(
+                                  UpdateCartProduct(product: widget.product));
+                              print(
+                                  'Increased quantity: ${widget.product.quantity}');
+                            } else {
+                              // If quantity exceeds available stock, show a message
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content:
+                                        Text('exceed the available quantity')),
+                              );
+                            }
                           });
                         },
                         icon: const Icon(Icons.add),

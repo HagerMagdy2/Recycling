@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/core/storage_helper.dart';
@@ -23,8 +24,32 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
   GlobalKey<FormState> key = GlobalKey();
   TextEditingController nameC = TextEditingController();
   TextEditingController priceC = TextEditingController();
+  TextEditingController quantityC = TextEditingController();
+
   TextEditingController idC = TextEditingController();
   String? imageURL;
+  late String userId; // Add a variable to store the user ID
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserID(); // Call function to retrieve the user ID
+  }
+
+  Future<void> _getUserID() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        setState(() {
+          userId = user.uid;
+        });
+      } else {
+        print("User not found.");
+      }
+    } catch (e) {
+      print("Error fetching user information: $e");
+    }
+  }
 
   Future<void> _uploadImage(File imageFile) async {
     try {
@@ -127,18 +152,33 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
-                    controller: idC,
+                    controller: quantityC,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter product ID';
+                        return 'Please enter price';
                       }
                       return null;
                     },
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: 'Product ID',
+                      labelText: 'quantity',
                       border: OutlineInputBorder(),
                     ),
                   ),
+                  SizedBox(height: 20),
+                  // TextFormField(
+                  //   controller: idC,
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please enter product ID';
+                  //     }
+                  //     return null;
+                  //   },
+                  //   decoration: InputDecoration(
+                  //     labelText: 'Product ID',
+                  //     border: OutlineInputBorder(),
+                  //   ),
+                  // ),
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
@@ -149,7 +189,7 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
                             builder: (context) => GlassesCategoryPage(),
                           ),
                         );
-
+                      
                         context.read<ProductBloc>().add(
                               AddProduct(
                                 product: Product(
@@ -157,7 +197,9 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
                                   name: nameC.text,
                                   id: idC.text,
                                   price: num.parse(priceC.text),
-                                  quantity: 1,
+                                  quantity: num.parse(quantityC.text),
+                                  availableQuantity: num.parse(quantityC.text),
+                                  userId: userId, // Pass the userId here
                                 ),
                               ),
                             );

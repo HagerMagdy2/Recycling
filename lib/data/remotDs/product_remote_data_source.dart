@@ -18,16 +18,16 @@ abstract class ProductRemoteDs {
 class ProductRemoteDsImp extends ProductRemoteDs {
   @override
   Future<void> addProduct(Product product) async {
-    await FirebaseFirestore.instance
-        .collection("products")
-        .add(product.toMap());
+    await FirebaseFirestore.instance.collection("glasses").add(
+          product.toMap(),
+        );
   }
 
   @override
   Future<List<Product>> getProduct() async {
     try {
       final snapshot =
-          await FirebaseFirestore.instance.collection("products").get();
+          await FirebaseFirestore.instance.collection("glasses").get();
       return snapshot.docs.map((d) => Product.fromDoc(d)).toList();
     } catch (e) {
       print("Error getting products: $e");

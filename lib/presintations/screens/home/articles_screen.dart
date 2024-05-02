@@ -17,7 +17,7 @@ class ArticleScreen extends StatelessWidget {
         padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Directionality(
-            textDirection: TextDirection.rtl, // Right-to-left text direction for Arabic
+            textDirection: TextDirection.ltr, // Right-to-left text direction for Arabic
             child: Text(
               article,
               style: TextStyle(fontSize: 16.0),

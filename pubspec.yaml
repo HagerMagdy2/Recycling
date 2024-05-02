@@ -51,6 +51,8 @@ dependencies:
   encrypt: ^5.0.0
 
   video_player: ^2.5.1
+  webview_flutter: ^2.0.13
+
 
 
 

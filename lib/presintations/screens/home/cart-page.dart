@@ -2,6 +2,7 @@ import 'package:firstly/constants.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
 import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
+import 'package:firstly/presintations/screens/home/check_out_page.dart';
 import 'package:firstly/presintations/widgets/show_product.dart';
 import 'package:firstly/presintations/widgets/show_in_cart.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,13 @@ class _CartPageState extends State<CartPage> {
   void initState() {
     super.initState();
     context.read<ProductBloc>().add(GetCartProduct());
+  }
+
+  List<Product> getCartProducts() {
+    if (context.read<ProductBloc>().state is ProductLoaded) {
+      return (context.read<ProductBloc>().state as ProductLoaded).products;
+    }
+    return [];
   }
 
   double calculateTotalPrice(List<Product> products) {
@@ -94,7 +102,13 @@ class _CartPageState extends State<CartPage> {
                               ),
                               ElevatedButton(
                                 onPressed: () {
-                                  // Implement your checkout logic here
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CheckOutPage(
+                                          cartProducts: getCartProducts()),
+                                    ),
+                                  );
                                 },
                                 style: ElevatedButton.styleFrom(
                                   primary:

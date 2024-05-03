@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firstly/constants.dart';
-import 'package:firstly/presintations/screens/change-pass.dart';
+import 'package:firstly/presintations/screens/add-edit/change-pass.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final String currentName;

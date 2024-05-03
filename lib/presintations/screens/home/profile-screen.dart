@@ -3,7 +3,7 @@ import 'package:firstly/constants.dart';
 import 'package:firstly/core/firebase-service.dart';
 import 'package:firstly/core/storage_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firstly/presintations/screens/edit-profile-screen.dart';
+import 'package:firstly/presintations/screens/add-edit/edit-profile-screen.dart';
 import 'package:firstly/presintations/widgets/add_profile-photo.dart';
 
 class ProfileScreen extends StatefulWidget {

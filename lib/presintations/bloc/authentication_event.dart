@@ -19,5 +19,7 @@ class SignUpEvent extends AuthenticationEvent {
 class SignOutEvent extends AuthenticationEvent {}
 
 class SignInWithGoogleEvent extends AuthenticationEvent {}
+class signInWithFacebookEvent extends AuthenticationEvent{}
 
 class IsSignedInEvent extends AuthenticationEvent {}
+

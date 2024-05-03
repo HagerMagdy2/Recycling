@@ -1,6 +1,6 @@
 import 'package:firstly/constants.dart';
 import 'package:firstly/presintations/bloc/authentication_bloc.dart';
-import 'package:firstly/presintations/screens/signup_screen.dart';
+import 'package:firstly/presintations/screens/start/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

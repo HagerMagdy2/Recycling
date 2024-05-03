@@ -3,32 +3,34 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstly/constants.dart';
-import 'package:firstly/core/storage_helper.dart';
+import 'package:firstly/core/firebase-service.dart';
 import 'package:firstly/data/models/product.dart';
-import 'package:firstly/presintations/bloc/products_bloc.dart';
-import 'package:firstly/presintations/bloc/products_event.dart';
-import 'package:firstly/presintations/bloc/products_state.dart';
-import 'package:firstly/presintations/screens/category/glasses_page.dart';
+
+import 'package:firstly/presintations/bloc/oils_bloc.dart';
+import 'package:firstly/presintations/bloc/oils_event.dart';
+import 'package:firstly/presintations/bloc/oils_state.dart';
+import 'package:firstly/presintations/screens/category/oils_page.dart';
+
 import 'package:firstly/presintations/widgets/add_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AddGlassesPage extends StatefulWidget {
-  const AddGlassesPage({Key? key}) : super(key: key);
+class AddOilsPage extends StatefulWidget {
+  const AddOilsPage({Key? key}) : super(key: key);
 
   @override
-  State<AddGlassesPage> createState() => _AddGlassesPageState();
+  State<AddOilsPage> createState() => _AddOilsPageState();
 }
 
-class _AddGlassesPageState extends State<AddGlassesPage> {
+class _AddOilsPageState extends State<AddOilsPage> {
   GlobalKey<FormState> key = GlobalKey();
   TextEditingController nameC = TextEditingController();
   TextEditingController priceC = TextEditingController();
+  TextEditingController idC = TextEditingController();
   TextEditingController quantityC = TextEditingController();
 
-  TextEditingController idC = TextEditingController();
   String? imageURL;
-  late String userId,
+  String? userId,
       userName,
       userEmail,
       userPhone; // Add a variable to store the user ID
@@ -45,9 +47,8 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
       if (user != null) {
         setState(() {
           userId = user.uid;
-          userName = user.displayName ?? ''; // Ensure userName is not null
-          userEmail = user.email ?? ''; // Ensure userEmail is not null
-          userPhone = user.phoneNumber ?? ''; // Ensure userPhone is not null
+          userName = user.displayName;
+          userEmail = user.email;
         });
       } else {
         print("User not found.");
@@ -55,6 +56,11 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
     } catch (e) {
       print("Error fetching user information: $e");
     }
+  }
+
+  Future<void> loadPhoneNumber() async {
+    userPhone = await FirebaseService.getUserPhoneNumber(userId!);
+    setState(() {});
   }
 
   Future<void> _uploadImage(File imageFile) async {
@@ -77,7 +83,7 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
@@ -86,7 +92,7 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
-      body: BlocBuilder<ProductBloc, ProductState>(
+      body: BlocBuilder<OilsBloc, OilsState>(
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.all(16.0),
@@ -97,9 +103,7 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
                   GestureDetector(
                     onTap: () async {
                       File? imageFile = await showDialog(
-                        context: context,
-                        builder: (context) => AddPhoto(),
-                      );
+                          context: context, builder: (context) => AddPhoto());
                       if (imageFile != null) {
                         await _uploadImage(imageFile);
                       }
@@ -172,32 +176,19 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  // TextFormField(
-                  //   controller: idC,
-                  //   validator: (value) {
-                  //     if (value == null || value.isEmpty) {
-                  //       return 'Please enter product ID';
-                  //     }
-                  //     return null;
-                  //   },
-                  //   decoration: InputDecoration(
-                  //     labelText: 'Product ID',
-                  //     border: OutlineInputBorder(),
-                  //   ),
-                  // ),
-                  SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
                       if (key.currentState!.validate()) {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => GlassesCategoryPage(),
+                            builder: (context) => OilsCategoryPage(),
                           ),
                         );
                         print(userName);
-                        context.read<ProductBloc>().add(
-                              AddProduct(
+
+                        context.read<OilsBloc>().add(
+                              AddOils(
                                 product: Product(
                                   image: imageURL ?? '',
                                   name: nameC.text,
@@ -205,10 +196,12 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
                                   price: num.parse(priceC.text),
                                   quantity: num.parse(quantityC.text),
                                   availableQuantity: num.parse(quantityC.text),
-                                  userId: userId, 
-                                  userName: userName,
-                                  userEmail: userEmail,
-                                  userPhone: userPhone, // Pass the userId here
+                                  userId: userId!,
+                                  userName: userName ??
+                                      '', // Ensure userName is not null
+                                  userEmail: userEmail ??
+                                      '', // Ensure userEmail is not null
+                                  userPhone: userPhone ?? '',
                                 ),
                               ),
                             );

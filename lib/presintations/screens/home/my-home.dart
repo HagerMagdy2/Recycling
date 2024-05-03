@@ -5,6 +5,7 @@ import 'package:firstly/core/storage_helper.dart';
 import 'package:firstly/data/models/product.dart';
 import 'package:firstly/presintations/screens/category/compost-page.dart';
 import 'package:firstly/presintations/screens/category/glasses_page.dart';
+import 'package:firstly/presintations/screens/category/oils_page.dart';
 import 'package:firstly/presintations/screens/category/papers-page.dart';
 import 'package:firstly/presintations/screens/category/plastic-page.dart';
 import 'package:firstly/presintations/widgets/bottom-bar.dart';
@@ -109,9 +110,10 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Text(
                   "      Materials",
-                  textAlign: TextAlign.start,
                   style: TextStyle(
-                      fontWeight: FontWeight.w500, fontSize: 20, color: Gray),
+                      fontSize: 22,
+                      color: kMainColor1,
+                      fontWeight: FontWeight.w500),
                 ),
                 Row(
                   children: [
@@ -187,12 +189,22 @@ class _MyHomePageState extends State<MyHomePage> {
                                       height: 50,
                                     )),
                               ),
-                              Matrial(
-                                  title: "Oils",
-                                  icon: Image.asset(
-                                    "assets/images/icons-oils.png",
-                                    height: 50,
-                                  )),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            OilsCategoryPage()),
+                                  );
+                                },
+                                child: Matrial(
+                                    title: "Oils",
+                                    icon: Image.asset(
+                                      "assets/images/icons-oils.png",
+                                      height: 50,
+                                    )),
+                              ),
                             ]),
                       ),
                     )
@@ -206,9 +218,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Text(
                     "For you",
-                    textAlign: TextAlign.start,
                     style: TextStyle(
-                        fontWeight: FontWeight.w500, fontSize: 18, color: Gray),
+                        fontSize: 20,
+                        color: kMainColor1,
+                        fontWeight: FontWeight.w500),
                   ),
                 ]),
             Container(
@@ -216,30 +229,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: 400,
                 child: ListView(
                   children: [
-                    ShowProducts(
-                        product: Product(
-                            image:
-                                "https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713739135580.jpg?alt=media&token=ae6a4ef6-6d62-432b-8968-ced8cfcfa6ab",
-                            name: "Crystal Glass Cup",
-                            id: "id",
-                            price: 250,
-                            quantity: 1)),
-                    ShowProducts(
-                        product: Product(
-                            image:
-                                "https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713741072235.jpg?alt=media&token=0654e890-f6a1-4345-8531-847c6fb9e8ea",
-                            name: "plastic food containers",
-                            id: "id",
-                            price: 55,
-                            quantity: 1)),
-                    ShowProducts(
-                        product: Product(
-                            image:
-                                "https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713741794884.jpg?alt=media&token=6d02d1cc-0cbb-4d7b-b851-52771e762335",
-                            name: "Pepper Caffeine Container",
-                            id: "id",
-                            price: 30,
-                            quantity: 1))
+                    ItemsGrideTail(),
+                    ItemsGrideTail(),
+                    ItemsGrideTail(),
+                    ItemsGrideTail(),
+                    ItemsGrideTail(),
+                    ItemsGrideTail(),
+                    ItemsGrideTail(),
+                    ItemsGrideTail()
                   ],
                 ))
           ],

@@ -1,58 +1,54 @@
-// product_remote_ds.dart
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firstly/data/models/product.dart';
 
-abstract class ProductRemoteDs {
-  Future<void> addProduct(Product product);
-  Future<List<Product>> getProduct();
+abstract class OilRemoteDs {
+  Future<void> addOil(Product product);
+  Future<List<Product>> getOil();
   Future<void> addToCart(Product product);
   Future<List<Product>> getCartProduct();
-  Future<void> removeProduct(String id);
+  Future<void> removeOil(String id);
   Future<void> removeProductFromCart(String id);
-  Future<void> updateProduct(Product product);
-  Future<void> updateCartProduct(Product product);
+  Future<void> updateOil(Product product);
 }
 
-class ProductRemoteDsImp extends ProductRemoteDs {
+class OilRemoteDsImp extends OilRemoteDs {
   @override
-  Future<void> addProduct(Product product) async {
-    await FirebaseFirestore.instance.collection("glasses").add(
-          product.toMap(),
-        );
+  Future<void> addOil(Product product) async {
+    await FirebaseFirestore.instance.collection("Oil").add(product.toMap());
   }
 
   @override
-  Future<List<Product>> getProduct() async {
+  Future<List<Product>> getOil() async {
     try {
       final snapshot =
-          await FirebaseFirestore.instance.collection("glasses").get();
+          await FirebaseFirestore.instance.collection("Oil").get();
       return snapshot.docs.map((d) => Product.fromDoc(d)).toList();
     } catch (e) {
-      print("Error getting products: $e");
+      print("Error getting oil products: $e");
       return [];
     }
   }
 
   @override
-  Future<void> removeProduct(String id) async {
+  Future<void> removeOil(String id) async {
     try {
-      await FirebaseFirestore.instance.collection("products").doc(id).delete();
+      await FirebaseFirestore.instance.collection("Oil").doc(id).delete();
     } catch (e) {
-      print("Error removing product: $e");
+      print("Error removing oil product: $e");
     }
   }
 
   @override
-  Future<void> updateProduct(Product product) async {
+  Future<void> updateOil(Product product) async {
     try {
       await FirebaseFirestore.instance
-          .collection("products")
+          .collection("Oil")
           .doc(product.id)
           .update(product.toMap());
     } catch (e) {
-      print("Error updating product: $e");
+      print("Error updating oil product: $e");
     }
   }
 
@@ -73,7 +69,7 @@ class ProductRemoteDsImp extends ProductRemoteDs {
         print("User not signed in.");
       }
     } catch (e) {
-      print("Error adding to cart: $e");
+      print("Error adding oil product to cart: $e");
     }
   }
 
@@ -107,7 +103,7 @@ class ProductRemoteDsImp extends ProductRemoteDs {
         return [];
       }
     } catch (e) {
-      print("Error getting cart products: $e");
+      print("Error getting oil cart products: $e");
       return [];
     }
   }
@@ -125,34 +121,12 @@ class ProductRemoteDsImp extends ProductRemoteDs {
             .collection("items")
             .doc(id)
             .delete();
-        print("Product removed from cart");
+        print("Oil product removed from cart");
       } else {
         print("User not signed in.");
       }
     } catch (e) {
-      print("Error removing from cart: $e");
-    }
-  }
-
-  @override
-  Future<void> updateCartProduct(Product product) async {
-    try {
-      final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-      var currentUser = firebaseAuth.currentUser;
-
-      if (currentUser != null) {
-        await FirebaseFirestore.instance
-            .collection("users-cart-items")
-            .doc(currentUser.email)
-            .collection("items")
-            .doc(product.id)
-            .update(product.toMap());
-        print("Product quantity updated in cart");
-      } else {
-        print("User not signed in.");
-      }
-    } catch (e) {
-      print("Error updating product quantity in cart: $e");
+      print("Error removing oil product from cart: $e");
     }
   }
 }

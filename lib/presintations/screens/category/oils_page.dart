@@ -1,28 +1,28 @@
+import 'package:firstly/presintations/screens/add-edit/add_oils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:firstly/constants.dart';
-import 'package:firstly/presintations/bloc/papers_bloc.dart';
-import 'package:firstly/presintations/bloc/papers_state.dart';
-import 'package:firstly/presintations/bloc/papers_event.dart';
-import 'package:firstly/presintations/screens/add-edit/add-papers.dart';
+import 'package:firstly/presintations/bloc/oils_bloc.dart';
+import 'package:firstly/presintations/bloc/oils_state.dart';
+import 'package:firstly/presintations/bloc/oils_event.dart';
 import 'package:firstly/presintations/widgets/show_product.dart';
 
-class PapersCategoryPage extends StatefulWidget {
-  const PapersCategoryPage({Key? key}) : super(key: key);
+class OilsCategoryPage extends StatefulWidget {
+  const OilsCategoryPage({Key? key}) : super(key: key);
 
   @override
-  State<PapersCategoryPage> createState() => _PapersCategoryPageState();
+  State<OilsCategoryPage> createState() => _OilsCategoryPageState();
 }
 
-class _PapersCategoryPageState extends State<PapersCategoryPage> {
+class _OilsCategoryPageState extends State<OilsCategoryPage> {
   late TextEditingController searchController;
 
   @override
   void initState() {
     super.initState();
     searchController = TextEditingController();
-    context.read<PapersBloc>().add(GetPapers());
+    context.read<OilsBloc>().add(GetOils());
   }
 
   @override
@@ -39,7 +39,7 @@ class _PapersCategoryPageState extends State<PapersCategoryPage> {
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
-          'Papers Page',
+          'Oils Page',
           style: TextStyle(color: Colors.white),
         ),
         actions: [
@@ -79,22 +79,22 @@ class _PapersCategoryPageState extends State<PapersCategoryPage> {
           ),
         ],
       ),
-      body: BlocBuilder<PapersBloc, PapersState>(
+      body: BlocBuilder<OilsBloc, OilsState>(
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView(
               children: [
-                if (state is PapersLoadingState)
+                if (state is OilsLoadingState)
                   Lottie.asset(
                     'assets/images/Animation loading1.json',
                     height: 200,
                     width: 200,
                     repeat: true,
                   ),
-                if (state is PapersErrorState)
+                if (state is OilsErrorState)
                   Text('Error: ${state.errorMessage}'),
-                if (state is PapersLoaded)
+                if (state is OilsLoaded)
                   ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -120,7 +120,7 @@ class _PapersCategoryPageState extends State<PapersCategoryPage> {
         onPressed: () async {
           await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddPapersPage()),
+            MaterialPageRoute(builder: (context) => AddOilsPage()),
           );
           setState(() {});
         },

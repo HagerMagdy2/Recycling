@@ -37,3 +37,9 @@ class UpdateProduct extends ProductEvent {
 
   UpdateProduct({required this.product});
 }
+
+class UpdateCartProduct extends ProductEvent {
+  final Product product;
+
+  UpdateCartProduct({required this.product});
+}

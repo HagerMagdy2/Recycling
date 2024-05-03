@@ -146,6 +146,36 @@ class _ShowInCartState extends State<ShowInCart> {
                         ),
                         fixedSize: const Size(170, 40),
                       ),
+
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            widget.product.quantity++;
+                          });
+                        },
+                        icon: const Icon(Icons.add),
+                      ),
+                    ],
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      context
+                          .read<ProductBloc>()
+                          .add(RemoveProductFromCart(id: widget.product.id));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Product removed from cart')),
+                      );
+                      setState(() {});
+                    },
+                    child: const Text('Remove from cart'),
+                    style: OutlinedButton.styleFrom(
+                     // primary: Colors.white,
+                      backgroundColor: kMainColor,
+                      side: BorderSide(color: kMainColor),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      fixedSize: const Size(170, 40),
                     ),
                   ],
                 ),

@@ -121,6 +121,9 @@ class _ShowProductsState extends State<ShowProducts> {
                                 isInCart ? kMainColor : Colors.white,
                             side: BorderSide(
                                 color: isInCart ? kMainColor : kMainColor),
+                            //primary: isInCart ? Colors.white : kMainColor,
+                            backgroundColor: isInCart ? kMainColor : Colors.white,
+                            side: BorderSide(color: isInCart ? kMainColor : kMainColor),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4),
                             ),

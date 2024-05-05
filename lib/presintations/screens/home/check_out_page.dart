@@ -1,9 +1,14 @@
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
+import 'package:firstly/presintations/screens/payment/payment_gateway.dart';
+import 'package:firstly/presintations/screens/payment/paymob_manager.dart';
+import 'package:firstly/presintations/screens/payment/paypal.dart';
 import 'package:firstly/presintations/widgets/show_in_checkout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 
 class CheckOutPage extends StatefulWidget {
+  final num totalprice = 10;
   const CheckOutPage({Key? key, required this.cartProducts}) : super(key: key);
   final List<Product> cartProducts;
 
@@ -16,6 +21,16 @@ class _CheckOutPageState extends State<CheckOutPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController notesController = TextEditingController();
+  void _continuePayment() {
+    PaymobManager().payWithPaymob(widget.totalprice.toInt()).then((paymentKey) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => paymentGateway(paymentToken: paymentKey),
+        ),
+      );
+    });
+  }
 
   double getTotalPrice() {
     double totalPrice = 0.0;
@@ -109,7 +124,11 @@ class _CheckOutPageState extends State<CheckOutPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PaymentPage(totalprice: 10)),
+                );
               },
               child: Text(
                 'Confirm',
@@ -128,6 +147,174 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   )),
             ),
           ],
+        );
+      },
+    );
+  }
+
+  void _showPaymentDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Pay',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: kMainColor,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: Colors.white,
+                ),
+                child: GestureDetector(
+                  onTap: () async {
+                    _continuePayment();
+                  },
+                  child: Row(
+                    children: [
+                      Image.asset("assets/images/paymobLogo.png",
+                          width: 50, height: 50),
+                      SizedBox(width: 10),
+                      Text(
+                        "Pay With Paymob",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                      SizedBox(height: 8),
+                      Container(
+                        width: 100,
+                        height: 15,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 12.0),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: Colors.white,
+                ),
+                child: GestureDetector(
+                  onTap: () async {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) => PaypalCheckout(
+                        sandboxMode: true,
+                        clientId:
+                            "AftxijrSfWNnLyyVF_3jKzbyqpwDMhJZbU8IXaYcpLdW6d2CBwyAx9rKZ57waYdAY40kPaU2V2SH5p2V",
+                        secretKey:
+                            "EM8uOZf_WELwN2h7JCubnux9SL5mX_meISEEPKuqdh71-E6PQFjtLtNsxZcWYInXcHmyoEyKiHhMjreE",
+                        returnURL: "success.snippetcoder.com",
+                        cancelURL: "cancel.snippetcoder.com",
+
+                        //  emailPersonal:sb-st7md30520465@personal.example.com pass:123456789
+                        //  emailBissness:sb-pr743330543964@business.example.com pass:123456789
+                        transactions: const [
+                          {
+                            "amount": {
+                              "total": '2',
+                              "currency": "USD",
+                              "details": {
+                                "subtotal": '2',
+                                "shipping": '0',
+                                "shipping_discount": 0
+                              }
+                            },
+                            "description":
+                                "The payment transaction description.",
+                            // "payment_options": {
+                            //   "allowed_payment_method":
+                            //       "INSTANT_FUNDING_SOURCE"
+                            // },
+                            "item_list": {
+                              "items": [
+                                {
+                                  "name": "Apple",
+                                  "quantity": 1,
+                                  "price": '1',
+                                  "currency": "USD"
+                                },
+                                {
+                                  "name": "Pineapple",
+                                  "quantity": 1,
+                                  "price": '1',
+                                  "currency": "USD"
+                                }
+                              ],
+
+                              // shipping address is not required though
+                              //   "shipping_address": {
+                              //     "recipient_name": "Raman Singh",
+                              //     "line1": "Delhi",
+                              //     "line2": "",
+                              //     "city": "Delhi",
+                              //     "country_code": "IN",
+                              //     "postal_code": "11001",
+                              //     "phone": "+00000000",
+                              //     "state": "Texas"
+                              //  },
+                            }
+                          }
+                        ],
+                        note: "Contact us for any questions on your order.",
+                        onSuccess: (Map params) async {
+                          print("onSuccess: $params");
+                          // Navigate to the success page
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SuccessPage()),
+                          );
+                        },
+                        onError: (error) {
+                          print("onError: $error");
+                          // Navigate to the failure page
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FailurePage()),
+                          );
+                        },
+                        onCancel: () {
+                          print('cancelled:');
+                        },
+                      ),
+                    ));
+                  },
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        "assets/images/paypal.png",
+                        width: 50,
+                        height: 50,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        "Pay With Paypal",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                      SizedBox(height: 8),
+                      Container(
+                        width: 100,
+                        height: 15,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -193,8 +380,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
               ),
             ),
             SizedBox(
-                      height: 20,
-                    ),
+              height: 20,
+            ),
             Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -240,7 +427,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   ),
                   SizedBox(height: 50),
                   ElevatedButton(
-                    onPressed: _showConfirmationDialog,
+                    onPressed: _showPaymentDialog,
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(500, 50),
                       backgroundColor: kMainColor,

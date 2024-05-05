@@ -568,7 +568,35 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.7"
+<<<<<<<<< Temporary merge branch 1
+  leak_tracker:
+    dependency: transitive
+    description:
+      name: leak_tracker
+      sha256: "78eb209deea09858f5269f5a5b02be4049535f568c07b275096836f01ea323fa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.0.0"
+  leak_tracker_flutter_testing:
+    dependency: transitive
+    description:
+      name: leak_tracker_flutter_testing
+      sha256: b46c5e37c19120a8a01918cfaf293547f47269f7cb4b0058f21531c2465d6ef0
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
+  leak_tracker_testing:
+    dependency: transitive
+    description:
+      name: leak_tracker_testing
+      sha256: a597f72a664dbd293f3bfc51f9ba69816f84dcd403cdac7066cb3f6003f3ab47
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
+  lints:
+=========
   json_annotation:
+>>>>>>>>> Temporary merge branch 2
     dependency: transitive
     description:
       name: json_annotation
@@ -648,6 +676,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.1"
+    version: "1.9.0"
   pigeon:
     dependency: transitive
     description:
@@ -820,7 +849,8 @@ packages:
       sha256: dc8ccd225a2005c1be616fe02951e2e342092edf968cf0844220383757ef8f10
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.4-beta"
+<<<<<<<<< Temporary merge branch 1
+    version: "0.5.1"
   webview_flutter:
     dependency: "direct main"
     description:
@@ -853,6 +883,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.9.5"
+=========
+    version: "0.1.4-beta"
   xml:
     dependency: transitive
     description:
@@ -861,6 +893,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.4.2"
+>>>>>>>>> Temporary merge branch 2
   yaml:
     dependency: transitive
     description:

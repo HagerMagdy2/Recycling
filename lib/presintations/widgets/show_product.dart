@@ -116,9 +116,17 @@ class _ShowProductsState extends State<ShowProducts> {
                           child: Text(
                               isInCart ? 'Remove from cart' : 'Add to cart'),
                           style: OutlinedButton.styleFrom(
-                            primary: isInCart ? Colors.white : kMainColor,
+<<<<<<<<< Temporary merge branch 1
+                            //primary: isInCart ? Colors.white : kMainColor,
                             backgroundColor: isInCart ? kMainColor : Colors.white,
                             side: BorderSide(color: isInCart ? kMainColor : kMainColor),
+=========
+                            primary: isInCart ? Colors.white : kMainColor,
+                            backgroundColor:
+                                isInCart ? kMainColor : Colors.white,
+                            side: BorderSide(
+                                color: isInCart ? kMainColor : kMainColor),
+>>>>>>>>> Temporary merge branch 2
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4),
                             ),

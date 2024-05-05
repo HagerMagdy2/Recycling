@@ -51,7 +51,70 @@ class _ShowInCartState extends State<ShowInCart> {
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
-                      softWrap: true, // This enables text wrapping
+<<<<<<<<< Temporary merge branch 1
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Text(
+                        "EGP",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            if (widget.product.quantity > 1) {
+                              widget.product.quantity--;
+                            }
+                          });
+                        },
+                        icon: const Icon(Icons.remove),
+                      ),
+                      Text(
+                        widget.product.quantity.toString(),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            widget.product.quantity++;
+                          });
+                        },
+                        icon: const Icon(Icons.add),
+                      ),
+                    ],
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      context
+                          .read<ProductBloc>()
+                          .add(RemoveProductFromCart(id: widget.product.id));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Product removed from cart')),
+                      );
+                      setState(() {});
+                    },
+                    child: const Text('Remove from cart'),
+                    style: OutlinedButton.styleFrom(
+                     // primary: Colors.white,
+                      backgroundColor: kMainColor,
+                      side: BorderSide(color: kMainColor),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      fixedSize: const Size(170, 40),
+=========
+                      softWrap: true, 
+>>>>>>>>> Temporary merge branch 2
                     ),
                     const SizedBox(height: 5),
                     Row(
@@ -146,6 +209,36 @@ class _ShowInCartState extends State<ShowInCart> {
                         ),
                         fixedSize: const Size(170, 40),
                       ),
+
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            widget.product.quantity++;
+                          });
+                        },
+                        icon: const Icon(Icons.add),
+                      ),
+                    ],
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      context
+                          .read<ProductBloc>()
+                          .add(RemoveProductFromCart(id: widget.product.id));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Product removed from cart')),
+                      );
+                      setState(() {});
+                    },
+                    child: const Text('Remove from cart'),
+                    style: OutlinedButton.styleFrom(
+                     // primary: Colors.white,
+                      backgroundColor: kMainColor,
+                      side: BorderSide(color: kMainColor),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      fixedSize: const Size(170, 40),
                     ),
                   ],
                 ),

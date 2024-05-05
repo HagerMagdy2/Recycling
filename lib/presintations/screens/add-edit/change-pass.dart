@@ -87,6 +87,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 },
                 child: Text('Save'),
                 style: ElevatedButton.styleFrom(
+                  //primary: kMainColor,
                   backgroundColor: kMainColor,
                   padding: EdgeInsets.symmetric(vertical: 16.0),
                   shape: RoundedRectangleBorder(

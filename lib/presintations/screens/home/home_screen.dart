@@ -2,7 +2,6 @@ import 'package:firstly/constants.dart';
 import 'package:firstly/controller/home-page-controller.dart';
 import 'package:firstly/presintations/screens/home/add-frome-home.dart';
 import 'package:firstly/presintations/screens/home/cart-page.dart';
-
 import 'package:firstly/presintations/screens/home/favorite_screen.dart';
 import 'package:firstly/presintations/screens/home/learn_screen.dart';
 import 'package:firstly/presintations/screens/home/my-home.dart';
@@ -66,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   FloatingActionButtonLocation.miniCenterDocked,
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
-                 Navigator.push(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => AddFromHome(),

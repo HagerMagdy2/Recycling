@@ -1,3 +1,5 @@
+// show_in_cart.dart
+
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
@@ -11,7 +13,7 @@ class ShowInCart extends StatefulWidget {
   final Product product;
 
   @override
-  State<ShowInCart> createState() => _ShowInCartState();
+  State<StatefulWidget> createState() => _ShowInCartState();
 }
 
 class _ShowInCartState extends State<ShowInCart> {
@@ -36,96 +38,121 @@ class _ShowInCartState extends State<ShowInCart> {
                   ),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    widget.product.name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Text(
-                        widget.product.price.toString(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
+                    Text(
+                      widget.product.name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
                       ),
-                      SizedBox(
-                        width: 3,
-                      ),
-                      Text(
-                        "EGP",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            if (widget.product.quantity > 1) {
-                              widget.product.quantity--;
-                            }
-                          });
-                        },
-                        icon: const Icon(Icons.remove),
-                      ),
-                      Text(
-                        widget.product.quantity.toString(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          setState(() {
-                            widget.product.quantity++;
-                          });
-                        },
-                        icon: const Icon(Icons.add),
-                      ),
-                    ],
-                  ),
-                  OutlinedButton(
-                    onPressed: () {
-                      context
-                          .read<ProductBloc>()
-                          .add(RemoveProductFromCart(id: widget.product.id));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Product removed from cart')),
-                      );
-                      setState(() {});
-                    },
-                    child: const Text('Remove from cart'),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.white, backgroundColor: kMainColor,
-                      side: BorderSide(color: kMainColor),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      fixedSize: const Size(170, 40),
+                      softWrap: true, // This enables text wrapping
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 5),
+                    Row(
+                      children: [
+                        Text(
+                          widget.product.price.toString(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 3,
+                        ),
+                        Text(
+                          "EGP",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (widget.product.quantity > 1) {
+                                widget.product.quantity--;
+                                // Update the product quantity in the cart
+                                context.read<ProductBloc>().add(
+                                    UpdateCartProduct(product: widget.product));
+                                print(
+                                    'Decreased quantity: ${widget.product.quantity}');
+                              }
+                            });
+                          },
+                          icon: const Icon(Icons.remove),
+                        ),
+                        Text(
+                          widget.product.quantity.toString(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              // Check if increasing quantity exceeds available stock
+                              if (widget.product.quantity <
+                                  widget.product.availableQuantity) {
+                                // Increment the product quantity
+                                widget.product.quantity++;
+                                // Update the product quantity in the cart
+                                context.read<ProductBloc>().add(
+                                    UpdateCartProduct(product: widget.product));
+                                print(
+                                    'Increased quantity: ${widget.product.quantity}');
+                              } else {
+                                // If quantity exceeds available stock, show a message
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(
+                                          'exceed the available quantity')),
+                                );
+                              }
+                            });
+                          },
+                          icon: const Icon(Icons.add),
+                        ),
+                      ],
+                    ),
+                    OutlinedButton(
+                      onPressed: () {
+                        context
+                            .read<ProductBloc>()
+                            .add(RemoveProductFromCart(id: widget.product.id));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Product removed from cart')),
+                        );
+                        setState(() {});
+                      },
+                      child: const Text('Remove from cart'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white, backgroundColor: kMainColor,
+                        side: BorderSide(color: kMainColor),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        fixedSize: const Size(170, 40),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         );
-      },
-    );
-  }
+     },
+);
+}
 }

@@ -66,7 +66,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       alignment: Alignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(bottom: 70),
+                          padding: const EdgeInsets.only(bottom: 70),
                           child: Container(
                             // color: Colors.amber,
                             height: 200,
@@ -77,7 +77,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                           ),
                         ),
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(top: 155),
                           child: Text(
                             'Be',
@@ -87,7 +87,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(top: 210),
                           child: Text(
                             'Green',
@@ -124,7 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   hint: 'Enter your password',
                   icon: Icons.lock,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 if (state is UnAuthorized)
@@ -151,15 +151,15 @@ class _SignupScreenState extends State<SignupScreen> {
                           style: TextStyle(color: Colors.white),
                         )),
                   ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Column(
                   children: [
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'SignUp ',
                           style: TextStyle(
                               fontSize: 16,
@@ -172,7 +172,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -184,21 +184,21 @@ class _SignupScreenState extends State<SignupScreen> {
                                 .read<AuthenticationBloc>()
                                 .add(SignInWithGoogleEvent());
                           },
-                          child: CircleAvatar(
+                          child: const CircleAvatar(
                             backgroundColor: kSecondaryColor,
                             radius: 25,
                             backgroundImage:
                                 AssetImage("assets/images/google.png"),
                           ),
                         ),
-                        SizedBox(width: 20),
+                        const SizedBox(width: 20),
                         InkWell(
                           onTap: () {
                             context
                                 .read<AuthenticationBloc>()
                                 .add(signInWithFacebookEvent());
                           },
-                          child: CircleAvatar(
+                          child: const CircleAvatar(
                             radius: 25,
                             backgroundImage:
                                 AssetImage("assets/images/facebook.png"),
@@ -208,7 +208,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(

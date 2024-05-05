@@ -1,9 +1,8 @@
+
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
-import 'package:firstly/data/product_remote_data_source.dart';
-import 'package:firstly/presintations/bloc/compost_event.dart';
+import 'package:firstly/data/remotDs/product_remote_data_source.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
-import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,6 +62,30 @@ class _ShowProductsState extends State<ShowProducts> {
                         fontSize: 16,
                       ),
                     ),
+                    // Check if userName is not null
+                    Text(
+                      'Added by: ${widget.product.userName}',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    // Check if userEmail is not null
+                    Text(
+                      'Email: ${widget.product.userEmail}',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    // Check if userPhoneNumber is not null
+                    Text(
+                      'Phone:${widget.product.userPhone}',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
                     const SizedBox(height: 5),
                     Row(
                       children: [
@@ -72,21 +95,31 @@ class _ShowProductsState extends State<ShowProducts> {
                               isInCart = !isInCart;
                             });
                             if (isInCart) {
-                              ProductRemoteDsImp().addToCart(widget.product);
+                              ProductRemoteDsImp().addToCart(
+                                  widget.product.copyWith(quantity: 1));
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Product added to cart')),
+                                SnackBar(
+                                    content: Text('Product added to cart')),
                               );
                             } else {
-                              ProductRemoteDsImp().removeProductFromCart(widget.product.id);
+                              ProductRemoteDsImp()
+                                  .removeProductFromCart(widget.product.id);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Product removed from cart')),
+                                SnackBar(
+                                    content: Text('Product removed from cart')),
                               );
                             }
                           },
-                          child: Text(isInCart ? 'Remove from cart' : 'Add to cart'),
+                          child: Text(
+                              isInCart ? 'Remove from cart' : 'Add to cart'),
                           style: OutlinedButton.styleFrom(
-                            foregroundColor: isInCart ? Colors.white : kMainColor, backgroundColor: isInCart ? kMainColor : Colors.white,
-                            side: BorderSide(color: isInCart ? kMainColor : kMainColor),
+                            foregroundColor: isInCart ? Colors.white : kMainColor, backgroundColor:
+                                isInCart ? kMainColor : Colors.white,
+                            side: BorderSide(
+                                color: isInCart ? kMainColor : kMainColor),
+                            //primary: isInCart ? Colors.white : kMainColor,
+                            //backgroundColor: isInCart ? kMainColor : Colors.white,
+                          //  side: BorderSide(color: isInCart ? kMainColor : kMainColor),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4),
                             ),

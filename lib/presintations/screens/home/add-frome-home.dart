@@ -15,7 +15,11 @@ class AddFromHome extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kMainColor,
-        title: Text('Be Green',style: TextStyle(color: Colors.white),),
+        foregroundColor: Colors.white,
+        title: Text(
+          'Be Green',
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           GestureDetector(
             onTap: () {
@@ -26,7 +30,7 @@ class AddFromHome extends StatelessWidget {
             },
             child: Icon(
               Icons.shopping_cart,
-            color: Colors.white,),
+            ),
           )
         ],
       ),
@@ -38,9 +42,10 @@ class AddFromHome extends StatelessWidget {
             child: Text(
               'Which category do you want to add?',
               style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+                  fontFamily: 'Pacifico',
+                  fontSize: 23.9,
+                  color: kMainColor1,
+                  fontWeight: FontWeight.w500),
             ),
           ),
           Expanded(

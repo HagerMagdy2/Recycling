@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstly/constants.dart';
+import 'package:firstly/core/firebase-service.dart';
 import 'package:firstly/core/storage_helper.dart';
 import 'package:firstly/data/models/product.dart';
 import 'package:firstly/presintations/bloc/compost_bloc.dart';
@@ -10,7 +13,6 @@ import 'package:firstly/presintations/screens/category/compost-page.dart';
 import 'package:firstly/presintations/widgets/add_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class AddCompostPage extends StatefulWidget {
   const AddCompostPage({Key? key}) : super(key: key);
@@ -24,7 +26,41 @@ class _AddCompostPageState extends State<AddCompostPage> {
   TextEditingController nameC = TextEditingController();
   TextEditingController priceC = TextEditingController();
   TextEditingController idC = TextEditingController();
+  TextEditingController quantityC = TextEditingController();
+
   String? imageURL;
+  String? userId,
+      userName,
+      userEmail,
+      userPhone; // Add a variable to store the user ID
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserID(); // Call function to retrieve the user ID
+  }
+
+  Future<void> _getUserID() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        setState(() {
+          userId = user.uid;
+          userName = user.displayName;
+          userEmail = user.email;
+        });
+      } else {
+        print("User not found.");
+      }
+    } catch (e) {
+      print("Error fetching user information: $e");
+    }
+  }
+
+  Future<void> loadPhoneNumber() async {
+    userPhone = await FirebaseService.getUserPhoneNumber(userId!);
+    setState(() {});
+  }
 
   Future<void> _uploadImage(File imageFile) async {
     try {
@@ -127,6 +163,20 @@ class _AddCompostPageState extends State<AddCompostPage> {
                   ),
                   SizedBox(height: 20),
                   TextFormField(
+                    controller: quantityC,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter price';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'quantity',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  TextFormField(
                     controller: idC,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -157,7 +207,14 @@ class _AddCompostPageState extends State<AddCompostPage> {
                                   name: nameC.text,
                                   id: idC.text,
                                   price: num.parse(priceC.text),
-                                  quantity: 1,
+                                  quantity: num.parse(quantityC.text),
+                                  availableQuantity: num.parse(quantityC.text),
+                                  userId: userId!,
+                                  userName: userName ??
+                                      '', // Ensure userName is not null
+                                  userEmail: userEmail ??
+                                      '', // Ensure userEmail is not null
+                                  userPhone: userPhone ?? '',
                                 ),
                               ),
                             );

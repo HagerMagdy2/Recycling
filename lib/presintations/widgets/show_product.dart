@@ -1,11 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
-import 'package:firstly/core/firebase-service.dart';
 import 'package:firstly/data/models/product.dart';
 import 'package:firstly/data/remotDs/product_remote_data_source.dart';
-import 'package:firstly/presintations/bloc/compost_event.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
-import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -116,11 +112,15 @@ class _ShowProductsState extends State<ShowProducts> {
                           child: Text(
                               isInCart ? 'Remove from cart' : 'Add to cart'),
                           style: OutlinedButton.styleFrom(
-                            primary: isInCart ? Colors.white : kMainColor,
+                            foregroundColor:
+                                isInCart ? Colors.white : kMainColor,
                             backgroundColor:
                                 isInCart ? kMainColor : Colors.white,
                             side: BorderSide(
                                 color: isInCart ? kMainColor : kMainColor),
+                            //primary: isInCart ? Colors.white : kMainColor,
+                            //backgroundColor: isInCart ? kMainColor : Colors.white,
+                            //  side: BorderSide(color: isInCart ? kMainColor : kMainColor),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4),
                             ),

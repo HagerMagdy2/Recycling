@@ -19,9 +19,12 @@ class GlassesCategoryPage extends StatefulWidget {
 }
 
 class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
+  late TextEditingController searchController;
+
   @override
   void initState() {
     super.initState();
+    searchController = TextEditingController();
     context.read<ProductBloc>().add(GetProduct());
   }
 
@@ -36,11 +39,46 @@ class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
           'Glasses Page',
           style: TextStyle(color: Colors.white),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search, color: kSecondaryColor),
+            onPressed: () {
+              showModalBottomSheet(
+                backgroundColor: kMainColor,
+                context: context,
+                isScrollControlled: false,
+                builder: (BuildContext context) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom,
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      child: TextField(
+                        controller: searchController,
+                        onChanged: (query) {
+                          setState(() {});
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Search...',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          fillColor: Colors.white,
+                          filled: true,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
           return SingleChildScrollView(
-            // Wrap with SingleChildScrollView
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -56,12 +94,19 @@ class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
                     Text('Error: ${state.errorMessage}'),
                   if (state is ProductLoaded)
                     ListView.builder(
-                      physics:
-                          NeverScrollableScrollPhysics(), // Disable scrolling of inner ListView
+                      physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: state.products.length,
-                      itemBuilder: (context, i) =>
-                          ShowProducts(product: state.products[i]),
+                      itemBuilder: (context, i) {
+                        final product = state.products[i];
+
+                        if (searchController.text.isNotEmpty &&
+                            !product.name.toLowerCase().contains(
+                                searchController.text.toLowerCase())) {
+                          return SizedBox.shrink();
+                        }
+                        return ShowProducts(product: product);
+                      },
                     ),
                 ],
               ),
@@ -82,5 +127,11 @@ class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 }

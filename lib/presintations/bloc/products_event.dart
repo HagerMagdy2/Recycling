@@ -23,13 +23,14 @@ class AddProductToCart extends ProductEvent {
 class RemoveProduct extends ProductEvent {
   final String id;
 
-  RemoveProduct( {required this.id});
+  RemoveProduct({required this.id});
 }
 
 class RemoveProductFromCart extends ProductEvent {
   final String id;
+  final Product product;
 
-  RemoveProductFromCart({required this.id, required Product product});
+  RemoveProductFromCart({required this.id, required this.product});
 }
 
 class UpdateProduct extends ProductEvent {

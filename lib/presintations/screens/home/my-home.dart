@@ -8,6 +8,7 @@ import 'package:firstly/presintations/screens/category/glasses_page.dart';
 import 'package:firstly/presintations/screens/category/oils_page.dart';
 import 'package:firstly/presintations/screens/category/papers-page.dart';
 import 'package:firstly/presintations/screens/category/plastic-page.dart';
+import 'package:firstly/presintations/screens/home/profile-screen.dart';
 import 'package:firstly/presintations/widgets/bottom-bar.dart';
 import 'package:firstly/presintations/widgets/drawer.dart';
 import 'package:firstly/presintations/widgets/item.dart';
@@ -27,6 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String? profilePhotoUrl;
   late String userId;
   String? userName;
+  String? userEmail;
   @override
   void initState() {
     super.initState();
@@ -50,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (user != null) {
       setState(() {
         userName = user.displayName;
+        userEmail = user.email;
       });
     }
   }
@@ -60,50 +63,113 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(
+              height: 15,
+            ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                child: Column(
+                padding: const EdgeInsets.all(20),
+                child: Stack(
+                  clipBehavior: Clip.none,
                   children: [
-                    Center(
-                        child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        child: CircleAvatar(
-                          backgroundColor: kMainColor,
-                          radius: 65,
-                          backgroundImage: profilePhotoUrl != null
-                              ? NetworkImage(profilePhotoUrl!)
-                              : null,
-                          child: profilePhotoUrl == null
-                              ? Icon(
-                                  Icons.person,
-                                  size: 80,
-                                  color: Colors.white,
-                                )
-                              : null,
+                    Container(
+                      height: 200,
+                      width: 400,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: kMainColor,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20.0, right: 20.0, top: 70.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 30),
+                            Text(
+                              userName ?? 'User Name',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              userEmail ?? 'User Email',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    )),
-                    SizedBox(
-                      height: 10,
                     ),
-                    Text(
-                      userName ?? 'User Name',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                    // Profile Photo
+                    Positioned(
+                      top: -35,
+                      left: 16,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(65),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 4.0,
+                            ),
+                          ),
+                          child: profilePhotoUrl != null
+                              ? CircleAvatar(
+                                  backgroundColor: kMainColor,
+                                  radius: 65,
+                                  backgroundImage:
+                                      NetworkImage(profilePhotoUrl!),
+                                )
+                              : CircleAvatar(
+                                  backgroundColor: kMainColor,
+                                  radius: 65,
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 80,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ),
+
+                    Positioned(
+                      top: 75,
+                      left: 180,
+                      child: OutlinedButton(
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfileScreen()),
+                          );
+                        },
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: Colors.white),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          fixedSize: const Size(150, 50),
+                        ),
+                        child: Text(
+                          'View Profile',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
-                ),
-                height: 200,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: kMainColor,
-                ),
-              ),
-            ),
+                )),
             Column(
               //  mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,

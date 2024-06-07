@@ -119,8 +119,8 @@ class _ShowProductsState extends State<ShowProducts> {
                             });
                             if (isInCart) {
                               // Update only isInCart status
-                              ProductRemoteDsImp().updateProduct(
-                                  widget.product.copyWith(isInCart: true));
+                              ProductRemoteDsImp().updateProduct(widget.product
+                                  .copyWith(isInCart: true, isFav: isFavorite));
                               ProductRemoteDsImp().addToCart(
                                   widget.product.copyWith(quantity: 1));
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -129,8 +129,9 @@ class _ShowProductsState extends State<ShowProducts> {
                               );
                             } else {
                               // Update only isInCart status
-                              ProductRemoteDsImp().updateProduct(
-                                  widget.product.copyWith(isInCart: false));
+                              ProductRemoteDsImp().updateProduct(widget.product
+                                  .copyWith(
+                                      isInCart: false, isFav: isFavorite));
                               ProductRemoteDsImp()
                                   .removeProductFromCart(widget.product.id);
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -170,8 +171,8 @@ class _ShowProductsState extends State<ShowProducts> {
 
                             if (isFavorite) {
                               // Update only isFav status
-                              ProductRemoteDsImp().updateProduct(
-                                  widget.product.copyWith(isFav: true));
+                              ProductRemoteDsImp().updateProduct(widget.product
+                                  .copyWith(isFav: true, isInCart: isInCart));
                               ProductRemoteDsImp().addToFavorites(
                                   widget.product.copyWith(isFav: true));
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -181,8 +182,8 @@ class _ShowProductsState extends State<ShowProducts> {
                               );
                             } else {
                               // Update only isFav status
-                              ProductRemoteDsImp().updateProduct(
-                                  widget.product.copyWith(isFav: false));
+                              ProductRemoteDsImp().updateProduct(widget.product
+                                  .copyWith(isFav: false, isInCart: isInCart));
                               ProductRemoteDsImp()
                                   .removeFromFavorites(widget.product.id);
                               ScaffoldMessenger.of(context).showSnackBar(

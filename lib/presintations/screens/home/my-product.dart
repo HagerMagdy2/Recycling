@@ -27,18 +27,22 @@ class _MyProductState extends State<MyProduct> {
   Future<void> retrieveUserProducts() async {
     User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('Products') // Specify the collection name directly
-          .where('userEmail', isEqualTo: currentUser.email)
-          .get();
+      try {
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+            .collection('Products')
+            .where('userEmail', isEqualTo: currentUser.email)
+            .get();
 
-      List<Product> products =
-          querySnapshot.docs.map((doc) => Product.fromDoc(doc)).toList();
+        List<Product> products =
+            querySnapshot.docs.map((doc) => Product.fromDoc(doc)).toList();
 
-      setState(() {
-        userProducts = products;
-        isLoading = false;
-      });
+        setState(() {
+          userProducts = products;
+          isLoading = false;
+        });
+      } catch (e) {
+        print("Error fetching user products: $e");
+      }
     }
   }
 
@@ -58,22 +62,25 @@ class _MyProductState extends State<MyProduct> {
               ),
             );
           } else if (state is ProductLoaded) {
-            // Update userProducts when products are loaded
-            userProducts = state.products;
-            isLoading = false;
+            User? currentUser = FirebaseAuth.instance.currentUser;
+
+            // Filter products based on the current user's email
+            List<Product> filteredProducts = state.products
+                .where((product) => product.userEmail == currentUser!.email)
+                .toList();
+
+            return ListView.builder(
+              itemCount: filteredProducts.length,
+              itemBuilder: (context, index) {
+                var product = filteredProducts[index];
+                return ShowMYProducts(product: product);
+              },
+            );
           }
 
-          return isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : ListView.builder(
-                  itemCount: userProducts.length,
-                  itemBuilder: (context, index) {
-                    var product = userProducts[index];
-                    return ShowMYProducts(product: product);
-                  },
-                );
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );

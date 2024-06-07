@@ -1,3 +1,4 @@
+import 'package:firstly/presintations/screens/add-edit/add_oils.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:firstly/constants.dart';
@@ -96,7 +97,7 @@ class AddFromHome extends StatelessWidget {
       {
         'title': "Oils",
         'image': "assets/images/icons-oils.png",
-        'destination': null
+        'destination': AddOilsPage()
       },
     ];
 

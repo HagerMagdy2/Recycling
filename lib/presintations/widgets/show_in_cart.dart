@@ -19,6 +19,23 @@ class ShowInCart extends StatefulWidget {
 }
 
 class _ShowInCartState extends State<ShowInCart> {
+  late bool isFavorite;
+  late bool isInCart;
+  @override
+  void initState() {
+    super.initState();
+
+    isFavorite = widget.product.isFav;
+    isInCart = widget.product.isInCart;
+    // Check if the product is in the cart item collection
+    // You'll need to replace 'checkIfInCart' with the appropriate method or logic
+    // checkIfInCart().then((inCart) {
+    //   setState(() {
+    //     isInCart = inCart;
+    //   });
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductBloc, ProductState>(
@@ -128,8 +145,11 @@ class _ShowInCartState extends State<ShowInCart> {
                   ),
                   OutlinedButton(
                     onPressed: () {
-                      ProductRemoteDsImp().updateProduct(
-                          widget.product.copyWith(isInCart: false));
+                      ProductRemoteDsImp()
+                          .updateProduct(widget.product.copyWith(
+                        isInCart: false,
+                      ));
+
                       context.read<ProductBloc>().add(RemoveProductFromCart(
                           product: widget.product, id: widget.product.id));
 

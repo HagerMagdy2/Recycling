@@ -38,7 +38,7 @@ class Page2 extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'We are Be Green, dedicated to fostering a greener world through recycling.',
+                'We are Be Green, dedicated to fostering a greener world through recycling. ',
                 style: TextStyle(
                   color: Colors.black54,
                   fontSize: 20,
@@ -96,7 +96,7 @@ class Page3 extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Text(
-                ' Start your recycling journey here..          ',
+                'Start your recycling journey here..              ',
                 style: TextStyle(
                   color: Colors.black54,
                   fontSize: 20,

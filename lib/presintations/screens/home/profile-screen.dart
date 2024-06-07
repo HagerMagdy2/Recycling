@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/core/firebase-service.dart';
@@ -27,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     userId = StorageHelperImpl().getCurrentUserId();
     loadProfileData();
     loadProfilePhotoUrl();
-    loadPhoneNumber(); // Call loadPhoneNumber here
+    loadPhoneNumber();
     StorageHelperImpl().profilePhotoStream.listen((String newUrl) {
       setState(() {
         profilePhotoUrl = newUrl;
@@ -47,7 +48,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         userName = user.displayName;
         userEmail = user.email;
       });
-      // Load phone number after loading profile data
       await loadPhoneNumber();
     }
   }
@@ -68,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         setState(() {
           userName = newName;
           userEmail = newEmail;
-          userPhone = newPhone; // Update local state with the new phone number
+          userPhone = newPhone;
         });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Profile updated successfully')),
@@ -94,9 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Phone number saved successfully')),
         );
-        print('Current user phone number: $userPhone');
-
-        await loadPhoneNumber(); // Reload phone number after saving
+        await loadPhoneNumber();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Failed to send verification code')),
@@ -117,27 +115,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () async {
-                await showDialog(
-                  context: context,
-                  builder: (context) => AddProfilePhoto(),
-                );
-                await loadProfileData();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Profile photo set successfully')),
-                );
-              },
-              child: Center(
-                child: Stack(
-                  alignment: Alignment.bottomRight,
-                  children: [
-                    CircleAvatar(
+      body: Column(
+        children: [
+          AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            toolbarHeight: 10,
+          ),
+          Center(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 20),
+              child: Text(
+                'My Profile',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w700,
+                  color: kMainColor,
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () async {
+              await showDialog(
+                context: context,
+                builder: (context) => AddProfilePhoto(),
+              );
+              await loadProfileData();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Profile photo set successfully')),
+              );
+            },
+            child: Center(
+              child: Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: kMainColor, width: 5),
+                    ),
+                    child: CircleAvatar(
                       backgroundColor: kMainColor,
                       radius: 80,
                       backgroundImage: profilePhotoUrl != null
@@ -151,89 +169,173 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             )
                           : null,
                     ),
-                    MaterialButton(
-                      onPressed: () async {
-                        await showDialog(
-                          context: context,
-                          builder: (context) => AddProfilePhoto(),
-                        );
-                        await loadProfileData();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text('Profile photo set successfully')),
-                        );
-                      },
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey,
-                        child: Icon(
-                          Icons.camera_alt,
-                          color: Colors.white,
-                        ),
+                  ),
+                  MaterialButton(
+                    onPressed: () async {
+                      await showDialog(
+                        context: context,
+                        builder: (context) => AddProfilePhoto(),
+                      );
+                      await loadProfileData();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text('Profile photo set successfully')),
+                      );
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
                       ),
                     ),
-                  ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          buildUserInfoDisplay(userName ?? 'User Name', 'Name'),
+          SizedBox(height: 20),
+          buildUserInfoDisplay(userEmail ?? 'User Email', 'Email'),
+          SizedBox(height: 20),
+          buildUserInfoDisplay(userPhone ?? 'User Phone Number', 'Phone'),
+          SizedBox(height: 40),
+          ElevatedButton.icon(
+            onPressed: () async {
+              final result = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditProfileScreen(
+                    currentName: userName ?? '',
+                    currentEmail: userEmail ?? '',
+                    currentPhone: userPhone ?? '',
+                  ),
+                ),
+              );
+
+              if (result != null && result is Map<String, String>) {
+                await updateProfileData(
+                  result['name']!,
+                  result['email']!,
+                  result['phone']!,
+                );
+              }
+            },
+            icon: Icon(
+              Icons.edit,
+              color: Colors.white,
+            ),
+            label: Text('Edit Profile', style: TextStyle(color: Colors.white)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kMainColor,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: BorderSide(color: kMainColor1),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildUserInfoDisplay(String getValue, String title) => Padding(
+        padding: EdgeInsets.only(bottom: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey,
+              ),
+            ),
+            SizedBox(
+              height: 1,
+            ),
+            Container(
+              width: 350,
+              height: 40,
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: 1,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              userName ?? 'User Name',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              userEmail ?? 'User Email',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              userPhone ?? 'User Phone Number',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditProfileScreen(
-                      currentName: userName ?? '',
-                      currentEmail: userEmail ?? '',
-                      currentPhone: userPhone ?? '',
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      getValue,
+                      style: TextStyle(fontSize: 16, height: 1.4),
                     ),
                   ),
-                );
-
-                if (result != null && result is Map<String, String>) {
-                  await updateProfileData(
-                    result['name']!,
-                    result['email']!,
-                    result['phone']!,
-                  );
-                }
-              },
-              child: Text('Edit Profile'),
-              style: ElevatedButton.styleFrom(
-                //primary: kMainColor,
-                backgroundColor: kMainColor,
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
+                ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
+      );
+
+  Widget buildAbout() => Padding(
+        padding: EdgeInsets.only(bottom: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 1),
+            Container(
+              width: 350,
+              height: 100,
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: 1,
+                  ),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: InkWell(
+                      onTap: () async {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditProfileScreen(
+                              currentName: userName ?? '',
+                              currentEmail: userEmail ?? '',
+                              currentPhone: userPhone ?? '',
+                            ),
+                          ),
+                        );
+
+                        if (result != null && result is Map<String, String>) {
+                          await updateProfileData(
+                            result['name']!,
+                            result['email']!,
+                            result['phone']!,
+                          );
+                        }
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
 }

@@ -6,6 +6,7 @@ import 'package:firstly/presintations/screens/home/cart-page.dart';
 import 'package:firstly/presintations/screens/home/favorite_screen.dart';
 import 'package:firstly/presintations/screens/home/learn_screen.dart';
 import 'package:firstly/presintations/screens/home/my-home.dart';
+import 'package:firstly/presintations/screens/home/my-product.dart';
 import 'package:firstly/presintations/screens/home/profile-screen.dart';
 import 'package:firstly/presintations/widgets/bottom-bar.dart';
 import 'package:firstly/presintations/widgets/drawer.dart';
@@ -29,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     MyHomePage(),
     FavoriteScreen(),
     LearnScreen(),
-    ProfileScreen(),
+    MyProduct()
   ];
   @override
   Widget build(BuildContext context) {
@@ -113,9 +114,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         label: 'Learn'),
                     BottomNavigationBarItem(
                         icon: Icon(
-                          Icons.person,
+                          Icons.move_up_rounded,
                         ),
-                        label: 'Profile'),
+                        label: 'Your Products'),
                   ],
                 ),
               ),

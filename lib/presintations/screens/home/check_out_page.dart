@@ -265,24 +265,25 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           }
                         ],
                         note: "Contact us for any questions on your order.",
-                        onSuccess: (Map params) async {
-                          print("onSuccess: $params");
-                          // Navigate to the success page
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SuccessPage()),
-                          );
-                        },
-                        onError: (error) {
-                          print("onError: $error");
-                          // Navigate to the failure page
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FailurePage()),
-                          );
-                        },
+                       // onSuccess:
+                        //  (Map params) async {
+                        //   print("onSuccess: $params");
+                        //   // Navigate to the success page
+                        //   Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => SuccessPage()),
+                        //   );
+                        // },
+                        // onError: (error) {
+                        //   print("onError: $error");
+                        //   // Navigate to the failure page
+                        //   Navigator.pushReplacement(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => FailurePage()),
+                        //   );
+                        // },
                         onCancel: () {
                           print('cancelled:');
                         },

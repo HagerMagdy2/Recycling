@@ -244,6 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         userPhone: '01119257229',
                         quantity: 1,
                         availableQuantity: 5,
+                        category: 'oils',
                       )),
                       ShowProducts(
                           product: Product(
@@ -258,6 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         userPhone: '0115516',
                         quantity: 1,
                         availableQuantity: 5,
+                        category: 'glasses',
                       )),
                       ShowProducts(
                           product: Product(
@@ -272,6 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         userPhone: '012346',
                         quantity: 1,
                         availableQuantity: 5,
+                        category: 'papers',
                       ))
                     ],
                   ),

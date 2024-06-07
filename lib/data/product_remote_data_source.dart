@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firstly/data/models/product.dart';
 
-
 abstract class ProductRemoteDs {
   Future<void> addProduct(Product product);
   Future<List<Product>> getProduct();
@@ -46,10 +45,16 @@ class ProductRemoteDsImp extends ProductRemoteDs {
   @override
   Future<void> updateProduct(Product product) async {
     try {
-      await FirebaseFirestore.instance
-          .collection("products")
-          .doc(product.id)
-          .update(product.toMap());
+      final String productId = product.id; // Assuming 'id' is the document ID
+      if (productId.isNotEmpty) {
+        await FirebaseFirestore.instance
+            .collection("products")
+            .doc(productId) // Ensure productId is not empty
+            .update(product.toMap()); // Update the document with product data
+        print("Product updated successfully");
+      } else {
+        print("Error: Product ID is empty");
+      }
     } catch (e) {
       print("Error updating product: $e");
     }
@@ -73,6 +78,25 @@ class ProductRemoteDsImp extends ProductRemoteDs {
       }
     } catch (e) {
       print("Error adding to cart: $e");
+    }
+  }
+
+  Future<bool> isInCart(String productId, User currentUser) async {
+    try {
+      // Query the 'users-cart-items' collection to check if the product exists in the user's cart
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection("users-cart-items")
+          .doc(currentUser.email)
+          .collection("items")
+          .where('productId', isEqualTo: productId)
+          .get();
+
+      // If the query snapshot has any documents, it means the product is in the cart
+      return querySnapshot.docs.isNotEmpty;
+    } catch (error) {
+      // Handle error
+      print('Error checking if product is in cart: $error');
+      return false;
     }
   }
 
@@ -114,19 +138,23 @@ class ProductRemoteDsImp extends ProductRemoteDs {
   @override
   Future<void> removeProductFromCart(String id) async {
     try {
-      final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-      var currentUser = firebaseAuth.currentUser;
+      if (id.isNotEmpty) {
+        final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+        var currentUser = firebaseAuth.currentUser;
 
-      if (currentUser != null) {
-        await FirebaseFirestore.instance
-            .collection("users-cart-items")
-            .doc(currentUser.email)
-            .collection("items")
-            .doc(id)
-            .delete();
-        print("Product removed from cart");
+        if (currentUser != null) {
+          await FirebaseFirestore.instance
+              .collection("users-cart-items")
+              .doc(currentUser.email)
+              .collection("items")
+              .doc(id) // Ensure 'id' is not empty
+              .delete(); // Delete the document
+          print("Product removed from cart successfully");
+        } else {
+          print("User not signed in.");
+        }
       } else {
-        print("User not signed in.");
+        print("Error: Document ID is empty");
       }
     } catch (e) {
       print("Error removing from cart: $e");

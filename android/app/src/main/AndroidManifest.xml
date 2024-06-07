@@ -23,7 +23,8 @@
             <data android:scheme="@string/fb_login_protocol_scheme" />
         </intent-filter>
     </activity>
-    
+    <meta-data android:name="com.google.android.geo.API_KEY"
+    android:value="AIzaSyDi-bSYjtEknQ7O7V05Hg7oWRLWPnU0rXU"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

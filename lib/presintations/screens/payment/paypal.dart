@@ -1,4 +1,3 @@
-import 'package:firstly/presintations/screens/home_screen.dart';
 import 'package:firstly/presintations/screens/payment/payment_gateway.dart';
 import 'package:firstly/presintations/screens/payment/paymob_manager.dart';
 import 'package:flutter/material.dart';

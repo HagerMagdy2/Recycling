@@ -114,7 +114,7 @@ class _CartPageState extends State<CartPage> {
                                   primary:
                                       kMainColor, // Use kMainColor as button background color
                                 ),
-                                child: Text('Checkout'),
+                                child: Text('Checkout',style: TextStyle(color: kSecondaryColor),),
                               ),
                             ],
                           ),

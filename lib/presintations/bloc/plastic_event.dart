@@ -35,3 +35,23 @@ class UpdatePlastic extends PlasticEvent {
 
   UpdatePlastic({required this.product});
 }
+class UpdateCartProduct extends PlasticEvent {
+  final Product product;
+
+  UpdateCartProduct({required this.product});
+}
+
+class AddProductToFavorites extends PlasticEvent {
+  final Product product;
+
+  AddProductToFavorites({required this.product});
+}
+
+class RemoveProductFromFavorites extends PlasticEvent {
+  final String id;
+
+  RemoveProductFromFavorites({required this.id});
+}
+
+class GetFavoriteProduct extends PlasticEvent {}
+

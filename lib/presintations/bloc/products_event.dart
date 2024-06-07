@@ -23,13 +23,13 @@ class AddProductToCart extends ProductEvent {
 class RemoveProduct extends ProductEvent {
   final String id;
 
-  RemoveProduct({required this.id});
+  RemoveProduct( {required this.id});
 }
 
 class RemoveProductFromCart extends ProductEvent {
   final String id;
 
-  RemoveProductFromCart({required this.id});
+  RemoveProductFromCart({required this.id, required Product product});
 }
 
 class UpdateProduct extends ProductEvent {
@@ -43,3 +43,17 @@ class UpdateCartProduct extends ProductEvent {
 
   UpdateCartProduct({required this.product});
 }
+
+class AddProductToFavorites extends ProductEvent {
+  final Product product;
+
+  AddProductToFavorites({required this.product});
+}
+
+class RemoveProductFromFavorites extends ProductEvent {
+  final String id;
+
+  RemoveProductFromFavorites({required this.id});
+}
+
+class GetFavoriteProduct extends ProductEvent {}

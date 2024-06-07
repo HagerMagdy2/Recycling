@@ -296,54 +296,33 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
                 height: 320,
                 width: 400,
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: ListView(
-                    children: [
-                      ShowProducts(
-                          product: Product(
-                        image:
-                            "https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1714767572806.jpg?alt=media&token=da7134f5-8e70-4011-bf68-aa379d440731",
-                        name: "Cooking Oil",
-                        price: 25,
-                        id: '',
-                        userId: '',
-                        userName: 'maiatef',
-                        userEmail: 'maiatef17@gmail.com',
-                        userPhone: '01119257229',
-                        quantity: 1,
-                        availableQuantity: 5,
-                      )),
-                      ShowProducts(
-                          product: Product(
-                        image:
-                            "https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1714759096537.jpg?alt=media&token=552b2757-3ae2-42be-9c2a-cffece628920",
-                        name: "Flower Vase",
-                        price: 95,
-                        id: '',
-                        userId: '',
-                        userName: 'hagar',
-                        userEmail: 'hagarmag5@gmail.com',
-                        userPhone: '0115516',
-                        quantity: 1,
-                        availableQuantity: 5,
-                      )),
-                      ShowProducts(
-                          product: Product(
-                        image:
-                            "https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1714760266207.jpg?alt=media&token=854b8c8d-5aa6-40fb-9f06-51ac23ca2a79",
-                        name: "Print Newspapers",
-                        price: 95,
-                        id: '',
-                        userId: '',
-                        userName: 'Arwa',
-                        userEmail: 'arwa@gmail.com',
-                        userPhone: '012346',
-                        quantity: 1,
-                        availableQuantity: 5,
-                      ))
-                    ],
-                  ),
+                child: ListView(
+                  children: [
+                    // ShowProducts(
+                    //     product: Product(
+                    //         image:
+                    //             "https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713739135580.jpg?alt=media&token=ae6a4ef6-6d62-432b-8968-ced8cfcfa6ab",
+                    //         name: "Crystal Glass Cup",
+                    //         id: "id",
+                    //         price: 250,
+                    //         quantity: 1)),
+                    // ShowProducts(
+                    //     product: Product(
+                    //         image:
+                    //             "https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713741072235.jpg?alt=media&token=0654e890-f6a1-4345-8531-847c6fb9e8ea",
+                    //         name: "plastic food containers",
+                    //         id: "id",
+                    //         price: 55,
+                    //         quantity: 1)),
+                    // ShowProducts(
+                    //     product: Product(
+                    //         image:
+                    //             "https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713741794884.jpg?alt=media&token=6d02d1cc-0cbb-4d7b-b851-52771e762335",
+                    //         name: "Pepper Caffeine Container",
+                    //         id: "id",
+                    //         price: 30,
+                    //         quantity: 1))
+                  ],
                 ))
           ],
         ),

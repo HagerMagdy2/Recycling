@@ -150,7 +150,7 @@ class LearnScreen extends StatelessWidget {
                         )));
           },
         ),
-      ),
-    );
-  }
+  ),
+);
+}
 }

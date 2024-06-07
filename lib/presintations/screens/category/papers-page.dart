@@ -1,15 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstly/constants.dart';
+import 'package:firstly/core/firebase-service.dart';
+import 'package:firstly/presintations/bloc/products_bloc.dart';
+import 'package:firstly/presintations/bloc/products_event.dart';
+import 'package:firstly/presintations/bloc/products_state.dart';
+import 'package:firstly/presintations/screens/add-edit/add-papers.dart';
+import 'package:firstly/presintations/screens/add-edit/add_glasses.dart';
+import 'package:firstly/presintations/widgets/show_product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:firstly/constants.dart';
-import 'package:firstly/presintations/bloc/papers_bloc.dart';
-import 'package:firstly/presintations/bloc/papers_state.dart';
-import 'package:firstly/presintations/bloc/papers_event.dart';
-import 'package:firstly/presintations/screens/add-edit/add-papers.dart';
-import 'package:firstly/presintations/widgets/show_product.dart';
 
 class PapersCategoryPage extends StatefulWidget {
-  const PapersCategoryPage({Key? key}) : super(key: key);
+  const PapersCategoryPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<PapersCategoryPage> createState() => _PapersCategoryPageState();
@@ -22,13 +28,7 @@ class _PapersCategoryPageState extends State<PapersCategoryPage> {
   void initState() {
     super.initState();
     searchController = TextEditingController();
-    context.read<PapersBloc>().add(GetPapers());
-  }
-
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
+    context.read<ProductBloc>().add(GetProduct());
   }
 
   @override
@@ -79,38 +79,54 @@ class _PapersCategoryPageState extends State<PapersCategoryPage> {
           ),
         ],
       ),
-      body: BlocBuilder<PapersBloc, PapersState>(
+      body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView(
-              children: [
-                if (state is PapersLoadingState)
-                  Lottie.asset(
-                    'assets/images/Animation loading1.json',
-                    height: 200,
-                    width: 200,
-                    repeat: true,
-                  ),
-                if (state is PapersErrorState)
-                  Text('Error: ${state.errorMessage}'),
-                if (state is PapersLoaded)
-                  ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: state.products.length,
-                    itemBuilder: (context, i) {
-                      final product = state.products[i];
-                      if (searchController.text.isNotEmpty &&
-                          !product.name
-                              .toLowerCase()
-                              .contains(searchController.text.toLowerCase())) {
-                        return SizedBox.shrink();
-                      }
-                      return ShowProducts(product: product);
-                    },
-                  ),
-              ],
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  if (state is ProductLoadingState)
+                    Lottie.asset(
+                      'assets/images/Animation loading1.json',
+                      height: 200,
+                      width: 200,
+                      repeat: true,
+                    ),
+                  if (state is ProductErrorState)
+                    Text('Error: ${state.errorMessage}'),
+                  if (state is ProductLoaded)
+                    ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.products.length,
+                      itemBuilder: (context, i) {
+                        final product = state.products[i];
+                        // Check if the product user email matches the current user's email
+                        User? currentUser = FirebaseAuth.instance.currentUser;
+                        if (product.userEmail == currentUser!.email) {
+                          return SizedBox
+                              .shrink(); // Skip displaying this product
+                        }
+
+                        // Check if the product's category is "plastics"
+                        if (product.category.toLowerCase() != "papers") {
+                          return SizedBox
+                              .shrink(); // Skip displaying this product
+                        }
+
+                        // Check if there's a search query and the product name doesn't contain it
+                        if (searchController.text.isNotEmpty &&
+                            !product.name.toLowerCase().contains(
+                                searchController.text.toLowerCase())) {
+                          return SizedBox.shrink();
+                        }
+
+                        return ShowProducts(product: product);
+                      },
+                    ),
+                ],
+              ),
             ),
           );
         },
@@ -118,10 +134,8 @@ class _PapersCategoryPageState extends State<PapersCategoryPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: kMainColor,
         onPressed: () async {
-          await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddPapersPage()),
-          );
+          await Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddPapersPage()));
           setState(() {});
         },
         child: const Icon(
@@ -130,5 +144,11 @@ class _PapersCategoryPageState extends State<PapersCategoryPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 }

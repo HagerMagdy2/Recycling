@@ -1,50 +1,36 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
+import 'package:firstly/data/remotDs/plastic-remot-ds.dart';
 import 'package:firstly/data/remotDs/product_remote_data_source.dart';
+import 'package:firstly/presintations/bloc/plastic_bloc.dart';
+import 'package:firstly/presintations/bloc/plastic_state.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ShowProducts extends StatefulWidget {
-  const ShowProducts({Key? key, required this.product}) : super(key: key);
+class ShowPlastic extends StatefulWidget {
+  const ShowPlastic({Key? key, required this.product}) : super(key: key);
   final Product product;
 
   @override
-  State<ShowProducts> createState() => _ShowProductsState();
+  State<ShowPlastic> createState() => _ShowPlasticState();
 }
 
-class _ShowProductsState extends State<ShowProducts> {
+class _ShowPlasticState extends State<ShowPlastic> {
   late bool isFavorite;
   late bool isInCart;
-  Future<bool> checkIfInCart() async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    // Logic to check if the product is in the cart item collection
-    // You can use your data source or any other method to perform this check
-    // For demonstration purposes, let's assume a hypothetical method called 'isInCart'
-    return await ProductRemoteDsImp()
-        .isInCart(widget.product.id, _auth.currentUser!);
-  }
 
   @override
   void initState() {
     super.initState();
-
     isFavorite = widget.product.isFav;
     isInCart = widget.product.isInCart;
-    // Check if the product is in the cart item collection
-    // You'll need to replace 'checkIfInCart' with the appropriate method or logic
-    // checkIfInCart().then((inCart) {
-    //   setState(() {
-    //     isInCart = inCart;
-    //   });
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductBloc, ProductState>(
+    return BlocBuilder<PlasticBloc, PlasticState>(
       builder: (context, state) {
         return Container(
           color: Colors.grey[200],
@@ -114,14 +100,18 @@ class _ShowProductsState extends State<ShowProducts> {
                       children: [
                         OutlinedButton(
                           onPressed: () {
+                            print(
+                                "Before adding to cart - isFav: $isFavorite, isInCart: $isInCart");
                             setState(() {
                               isInCart = !isInCart;
                             });
+                            print(
+                                "After adding to cart - isFav: $isFavorite, isInCart: $isInCart");
                             if (isInCart) {
                               // Update only isInCart status
-                              ProductRemoteDsImp().updateProduct(widget.product
-                                  .copyWith(isInCart: true, isFav: isFavorite));
-                              ProductRemoteDsImp().addToCart(
+                              PlasticRemoteDsImp().updatePlastic(
+                                  widget.product.copyWith(isInCart: true));
+                              PlasticRemoteDsImp().addToCart(
                                   widget.product.copyWith(quantity: 1));
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
@@ -129,10 +119,9 @@ class _ShowProductsState extends State<ShowProducts> {
                               );
                             } else {
                               // Update only isInCart status
-                              ProductRemoteDsImp().updateProduct(widget.product
-                                  .copyWith(
-                                      isInCart: false, isFav: isFavorite));
-                              ProductRemoteDsImp()
+                              PlasticRemoteDsImp().updatePlastic(
+                                  widget.product.copyWith(isInCart: false));
+                              PlasticRemoteDsImp()
                                   .removeProductFromCart(widget.product.id);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
@@ -171,8 +160,8 @@ class _ShowProductsState extends State<ShowProducts> {
 
                             if (isFavorite) {
                               // Update only isFav status
-                              ProductRemoteDsImp().updateProduct(widget.product
-                                  .copyWith(isFav: true, isInCart: isInCart));
+                              PlasticRemoteDsImp().updatePlastic(
+                                  widget.product.copyWith(isFav: true));
                               ProductRemoteDsImp().addToFavorites(
                                   widget.product.copyWith(isFav: true));
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -182,8 +171,8 @@ class _ShowProductsState extends State<ShowProducts> {
                               );
                             } else {
                               // Update only isFav status
-                              ProductRemoteDsImp().updateProduct(widget.product
-                                  .copyWith(isFav: false, isInCart: isInCart));
+                              PlasticRemoteDsImp().updatePlastic(
+                                  widget.product.copyWith(isFav: false));
                               ProductRemoteDsImp()
                                   .removeFromFavorites(widget.product.id);
                               ScaffoldMessenger.of(context).showSnackBar(

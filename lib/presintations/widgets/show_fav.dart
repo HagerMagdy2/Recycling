@@ -3,19 +3,20 @@ import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
 import 'package:firstly/data/remotDs/product_remote_data_source.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
+import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ShowProducts extends StatefulWidget {
-  const ShowProducts({Key? key, required this.product}) : super(key: key);
+class ShowFav extends StatefulWidget {
+  const ShowFav({Key? key, required this.product}) : super(key: key);
   final Product product;
 
   @override
-  State<ShowProducts> createState() => _ShowProductsState();
+  State<ShowFav> createState() => _ShowFavState();
 }
 
-class _ShowProductsState extends State<ShowProducts> {
+class _ShowFavState extends State<ShowFav> {
   late bool isFavorite;
   late bool isInCart;
   Future<bool> checkIfInCart() async {
@@ -119,8 +120,8 @@ class _ShowProductsState extends State<ShowProducts> {
                             });
                             if (isInCart) {
                               // Update only isInCart status
-                              ProductRemoteDsImp().updateProduct(widget.product
-                                  .copyWith(isInCart: true, isFav: isFavorite));
+                              ProductRemoteDsImp().updateProduct(
+                                  widget.product.copyWith(isInCart: true));
                               ProductRemoteDsImp().addToCart(
                                   widget.product.copyWith(quantity: 1));
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -129,9 +130,8 @@ class _ShowProductsState extends State<ShowProducts> {
                               );
                             } else {
                               // Update only isInCart status
-                              ProductRemoteDsImp().updateProduct(widget.product
-                                  .copyWith(
-                                      isInCart: false, isFav: isFavorite));
+                              ProductRemoteDsImp().updateProduct(
+                                  widget.product.copyWith(isInCart: false));
                               ProductRemoteDsImp()
                                   .removeProductFromCart(widget.product.id);
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -157,41 +157,23 @@ class _ShowProductsState extends State<ShowProducts> {
                         const SizedBox(width: 10),
                         IconButton(
                           icon: Icon(
-                            isFavorite ? Icons.favorite : Icons.favorite_border,
-                            color: isFavorite ? Colors.red : null,
+                            Icons.favorite,
+                            color: Colors.red,
                           ),
                           onPressed: () {
-                            print(
-                                "Before adding to favorites - isFav: $isFavorite, isInCart: $isInCart");
-                            setState(() {
-                              isFavorite = !isFavorite;
-                            });
-                            print(
-                                "After adding to favorites - isFav: $isFavorite, isInCart: $isInCart");
+                            ProductRemoteDsImp().updateProduct(
+                                widget.product.copyWith(isFav: false));
+                            context.read<ProductBloc>().add(
+                                RemoveProductFromFavorites(
+                                    id: widget.product.id));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content:
+                                      Text('Product removed from favorites')),
+                            );
+                            setState(() {});
 
-                            if (isFavorite) {
-                              // Update only isFav status
-                              ProductRemoteDsImp().updateProduct(widget.product
-                                  .copyWith(isFav: true, isInCart: isInCart));
-                              ProductRemoteDsImp().addToFavorites(
-                                  widget.product.copyWith(isFav: true));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content:
-                                        Text('Product added to favorites')),
-                              );
-                            } else {
-                              // Update only isFav status
-                              ProductRemoteDsImp().updateProduct(widget.product
-                                  .copyWith(isFav: false, isInCart: isInCart));
-                              ProductRemoteDsImp()
-                                  .removeFromFavorites(widget.product.id);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content:
-                                        Text('Product removed from favorites')),
-                              );
-                            }
+                            // Add logic to handle favorite status
                           },
                         ),
                       ],

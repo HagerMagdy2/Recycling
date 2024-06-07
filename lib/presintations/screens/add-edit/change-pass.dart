@@ -36,9 +36,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
-       
         title: Text('Change Password'),
       ),
       body: Padding(
@@ -87,15 +85,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   // Validate and update the password
                   _changePassword();
                 },
-                child: Text('Save',style: TextStyle(color: Colors.white)),
-              style: ElevatedButton.styleFrom(
-              backgroundColor: kMainColor,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(color: kMainColor1),
-              ),
-            ),
+                child: Text('Save'),
+                style: ElevatedButton.styleFrom(
+                  //primary: kMainColor,
+                  backgroundColor: kMainColor,
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
               ),
             ),
           ],

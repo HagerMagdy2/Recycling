@@ -1,15 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firstly/constants.dart';
+import 'package:firstly/core/firebase-service.dart';
+import 'package:firstly/presintations/bloc/products_bloc.dart';
+import 'package:firstly/presintations/bloc/products_event.dart';
+import 'package:firstly/presintations/bloc/products_state.dart';
+import 'package:firstly/presintations/screens/add-edit/add_glasses.dart';
 import 'package:firstly/presintations/screens/add-edit/add_oils.dart';
+import 'package:firstly/presintations/widgets/show_product.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:firstly/constants.dart';
-import 'package:firstly/presintations/bloc/oils_bloc.dart';
-import 'package:firstly/presintations/bloc/oils_state.dart';
-import 'package:firstly/presintations/bloc/oils_event.dart';
-import 'package:firstly/presintations/widgets/show_product.dart';
 
 class OilsCategoryPage extends StatefulWidget {
-  const OilsCategoryPage({Key? key}) : super(key: key);
+  const OilsCategoryPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<OilsCategoryPage> createState() => _OilsCategoryPageState();
@@ -22,13 +28,7 @@ class _OilsCategoryPageState extends State<OilsCategoryPage> {
   void initState() {
     super.initState();
     searchController = TextEditingController();
-    context.read<OilsBloc>().add(GetOils());
-  }
-
-  @override
-  void dispose() {
-    searchController.dispose();
-    super.dispose();
+    context.read<ProductBloc>().add(GetProduct());
   }
 
   @override
@@ -79,38 +79,54 @@ class _OilsCategoryPageState extends State<OilsCategoryPage> {
           ),
         ],
       ),
-      body: BlocBuilder<OilsBloc, OilsState>(
+      body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView(
-              children: [
-                if (state is OilsLoadingState)
-                  Lottie.asset(
-                    'assets/images/Animation loading1.json',
-                    height: 200,
-                    width: 200,
-                    repeat: true,
-                  ),
-                if (state is OilsErrorState)
-                  Text('Error: ${state.errorMessage}'),
-                if (state is OilsLoaded)
-                  ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: state.products.length,
-                    itemBuilder: (context, i) {
-                      final product = state.products[i];
-                      if (searchController.text.isNotEmpty &&
-                          !product.name
-                              .toLowerCase()
-                              .contains(searchController.text.toLowerCase())) {
-                        return SizedBox.shrink();
-                      }
-                      return ShowProducts(product: product);
-                    },
-                  ),
-              ],
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  if (state is ProductLoadingState)
+                    Lottie.asset(
+                      'assets/images/Animation loading1.json',
+                      height: 200,
+                      width: 200,
+                      repeat: true,
+                    ),
+                  if (state is ProductErrorState)
+                    Text('Error: ${state.errorMessage}'),
+                  if (state is ProductLoaded)
+                    ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.products.length,
+                      itemBuilder: (context, i) {
+                        final product = state.products[i];
+                        // Check if the product user email matches the current user's email
+                        User? currentUser = FirebaseAuth.instance.currentUser;
+                        if (product.userEmail == currentUser!.email) {
+                          return SizedBox
+                              .shrink(); // Skip displaying this product
+                        }
+
+                        // Check if the product's category is "plastics"
+                        if (product.category.toLowerCase() != "oils") {
+                          return SizedBox
+                              .shrink(); // Skip displaying this product
+                        }
+
+                        // Check if there's a search query and the product name doesn't contain it
+                        if (searchController.text.isNotEmpty &&
+                            !product.name.toLowerCase().contains(
+                                searchController.text.toLowerCase())) {
+                          return SizedBox.shrink();
+                        }
+
+                        return ShowProducts(product: product);
+                      },
+                    ),
+                ],
+              ),
             ),
           );
         },
@@ -118,10 +134,8 @@ class _OilsCategoryPageState extends State<OilsCategoryPage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: kMainColor,
         onPressed: () async {
-          await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddOilsPage()),
-          );
+          await Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddOilsPage()));
           setState(() {});
         },
         child: const Icon(
@@ -130,5 +144,11 @@ class _OilsCategoryPageState extends State<OilsCategoryPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 }

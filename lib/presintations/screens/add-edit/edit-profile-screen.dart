@@ -44,7 +44,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text('Edit Profile'),
       ),
@@ -89,15 +88,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 );
               },
-              child: Text('Change Password',style: TextStyle(color: Colors.white),),
-             style: ElevatedButton.styleFrom(
-              backgroundColor: kMainColor,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(color: kMainColor1),
+              child: Text('Change Password'),
+              style: OutlinedButton.styleFrom(
+               // primary: kMainColor,
+                backgroundColor: kMainColor,
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                side: BorderSide(color: kMainColor),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
               ),
-            ),
             ),
             SizedBox(height: 16.0),
             ElevatedButton(
@@ -109,15 +109,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   'phone': _phoneController.text.trim(), // Include phone number
                 });
               },
-              child: Text('Save',style: TextStyle(color: Colors.white)),
+              child: Text('Save'),
               style: ElevatedButton.styleFrom(
-              backgroundColor: kMainColor,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(color: kMainColor1),
+                //primary: kMainColor,
+                backgroundColor: kMainColor,
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
               ),
-            ),
             ),
           ],
         ),

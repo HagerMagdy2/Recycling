@@ -4,8 +4,11 @@ import 'package:firstly/presintations/screens/payment/payment_gateway.dart';
 import 'package:firstly/presintations/screens/payment/paymob_manager.dart';
 import 'package:firstly/presintations/screens/payment/paypal.dart';
 import 'package:firstly/presintations/widgets/show_in_checkout.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
+
+import '../delivery/delivery_screen.dart';
 
 class CheckOutPage extends StatefulWidget {
   final num totalprice = 10;
@@ -310,6 +313,34 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         height: 15,
                       ),
                     ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 12.0),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>DeliveryScreen()));
+                },
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          "go to Delivery Screen ",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+
+                      ],
+                    ),
                   ),
                 ),
               ),

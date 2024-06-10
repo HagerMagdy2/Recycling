@@ -61,10 +61,13 @@ dependencies:
   geolocator: ^10.1.0
   geocoding: ^2.1.1
   google_static_maps_controller: ^1.0.0
+  order_tracker: ^0.0.2
+  easy_localization: ^3.0.7
 
 
 
-
+dependency_overrides:
+  intl: ^0.18.0
 
 
 dev_dependencies:
@@ -103,6 +106,7 @@ flutter:
   assets:
     - assets/images/
     - videos/
+    - assets/translations/
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

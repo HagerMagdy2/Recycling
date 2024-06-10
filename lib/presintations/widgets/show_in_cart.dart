@@ -1,6 +1,7 @@
 // show_in_cart.dart
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
 import 'package:firstly/data/remotDs/product_remote_data_source.dart';
@@ -41,7 +42,18 @@ class _ShowInCartState extends State<ShowInCart> {
     return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         return Container(
-          color: Colors.grey[200],
+          decoration: BoxDecoration(
+            color: Colors.white70,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
           margin: const EdgeInsets.all(7),
           child: Row(
             children: [
@@ -162,7 +174,7 @@ class _ShowInCartState extends State<ShowInCart> {
                         widget.product.isInCart = false;
                       });
                     },
-                    child: const Text('Remove from cart'),
+                    child: Text(tr('Remove from cart')),
                     style: OutlinedButton.styleFrom(
                       primary: Colors.white,
                       backgroundColor: kMainColor,

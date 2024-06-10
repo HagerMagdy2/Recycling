@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/controller/home-page-controller.dart';
 import 'package:firstly/presintations/screens/home/add-frome-home.dart';
@@ -10,7 +11,6 @@ import 'package:firstly/presintations/screens/home/my-product.dart';
 import 'package:firstly/presintations/screens/home/profile-screen.dart';
 import 'package:firstly/presintations/widgets/bottom-bar.dart';
 import 'package:firstly/presintations/widgets/drawer.dart';
-import 'package:firstly/presintations/widgets/item.dart';
 import 'package:firstly/presintations/widgets/matrial_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -100,23 +100,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icon(
                         Icons.home,
                       ),
-                      label: 'Home',
+                      label: tr('Home'),
                     ),
                     BottomNavigationBarItem(
                         icon: Icon(
                           Icons.favorite,
                         ),
-                        label: 'Favorite'),
+                        label: tr('Favorite')),
                     BottomNavigationBarItem(
                         icon: Icon(
                           Icons.lightbulb,
                         ),
-                        label: 'Learn'),
+                        label: tr('Learn')),
                     BottomNavigationBarItem(
                         icon: Icon(
                           Icons.move_up_rounded,
                         ),
-                        label: 'Your Products'),
+                        label: tr('Your Products')),
                   ],
                 ),
               ),

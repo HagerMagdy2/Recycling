@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/core/firebase-service.dart';
@@ -37,7 +38,7 @@ class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
-          'Glasses Page',
+          tr('Glasses'),
           style: TextStyle(color: Colors.white),
         ),
         actions: [

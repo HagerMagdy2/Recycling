@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
@@ -48,7 +49,18 @@ class _ShowFavState extends State<ShowFav> {
     return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         return Container(
-          color: Colors.grey[200],
+          decoration: BoxDecoration(
+            color: Colors.white70,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
           margin: const EdgeInsets.all(7),
           child: Row(
             children: [
@@ -140,8 +152,9 @@ class _ShowFavState extends State<ShowFav> {
                               );
                             }
                           },
-                          child: Text(
-                              isInCart ? 'Remove from cart' : 'Add to cart'),
+                          child: Text(isInCart
+                              ? tr('Remove from cart')
+                              : tr('Add to cart')),
                           style: OutlinedButton.styleFrom(
                             primary: isInCart ? Colors.white : kMainColor,
                             backgroundColor:

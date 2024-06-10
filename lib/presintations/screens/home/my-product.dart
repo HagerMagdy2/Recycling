@@ -1,13 +1,14 @@
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
+import 'package:firstly/presintations/bloc/products_bloc.dart';
+import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
 import 'package:firstly/presintations/widgets/show-myProduct.dart';
-import 'package:firstly/presintations/bloc/products_bloc.dart'; // Import product bloc
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lottie/lottie.dart';
-import 'package:flutter_bloc/flutter_bloc.dart'; // Import flutter bloc
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyProduct extends StatefulWidget {
   @override
@@ -15,35 +16,14 @@ class MyProduct extends StatefulWidget {
 }
 
 class _MyProductState extends State<MyProduct> {
-  List<Product> userProducts = [];
-  bool isLoading = true;
-
   @override
+  
   void initState() {
     super.initState();
-    retrieveUserProducts();
-  }
-
-  Future<void> retrieveUserProducts() async {
-    User? currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser != null) {
-      try {
-        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-            .collection('Products')
-            .where('userEmail', isEqualTo: currentUser.email)
-            .get();
-
-        List<Product> products =
-            querySnapshot.docs.map((doc) => Product.fromDoc(doc)).toList();
-
-        setState(() {
-          userProducts = products;
-          isLoading = false;
-        });
-      } catch (e) {
-        print("Error fetching user products: $e");
-      }
-    }
+    // Fetch user products when the widget is initialized
+    context
+        .read<ProductBloc>()
+        .add(GetProduct()); // Dispatch FetchProducts event
   }
 
   @override
@@ -69,6 +49,13 @@ class _MyProductState extends State<MyProduct> {
                 .where((product) => product.userEmail == currentUser!.email)
                 .toList();
 
+            if (filteredProducts.isEmpty) {
+              // If there are no products for the current user, display a message
+              return Center(
+                child: Text('No products found for the current user.'),
+              );
+            }
+
             return ListView.builder(
               itemCount: filteredProducts.length,
               itemBuilder: (context, index) {
@@ -76,13 +63,19 @@ class _MyProductState extends State<MyProduct> {
                 return ShowMYProducts(product: product);
               },
             );
+          } else if (state is ProductErrorState) {
+            // Show error message if products couldn't be loaded
+            return Center(
+              child: Text('Error loading products: ${state.errorMessage}'),
+            );
           }
 
+          // Show a generic loading indicator by default
           return Center(
             child: CircularProgressIndicator(),
           );
         },
-   ),
-);
-}
+      ),
+    );
+  }
 }

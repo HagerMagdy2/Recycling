@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/core/firebase-service.dart';
@@ -40,7 +41,7 @@ class _CompostCategoryPageState extends State<CompostCategoryPage> {
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
-          'Compost Page',
+          tr('Compost'),
           style: TextStyle(color: Colors.white),
         ),
         actions: [

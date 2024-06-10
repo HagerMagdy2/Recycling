@@ -33,7 +33,18 @@ class _ShowMYProductsState extends State<ShowMYProducts> {
     return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         return Container(
-          color: Colors.grey[200],
+          decoration: BoxDecoration(
+            color: Colors.white70,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
           margin: const EdgeInsets.all(7),
           child: Row(
             children: [
@@ -91,15 +102,199 @@ class _ShowMYProductsState extends State<ShowMYProducts> {
                     const SizedBox(height: 5),
                     Row(
                       children: [
-                        const SizedBox(width: 10),
-                        IconButton(
-                            onPressed: () {
-                              context
-                                  .read<ProductBloc>()
-                                  .add(RemoveProduct(id: widget.product.id));
-                            },
-                            icon: Icon(Icons.delete_outline_outlined)),
-                        IconButton(onPressed: () {}, icon: Icon(Icons.edit))
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                TextEditingController nameC =
+                                    TextEditingController();
+                                TextEditingController priceC =
+                                    TextEditingController();
+                                TextEditingController quantityC =
+                                    TextEditingController();
+                                bool isValid = true;
+
+                                return AlertDialog(
+                                  backgroundColor: kMainColor,
+                                  title: Text(
+                                    'Update Product',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      TextField(
+                                        controller: nameC,
+                                        decoration: InputDecoration(
+                                          labelText: 'name',
+                                          labelStyle:
+                                              TextStyle(color: Colors.white),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                      TextField(
+                                        controller: priceC,
+                                        decoration: InputDecoration(
+                                          labelText: 'price',
+                                          labelStyle:
+                                              TextStyle(color: Colors.white),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                      TextField(
+                                        controller: quantityC,
+                                        decoration: InputDecoration(
+                                          labelText: 'quantity',
+                                          labelStyle:
+                                              TextStyle(color: Colors.white),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      child: Text(
+                                        'Cancel',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text(
+                                        'Update',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () {
+                                        if (nameC.text.isEmpty ||
+                                            priceC.text.isEmpty ||
+                                            quantityC.text.isEmpty) {
+                                          isValid = false;
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'All fields must be filled out',
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                              backgroundColor: kMainColor,
+                                            ),
+                                          );
+                                        } else {
+                                          isValid = true;
+                                          context.read<ProductBloc>().add(
+                                                UpdateProduct(
+                                                  product: Product(
+                                                    id: widget.product.id,
+                                                    name: nameC.text,
+                                                    price:
+                                                        int.parse(priceC.text),
+                                                    image: widget.product.image,
+                                                    userId:
+                                                        widget.product.userId,
+                                                    userName:
+                                                        widget.product.userName,
+                                                    userEmail: widget
+                                                        .product.userEmail,
+                                                    userPhone: widget
+                                                        .product.userPhone,
+                                                    quantity: int.parse(
+                                                        quantityC.text),
+                                                    availableQuantity: widget
+                                                        .product
+                                                        .availableQuantity,
+                                                    category:
+                                                        widget.product.category,
+                                                  ),
+                                                ),
+                                              );
+                                          Navigator.of(context).pop();
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Icon(
+                            Icons.edit,
+                          ),
+                        ),
+                        SizedBox(width: 20),
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor: kMainColor,
+                                  title: Text(
+                                    'Delete Product',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  content: Text(
+                                    'Are you sure you want to delete this product?',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      child: Text(
+                                        'Cancel',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text(
+                                        'Delete',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      onPressed: () {
+                                        context.read<ProductBloc>().add(
+                                              RemoveProduct(
+                                                id: widget.product.id,
+                                              ),
+                                            );
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Icon(
+                            Icons.delete_outline_outlined,
+                          ),
+                        ),
                       ],
                     ),
                   ],

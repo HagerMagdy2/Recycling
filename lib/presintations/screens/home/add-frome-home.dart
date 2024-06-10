@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firstly/presintations/screens/add-edit/add_oils.dart';
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
@@ -41,7 +42,7 @@ class AddFromHome extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Text(
-              'Which category do you want to add?',
+              tr('Which category do you want to add?'),
               style: TextStyle(
                   fontFamily: 'Pacifico',
                   fontSize: 23.9,
@@ -75,29 +76,29 @@ class AddFromHome extends StatelessWidget {
   Widget _buildMaterialItem(BuildContext context, int index) {
     List<Map<String, dynamic>> items = [
       {
-        'title': "Glasses",
+        'title': tr("Glasses"),
         'image': "assets/images/icons-glasses.png",
         'destination': AddGlassesPage(),
       },
       {
-        'title': "Plastic",
+        'title': tr("Plastic"),
         'image': "assets/images/icons-plastics.png",
         'destination': AddPlasticPage(),
       },
       {
-        'title': "Compost",
+        'title': tr("Compost"),
         'image': "assets/images/icons-carrots.png",
         'destination': AddCompostPage(),
       },
       {
-        'title': "Papers",
+        'title': tr("Papers"),
         'image': "assets/images/icons-paper.png",
         'destination': AddPapersPage(),
       },
       {
-        'title': "Oils",
+        'title': tr("Oils"),
         'image': "assets/images/icons-oils.png",
-        'destination': AddOilsPage()
+        'destination': null
       },
     ];
 

@@ -125,5 +125,5 @@ class _CartPageState extends State<CartPage> {
       totalPrice += product.price * product.quantity;
     }
     return totalPrice;
-  }
+}
 }

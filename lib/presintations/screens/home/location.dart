@@ -1,8 +1,9 @@
+import 'dart:async';
 import 'package:firstly/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 class Location extends StatefulWidget {
   const Location({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class Location extends StatefulWidget {
 class _LocationState extends State<Location> {
   Set<Marker> markers = {};
   String selectedAddress = '';
+  Completer<GoogleMapController> _controller = Completer();
 
   @override
   void initState() {
@@ -22,8 +24,36 @@ class _LocationState extends State<Location> {
   }
 
   Future<void> getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled, don't continue.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, don't continue.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can get the position.
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
+
+    // Update the map and marker.
     setState(() {
       markers.add(Marker(
         markerId: MarkerId('currentLocation'),
@@ -31,10 +61,16 @@ class _LocationState extends State<Location> {
       ));
     });
 
+    // Move the camera to the current location.
+    final GoogleMapController mapController = await _controller.future;
+    mapController.animateCamera(
+        CameraUpdate.newLatLng(LatLng(position.latitude, position.longitude)));
+
+    // Get the address of the current location.
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     setState(() {
-      selectedAddress = placemarks[0].name!;
+      selectedAddress = placemarks[0].name ?? 'Unknown';
     });
   }
 
@@ -42,10 +78,11 @@ class _LocationState extends State<Location> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.white,
         backgroundColor: kMainColor,
-        title:
-            Text('Pick Your Location', style: TextStyle(color: Colors.white)),
+        foregroundColor: Colors.white,
+        title: Text(
+          'Pick Your Location',
+        ),
       ),
       body: Stack(
         children: [
@@ -61,13 +98,17 @@ class _LocationState extends State<Location> {
               List<Placemark> placemarks = await placemarkFromCoordinates(
                   location.latitude, location.longitude);
               setState(() {
-                selectedAddress = placemarks[0].name!;
+                selectedAddress = placemarks[0].name ?? 'Unknown';
               });
             },
             initialCameraPosition: CameraPosition(
               target: LatLng(30.1, 30.1),
+              zoom: 14.0, // Adjust the initial zoom level.
             ),
             markers: markers,
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
           ),
           Positioned(
             bottom: 10,
@@ -118,10 +159,14 @@ class _LocationState extends State<Location> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(
-                      '$selectedAddress',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        selectedAddress,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],

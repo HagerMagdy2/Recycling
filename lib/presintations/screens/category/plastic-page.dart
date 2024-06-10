@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/core/firebase-service.dart';
@@ -39,7 +40,7 @@ class _PlasticCategoryPageState extends State<PlasticCategoryPage> {
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
-          'Plastics Page',
+          tr('Plastic'),
           style: TextStyle(color: Colors.white),
         ),
         actions: [

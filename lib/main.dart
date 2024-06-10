@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/authentication_remote_data_source.dart';
@@ -20,23 +21,26 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
-  // Firebase.appCheck.installAppCheckProviderFactory(
-  //     SafetyNetAppCheckProviderFactory.getInstance());
+
   runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider<AuthenticationBloc>(
-        create: (context) => AuthenticationBloc(AuthenticationRemoteDsImp()),
-      ),
-      BlocProvider<CartBloc>(
-        create: (context) => CartBloc(ProductRemoteDsImp()),
-      ),
-      BlocProvider<ProductBloc>(
-        create: (context) => ProductBloc(ProductRemoteDsImp()),
-      ),
-    ],
-    child: MyApp(),
-  ));
+      providers: [
+        BlocProvider<AuthenticationBloc>(
+          create: (context) => AuthenticationBloc(AuthenticationRemoteDsImp()),
+        ),
+        BlocProvider<CartBloc>(
+          create: (context) => CartBloc(ProductRemoteDsImp()),
+        ),
+        BlocProvider<ProductBloc>(
+          create: (context) => ProductBloc(ProductRemoteDsImp()),
+        ),
+      ],
+      child: EasyLocalization(
+          fallbackLocale: Locale('ar'),
+          child: const MyApp(),
+          supportedLocales: [Locale('en'), Locale('ar')],
+          path: 'assets/translations')));
 }
 
 class MyApp extends StatelessWidget {
@@ -47,7 +51,15 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider<AdminMode>(
       create: (context) => AdminMode(),
       child: MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
         color: kMainColor,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: kMainColor, primary: kSecondaryColor),
+          useMaterial3: true,
+        ),
         debugShowCheckedModeBanner: false,
         initialRoute: StartScreen.id,
         routes: {

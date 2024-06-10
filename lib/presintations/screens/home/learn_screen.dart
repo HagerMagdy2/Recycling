@@ -90,6 +90,7 @@ class LearnScreen extends StatelessWidget {
   Widget _buildVideoCard(
       String title, String image, BuildContext context, String video) {
     return Card(
+      color: Colors.white,
       child: ListTile(
         contentPadding: EdgeInsets.all(10),
         leading: Image.asset(
@@ -122,6 +123,7 @@ class LearnScreen extends StatelessWidget {
   Widget _buildArticleCard(
       String title, String image, BuildContext context, String article) {
     return Card(
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 10.0),
         child: ListTile(

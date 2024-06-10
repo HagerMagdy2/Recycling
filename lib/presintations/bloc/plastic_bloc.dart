@@ -17,6 +17,10 @@ class PlasticBloc extends Bloc<PlasticEvent, PlasticState> {
           emit(PlasticLoadingState());
           await remoteDs.addToCart(event.product);
           add(GetPlastic());
+        } else if (event is AddProductToFavorites) {
+          emit(PlasticLoadingState());
+          await remoteDs.addToFavorites(event.product);
+          add(GetPlastic());
         } else if (event is GetPlastic) {
           emit(PlasticLoadingState());
           final products = await remoteDs.getPlastic();
@@ -24,6 +28,10 @@ class PlasticBloc extends Bloc<PlasticEvent, PlasticState> {
         } else if (event is GetCartProduct) {
           emit(PlasticLoadingState());
           final products = await remoteDs.getCartProduct();
+          emit(PlasticLoaded(products: products));
+        } else if (event is GetFavoriteProduct) {
+          emit(PlasticLoadingState());
+          final products = await remoteDs.getFavoriteProducts();
           emit(PlasticLoaded(products: products));
         } else if (event is RemovePlastic) {
           emit(PlasticLoadingState());
@@ -33,10 +41,18 @@ class PlasticBloc extends Bloc<PlasticEvent, PlasticState> {
           emit(PlasticLoadingState());
           await remoteDs.removeProductFromCart(event.id);
           add(GetCartProduct());
+        } else if (event is RemoveProductFromFavorites) {
+          emit(PlasticLoadingState());
+          await remoteDs.removeFromFavorites(event.id);
+          add(GetFavoriteProduct());
         } else if (event is UpdatePlastic) {
           emit(PlasticLoadingState());
           await remoteDs.updatePlastic(event.product);
           add(GetPlastic());
+        } else if (event is UpdateCartProduct) {
+          emit(PlasticLoadingState());
+          await remoteDs.updateCartProduct(event.product);
+          add(GetCartProduct());
         }
       } catch (e) {
         emit(PlasticErrorState(errorMessage: e.toString()));

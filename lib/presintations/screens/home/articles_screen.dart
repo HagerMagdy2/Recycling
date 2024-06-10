@@ -14,9 +14,12 @@ class ArticleScreen extends StatelessWidget {
       appBar: AppBar(
         foregroundColor: kSecondaryColor,
         backgroundColor: kMainColor,
-        title: Text(title,style: TextStyle(color: kSecondaryColor,fontSize: 20),),
+        title: Text(
+          title,
+          style: TextStyle(color: kSecondaryColor, fontSize: 20),
+        ),
       ),
-       body: WebView(
+      body: WebView(
         initialUrl: articleUrl,
         javascriptMode: JavascriptMode.unrestricted,
       ),

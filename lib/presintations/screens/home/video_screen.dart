@@ -15,7 +15,10 @@ class VideoScreen extends StatelessWidget {
       appBar: AppBar(
         foregroundColor: kSecondaryColor,
         backgroundColor: kMainColor,
-        title: Text(title,style: TextStyle(color: kSecondaryColor,fontSize: 20),),
+        title: Text(
+          title,
+          style: TextStyle(color: kSecondaryColor, fontSize: 20),
+        ),
       ),
       body: WebView(
         initialUrl: videoUrl,

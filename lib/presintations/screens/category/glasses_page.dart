@@ -103,13 +103,13 @@ class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
                         //   print('Product Category: ${product.category}');
                         // Check if the product user email matches the current user's email
                         User? currentUser = FirebaseAuth.instance.currentUser;
-                        //  print('Current User Email: ${currentUser!.email}');
-                        // if (product.userEmail == currentUser!.email) {
-                        //   print(
-                        //       'Skipping product: ${product.name} because it belongs to current user.');
-                        //   return SizedBox
-                        //       .shrink(); // Skip displaying this product
-                        // }
+                        print('Current User Email: ${currentUser!.email}');
+                        if (product.userEmail == currentUser!.email) {
+                          print(
+                              'Skipping product: ${product.name} because it belongs to current user.');
+                          return SizedBox
+                              .shrink(); // Skip displaying this product
+                        }
 
                         // Check if there's a search query and the product name doesn't contain it
                         if (searchController.text.isNotEmpty &&

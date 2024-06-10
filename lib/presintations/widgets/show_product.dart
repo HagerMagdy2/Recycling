@@ -18,14 +18,6 @@ class ShowProducts extends StatefulWidget {
 class _ShowProductsState extends State<ShowProducts> {
   late bool isFavorite;
   late bool isInCart;
-  Future<bool> checkIfInCart() async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    // Logic to check if the product is in the cart item collection
-    // You can use your data source or any other method to perform this check
-    // For demonstration purposes, let's assume a hypothetical method called 'isInCart'
-    return await ProductRemoteDsImp()
-        .isInCart(widget.product.id, _auth.currentUser!);
-  }
 
   @override
   void initState() {
@@ -33,11 +25,17 @@ class _ShowProductsState extends State<ShowProducts> {
 
     isFavorite = widget.product.isFav;
     isInCart = widget.product.isInCart;
-    // Check if the product is in the cart item collection
-    // You'll need to replace 'checkIfInCart' with the appropriate method or logic
-    // checkIfInCart().then((inCart) {
+
+    //   ProductRemoteDsImp().isInCart(widget.product.id).then((value) {
     //   setState(() {
-    //     isInCart = inCart;
+    //     isInCart = value;
+    //   });
+    // });
+
+    // // Check if the product is in favorites
+    // ProductRemoteDsImp().isFavorite(widget.product.id).then((value) {
+    //   setState(() {
+    //     isFavorite = value;
     //   });
     // });
   }
@@ -131,6 +129,9 @@ class _ShowProductsState extends State<ShowProducts> {
                               // Update only isInCart status
                               ProductRemoteDsImp().updateProduct(widget.product
                                   .copyWith(
+                                      isInCart: false, isFav: isFavorite));
+                              ProductRemoteDsImp().updateCartProduct(
+                                  widget.product.copyWith(
                                       isInCart: false, isFav: isFavorite));
                               ProductRemoteDsImp()
                                   .removeProductFromCart(widget.product.id);

@@ -104,10 +104,10 @@ class _PapersCategoryPageState extends State<PapersCategoryPage> {
                         final product = state.products[i];
                         // Check if the product user email matches the current user's email
                         User? currentUser = FirebaseAuth.instance.currentUser;
-                        // if (product.userEmail == currentUser!.email) {
-                        //   return SizedBox
-                        //       .shrink(); // Skip displaying this product
-                        // }
+                        if (product.userEmail == currentUser!.email) {
+                          return SizedBox
+                              .shrink(); // Skip displaying this product
+                        }
 
                         // Check if the product's category is "plastics"
                         if (product.category.toLowerCase() != "papers") {

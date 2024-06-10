@@ -144,18 +144,19 @@ class _ShowInCartState extends State<ShowInCart> {
                     ],
                   ),
                   OutlinedButton(
-                    onPressed: () {
-                      ProductRemoteDsImp()
-                          .updateProduct(widget.product.copyWith(
-                        isInCart: false,
-                      ));
+                    onPressed: () async {
+                      ProductRemoteDsImp().updateProduct(
+                          widget.product.copyWith(isInCart: false));
 
+                      // Dispatch the RemoveProductFromCart event
                       context.read<ProductBloc>().add(RemoveProductFromCart(
                           product: widget.product, id: widget.product.id));
 
+                      // Show a snackbar to indicate that the product has been removed from the cart
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Product removed from cart')),
                       );
+
                       setState(() {
                         // Update isInCart field locally
                         widget.product.isInCart = false;

@@ -7,10 +7,8 @@ import 'package:firstly/data/remotDs/papers-remot-ds.dart';
 import 'package:firstly/data/remotDs/plastic-remot-ds.dart';
 import 'package:firstly/data/remotDs/product_remote_data_source.dart';
 import 'package:firstly/presintations/bloc/authentication_bloc.dart';
-import 'package:firstly/presintations/bloc/compost_bloc.dart';
-import 'package:firstly/presintations/bloc/oils_bloc.dart';
-import 'package:firstly/presintations/bloc/papers_bloc.dart';
-import 'package:firstly/presintations/bloc/plastic_bloc.dart';
+import 'package:firstly/presintations/bloc/cart_bloc.dart';
+
 import 'package:firstly/presintations/bloc/products_bloc.dart';
 import 'package:firstly/presintations/provider/adminMode.dart';
 import 'package:firstly/presintations/screens/start/login_screen.dart';
@@ -30,20 +28,11 @@ void main() async {
       BlocProvider<AuthenticationBloc>(
         create: (context) => AuthenticationBloc(AuthenticationRemoteDsImp()),
       ),
-      BlocProvider<PlasticBloc>(
-        create: (context) => PlasticBloc(PlasticRemoteDsImp()),
+      BlocProvider<CartBloc>(
+        create: (context) => CartBloc(ProductRemoteDsImp()),
       ),
       BlocProvider<ProductBloc>(
         create: (context) => ProductBloc(ProductRemoteDsImp()),
-      ),
-      BlocProvider<CompostBloc>(
-        create: (context) => CompostBloc(CompostRemoteDsImp()),
-      ),
-      BlocProvider<PapersBloc>(
-        create: (context) => PapersBloc(PapersRemoteDsImp()),
-      ),
-      BlocProvider<OilsBloc>(
-        create: (context) => OilsBloc(OilRemoteDsImp()),
       ),
     ],
     child: MyApp(),

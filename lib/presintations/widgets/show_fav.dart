@@ -19,14 +19,14 @@ class ShowFav extends StatefulWidget {
 class _ShowFavState extends State<ShowFav> {
   late bool isFavorite;
   late bool isInCart;
-  Future<bool> checkIfInCart() async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    // Logic to check if the product is in the cart item collection
-    // You can use your data source or any other method to perform this check
-    // For demonstration purposes, let's assume a hypothetical method called 'isInCart'
-    return await ProductRemoteDsImp()
-        .isInCart(widget.product.id, _auth.currentUser!);
-  }
+  // Future<bool> checkIfInCart() async {
+  //   final FirebaseAuth _auth = FirebaseAuth.instance;
+  //   // Logic to check if the product is in the cart item collection
+  //   // You can use your data source or any other method to perform this check
+  //   // For demonstration purposes, let's assume a hypothetical method called 'isInCart'
+  //   return await ProductRemoteDsImp()
+  //       .isInCart(widget.product.id, _auth.currentUser!);
+  // }
 
   @override
   void initState() {

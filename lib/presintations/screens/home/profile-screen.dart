@@ -115,6 +115,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        foregroundColor: Colors.white,
+        backgroundColor: kMainColor,
+        title: Text('My Profile', style: TextStyle(color: Colors.white)),
+      ),
       body: Column(
         children: [
           AppBar(
@@ -122,18 +127,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             elevation: 0,
             toolbarHeight: 10,
           ),
-          Center(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 20),
-              child: Text(
-                'My Profile',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
-                  color: kMainColor,
-                ),
-              ),
-            ),
+          SizedBox(
+            height: 40,
           ),
           GestureDetector(
             onTap: () async {

@@ -91,8 +91,8 @@ class _CartPageState extends State<CartPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      CheckOutPage(cartProducts: state.products),
+                                  builder: (context) => CheckOutPage(
+                                      cartProducts: state.products),
                                 ),
                               );
                             },

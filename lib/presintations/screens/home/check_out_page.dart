@@ -1,5 +1,6 @@
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
+import 'package:firstly/presintations/screens/home/location.dart';
 import 'package:firstly/presintations/screens/payment/payment_gateway.dart';
 import 'package:firstly/presintations/screens/payment/paymob_manager.dart';
 import 'package:firstly/presintations/screens/payment/paypal.dart';
@@ -265,25 +266,24 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           }
                         ],
                         note: "Contact us for any questions on your order.",
-                       // onSuccess:
-                        //  (Map params) async {
-                        //   print("onSuccess: $params");
-                        //   // Navigate to the success page
-                        //   Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => SuccessPage()),
-                        //   );
-                        // },
-                        // onError: (error) {
-                        //   print("onError: $error");
-                        //   // Navigate to the failure page
-                        //   Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => FailurePage()),
-                        //   );
-                        // },
+                        onSuccess: (Map params) async {
+                          print("onSuccess: $params");
+                          // Navigate to the success page
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SuccessPage()),
+                          );
+                        },
+                        onError: (error) {
+                          print("onError: $error");
+                          // Navigate to the failure page
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FailurePage()),
+                          );
+                        },
                         onCancel: () {
                           print('cancelled:');
                         },
@@ -440,6 +440,38 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Location()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: Size(500, 50),
+                      backgroundColor: kMainColor,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: kSecondaryColor,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          'Location',
+                          style: TextStyle(
+                            color: kSecondaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),

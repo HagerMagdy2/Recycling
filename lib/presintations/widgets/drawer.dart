@@ -8,6 +8,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: kSecondaryColor,
       child: Container(
         padding: const EdgeInsets.all(16),
         color: Theme.of(context).colorScheme.inversePrimary,

@@ -14,8 +14,9 @@ abstract class ProductRemoteDs {
   Future<void> addToFavorites(
       Product product); // Add method for adding to favorites
   Future<List<Product>> getFavoriteProducts();
-  Future<void> removeFromFavorites(
-      String id); // Add method for getting favorite products
+  Future<void> removeFromFavorites(String id);
+  Future<bool> isInCart(
+      String productId); // Add method for getting favorite products
 }
 
 class ProductRemoteDsImp extends ProductRemoteDs {
@@ -81,24 +82,24 @@ class ProductRemoteDsImp extends ProductRemoteDs {
     }
   }
 
-  Future<bool> isInCart(String productId, User currentUser) async {
-    try {
-      // Query the 'users-cart-items' collection to check if the product exists in the user's cart
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection("users-cart-items")
-          .doc(currentUser.email)
-          .collection("items")
-          .where('productId', isEqualTo: productId)
-          .get();
+  // Future<bool> isInCart(String productId, User currentUser) async {
+  //   try {
+  //     // Query the 'users-cart-items' collection to check if the product exists in the user's cart
+  //     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //         .collection("users-cart-items")
+  //         .doc(currentUser.email)
+  //         .collection("items")
+  //         .where('productId', isEqualTo: productId)
+  //         .get();
 
-      // If the query snapshot has any documents, it means the product is in the cart
-      return querySnapshot.docs.isNotEmpty;
-    } catch (error) {
-      // Handle error
-      print('Error checking if product is in cart: $error');
-      return false;
-    }
-  }
+  //     // If the query snapshot has any documents, it means the product is in the cart
+  //     return querySnapshot.docs.isNotEmpty;
+  //   } catch (error) {
+  //     // Handle error
+  //     print('Error checking if product is in cart: $error');
+  //     return false;
+  //   }
+  // }
 
   @override
   Future<List<Product>> getCartProduct() async {
@@ -136,41 +137,40 @@ class ProductRemoteDsImp extends ProductRemoteDs {
   }
 
   @override
-Future<void> removeProductFromCart(String id) async {
-  try {
-    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-    var currentUser = firebaseAuth.currentUser;
+  Future<void> removeProductFromCart(String id) async {
+    try {
+      final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+      var currentUser = firebaseAuth.currentUser;
 
-    if (currentUser != null) {
-      print("User is signed in. Attempting to remove product from cart.");
-      print("Document ID: $id");
+      if (currentUser != null) {
+        print("User is signed in. Attempting to remove product from cart.");
+        print("Document ID: $id");
 
-      final documentReference = FirebaseFirestore.instance
-          .collection("users-cart-items")
-          .doc(currentUser.email)
-          .collection("items")
-          .doc(id);
+        final documentReference = FirebaseFirestore.instance
+            .collection("users-cart-items")
+            .doc(currentUser.email)
+            .collection("items")
+            .doc(id);
 
-      final documentSnapshot = await documentReference.get();
+        final documentSnapshot = await documentReference.get();
 
-      if (documentSnapshot.exists) {
-        // Document exists, proceed with deletion
-        await documentReference.delete();
-        print("Product removed from cart successfully.");
+        if (documentSnapshot.exists) {
+          // Document exists, proceed with deletion
+          await documentReference.delete();
+          print("Product removed from cart successfully.");
+        } else {
+          // Document does not exist
+          print("Error: Document not found in cart items collection.");
+        }
       } else {
-        // Document does not exist
-        print("Error: Document not found in cart items collection.");
+        // User is not signed in
+        print("Error: User not signed in.");
       }
-    } else {
-      // User is not signed in
-      print("Error: User not signed in.");
+    } catch (e, stackTrace) {
+      print("Error removing from cart: $e");
+      print(stackTrace); // Print stack trace for more details
     }
-  } catch (e, stackTrace) {
-    print("Error removing from cart: $e");
-    print(stackTrace); // Print stack trace for more details
   }
-}
-
 
   @override
   Future<void> updateCartProduct(Product product) async {
@@ -266,5 +266,18 @@ Future<void> removeProductFromCart(String id) async {
     } catch (e) {
       print("Error removing from favorites: $e");
     }
+  }
+@override
+  // New method to check if a product is in the cart
+  Future<bool> isInCart(String productId) async {
+    List<Product> cartProducts = await getCartProduct();
+           // print(isInCart);
+
+    return cartProducts.any((product) => product.id == productId);
+
+  }
+    Future<bool> isFavorite(String productId) async {
+    List<Product> favoriteProducts = await getFavoriteProducts();
+    return favoriteProducts.any((product) => product.id == productId);
   }
 }

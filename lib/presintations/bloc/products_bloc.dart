@@ -39,16 +39,12 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           add(GetProduct());
         } else if (event is RemoveProductFromCart) {
           emit(ProductLoadingState());
-          await remoteDs.updateProduct(event.product.copyWith(isInCart: false));
-          //
-          //// Get updated cart products
+          //   await remoteDs.updateProduct(event.product.copyWith(isInCart: false));
 
           await remoteDs.removeProductFromCart(event.id);
-          add(GetCartProduct());
-
-          // final products = await remoteDs.getCartProduct();
-          // emit(ProductLoaded(
-          //     products: products)); // Emit new state with updated cart products
+          final products = await remoteDs.getCartProduct();
+          emit(ProductLoaded(
+              products: products)); // Emit new state with updated cart products
         } else if (event is RemoveProductFromFavorites) {
           emit(ProductLoadingState());
           await remoteDs.removeFromFavorites(event.id);

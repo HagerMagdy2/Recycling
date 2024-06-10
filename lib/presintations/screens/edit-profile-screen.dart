@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firstly/constants.dart';
-import 'package:firstly/presintations/screens/change-pass.dart';
+import 'package:firstly/presintations/screens/add-edit/change-pass.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final String currentName;
   final String currentEmail;
   final String? currentPhone; // Add current phone number
+
+
 
   const EditProfileScreen({
     Key? key,
@@ -13,6 +15,8 @@ class EditProfileScreen extends StatefulWidget {
     required this.currentEmail,
     this.currentPhone, // Update constructor
   }) : super(key: key);
+
+  static String id = 'EditProfileScreen';
 
   @override
   _EditProfileScreenState createState() => _EditProfileScreenState();
@@ -22,7 +26,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
   late TextEditingController _phoneController; // Add phone controller
-
   @override
   void initState() {
     super.initState();
@@ -90,7 +93,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               },
               child: Text('Change Password'),
               style: OutlinedButton.styleFrom(
-                foregroundColor: kMainColor,
+               // primary: kMainColor,
+                backgroundColor: kMainColor,
                 padding: EdgeInsets.symmetric(vertical: 16.0),
                 side: BorderSide(color: kMainColor),
                 shape: RoundedRectangleBorder(
@@ -110,6 +114,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               },
               child: Text('Save'),
               style: ElevatedButton.styleFrom(
+                //primary: kMainColor,
                 backgroundColor: kMainColor,
                 padding: EdgeInsets.symmetric(vertical: 16.0),
                 shape: RoundedRectangleBorder(

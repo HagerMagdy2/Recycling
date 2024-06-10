@@ -1,17 +1,22 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/presintations/bloc/authentication_bloc.dart';
+import 'package:firstly/presintations/screens/home/about_us.dart';
 import 'package:firstly/presintations/screens/start/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatefulWidget {
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: kSecondaryColor,
       child: Container(
         padding: const EdgeInsets.all(16),
-        color: Theme.of(context).colorScheme.inversePrimary,
         child: ListView(
           children: [
             Padding(
@@ -51,11 +56,52 @@ class AppDrawer extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(backgroundColor: kMainColor),
-              child: const Text(
-                'Log Out',
-                style: TextStyle(color: Colors.black),
+              child: Text(
+                tr('Log Out'),
+                style: TextStyle(color: kSecondaryColor),
               ),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AboutUsScreen()),
+                );
+              },
+              style: ElevatedButton.styleFrom(backgroundColor: kMainColor),
+              child: Text(
+                tr('About Us'),
+                style: TextStyle(color: kSecondaryColor),
+              ),
+            ),
+            SizedBox(
+              height: 310,
+            ),
+            Text(
+              tr('Languages'),
+              style: TextStyle(
+                  color: kMainColor, fontWeight: FontWeight.bold, fontSize: 30),
+            ),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: kMainColor),
+                onPressed: () async {
+                  context.setLocale(Locale("ar"));
+                  setState(() {});
+                },
+                child: Text(
+                  tr('Arabic'),
+                  style: TextStyle(color: kSecondaryColor),
+                )),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: kMainColor),
+                onPressed: () async {
+                  context.setLocale(Locale("en"));
+                  setState(() {});
+                },
+                child: Text(
+                  tr('English'),
+                  style: TextStyle(color: kSecondaryColor),
+                )),
           ],
         ),
       ),

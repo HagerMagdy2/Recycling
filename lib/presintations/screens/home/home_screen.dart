@@ -10,7 +10,6 @@ import 'package:firstly/presintations/screens/home/my-product.dart';
 import 'package:firstly/presintations/screens/home/profile-screen.dart';
 import 'package:firstly/presintations/widgets/bottom-bar.dart';
 import 'package:firstly/presintations/widgets/drawer.dart';
-import 'package:firstly/presintations/widgets/item.dart';
 import 'package:firstly/presintations/widgets/matrial_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

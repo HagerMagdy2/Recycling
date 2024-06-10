@@ -22,7 +22,8 @@ class _CartPageState extends State<CartPage> {
   @override
   void initState() {
     super.initState();
-    context.read<ProductBloc>().add(GetProduct());
+    context.read<ProductBloc>().add(GetCartProduct());
+    // context.read<ProductBloc>().add(GetProduct());
   }
 
   @override
@@ -58,8 +59,8 @@ class _CartPageState extends State<CartPage> {
               );
             } else if (state is ProductLoaded) {
               // Filter products to show only those in the cart
-              List<Product> cartProducts =
-                  state.products.where((product) => product.isInCart).toList();
+              // List<Product> cartProducts =
+              //     state.products.where((product) => product.isInCart).toList();
 
               return SingleChildScrollView(
                 child: Padding(
@@ -70,16 +71,16 @@ class _CartPageState extends State<CartPage> {
                         physics: NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: cartProducts.length,
+                        itemCount: state.products.length,
                         itemBuilder: (context, i) =>
-                            ShowInCart(product: cartProducts[i]),
+                            ShowInCart(product: state.products[i]),
                       ),
                       SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Total Price: ${calculateTotalPrice(cartProducts)} EGP',
+                            'Total Price: ${calculateTotalPrice(state.products)} EGP',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -90,8 +91,8 @@ class _CartPageState extends State<CartPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      CheckOutPage(cartProducts: cartProducts),
+                                  builder: (context) => CheckOutPage(
+                                      cartProducts: state.products),
                                 ),
                               );
                             },
@@ -124,5 +125,5 @@ class _CartPageState extends State<CartPage> {
       totalPrice += product.price * product.quantity;
     }
     return totalPrice;
-  }
+}
 }

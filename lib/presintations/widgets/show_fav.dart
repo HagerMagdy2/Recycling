@@ -48,7 +48,18 @@ class _ShowFavState extends State<ShowFav> {
     return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         return Container(
-          color: Colors.grey[200],
+          decoration: BoxDecoration(
+            color: Colors.white70,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
           margin: const EdgeInsets.all(7),
           child: Row(
             children: [

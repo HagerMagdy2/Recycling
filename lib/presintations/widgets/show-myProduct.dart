@@ -46,6 +46,7 @@ class _ShowMYProductsState extends State<ShowMYProducts> {
             ],
           ),
           margin: const EdgeInsets.all(7),
+          padding: const EdgeInsets.all(10),
           child: Row(
             children: [
               Container(
@@ -101,6 +102,7 @@ class _ShowMYProductsState extends State<ShowMYProducts> {
 
                     const SizedBox(height: 5),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         GestureDetector(
                           onTap: () {
@@ -244,6 +246,7 @@ class _ShowMYProductsState extends State<ShowMYProducts> {
                           },
                           child: Icon(
                             Icons.edit,
+                            color: kMainColor,
                           ),
                         ),
                         SizedBox(width: 20),
@@ -293,6 +296,7 @@ class _ShowMYProductsState extends State<ShowMYProducts> {
                           },
                           child: Icon(
                             Icons.delete_outline_outlined,
+                            color: kMainColor,
                           ),
                         ),
                       ],

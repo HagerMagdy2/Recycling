@@ -51,7 +51,7 @@ class _ShowInCartState extends State<ShowInCart> {
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
-                      softWrap: true, // This enables text wrapping
+                      softWrap: true, 
                     ),
                     const SizedBox(height: 5),
                     Row(

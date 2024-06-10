@@ -53,12 +53,10 @@ dependencies:
   flutter_paypal_checkout: ^1.0.1
   flutter_staggered_grid_view: ^0.4.0
   video_player: ^2.5.1
-  flutter_paymob: ^1.0.5
+  webview_flutter: ^2.0.13
   dio: ^5.4.3+1
-  intl: ^0.19.0
-  in_app_webview: ^0.0.3
-  
-  
+
+
 
 
 
@@ -67,8 +65,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.13.1
-  flutter_inappwebview: 5.8.0  
+  flutter_launcher_icons: ^0.13.1  
 
 flutter_launcher_icons:
   android : true

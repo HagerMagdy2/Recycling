@@ -1,3 +1,4 @@
+
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
 import 'package:firstly/presintations/screens/payment/payment_gateway.dart';
@@ -8,9 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 
 class CheckOutPage extends StatefulWidget {
-  final num totalprice = 10;
+  
   const CheckOutPage({Key? key, required this.cartProducts}) : super(key: key);
   final List<Product> cartProducts;
+  
 
   @override
   State<CheckOutPage> createState() => _CheckOutPageState();
@@ -22,7 +24,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController notesController = TextEditingController();
   void _continuePayment() {
-    PaymobManager().payWithPaymob(widget.totalprice.toInt()).then((paymentKey) {
+     num totalprice = getTotalPrice().toDouble();
+    PaymobManager().payWithPaymob(totalprice.toInt()).then((paymentKey) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -39,7 +42,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
     }
     return totalPrice;
   }
-
+ num totalPrice = 50;
   InputDecoration _buildInputDecoration(String labelText) {
     return InputDecoration(
       labelText: labelText,
@@ -198,6 +201,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                 ),
               ),
               SizedBox(height: 12.0),
+              
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.0),
@@ -217,13 +221,14 @@ class _CheckOutPageState extends State<CheckOutPage> {
 
                         //  emailPersonal:sb-st7md30520465@personal.example.com pass:123456789
                         //  emailBissness:sb-pr743330543964@business.example.com pass:123456789
-                        transactions: const [
+                        
+                      transactions: const [
                           {
                             "amount": {
-                              "total": '2',
+                              "total": 'totalPrice',
                               "currency": "USD",
                               "details": {
-                                "subtotal": '2',
+                                "subtotal":'totalPrice',
                                 "shipping": '0',
                                 "shipping_discount": 0
                               }
@@ -238,14 +243,14 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               "items": [
                                 {
                                   "name": "Apple",
-                                  "quantity": 1,
-                                  "price": '1',
+                                  "quantity": 5,
+                                  "price": '5',
                                   "currency": "USD"
                                 },
                                 {
                                   "name": "Pineapple",
-                                  "quantity": 1,
-                                  "price": '1',
+                                  "quantity": 5,
+                                  "price": '5',
                                   "currency": "USD"
                                 }
                               ],

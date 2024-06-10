@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 class PaymentPage extends StatefulWidget {
   static String id = 'CheckoutPage';
   final num totalprice;
-  const PaymentPage({super.key,required this.totalprice});
+  const PaymentPage( {super.key,required this.totalprice});
 
   @override
   State<PaymentPage> createState() => _CheckoutPageState();
+
+  void _continuePayment() {}
 }
 
 class _CheckoutPageState extends State<PaymentPage> {

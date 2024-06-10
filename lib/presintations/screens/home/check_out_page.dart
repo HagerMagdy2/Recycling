@@ -1,25 +1,6 @@
 
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
-import 'package:firstly/presintations/screens/home/current_location_screen.dart';
-import 'package:firstly/presintations/screens/home/location.dart';
-import 'package:firstly/presintations/screens/payment/payment_gateway.dart';
-import 'package:firstly/presintations/screens/payment/paymob_manager.dart';
-import 'package:firstly/presintations/screens/payment/paypal.dart';
-import 'package:firstly/presintations/widgets/show_in_checkout.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
-
-class CheckOutPage extends StatefulWidget {
-  
-  const CheckOutPage({Key? key, required this.cartProducts}) : super(key: key);
-  final List<Product> cartProducts;
-  
-
-  @override
-  State<CheckOutPage> createState() => _CheckOutPageState();
-import 'package:firstly/constants.dart';
-import 'package:firstly/data/models/product.dart';
 import 'package:firstly/presintations/screens/payment/payment_gateway.dart';
 import 'package:firstly/presintations/screens/payment/paymob_manager.dart';
 import 'package:firstly/presintations/screens/payment/paypal.dart';

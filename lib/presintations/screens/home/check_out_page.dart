@@ -704,6 +704,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               //     "phone": "+00000000",
                               //     "state": "Texas"
                               //  },
+                              
                             }
                           }
                         ],

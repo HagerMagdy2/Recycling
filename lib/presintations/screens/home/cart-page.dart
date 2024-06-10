@@ -111,8 +111,9 @@ class _CartPageState extends State<CartPage> {
                                   );
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  primary:
-                                      kMainColor, // Use kMainColor as button background color
+                                  backgroundColor:kMainColor ,
+                                  // primary:
+                                  //     kMainColor, // Use kMainColor as button background color
                                 ),
                                 child: Text('Checkout'),
                               ),

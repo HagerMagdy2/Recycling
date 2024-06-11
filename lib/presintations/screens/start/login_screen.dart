@@ -104,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: height * 0.1,
+                    height: 50,
                   ),
                   CustomTextField(
                     controller: EmailC,
@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: PasswordC,
                     hint: 'Enter your password',
                     icon: Icons.lock,
-                    showPasswordToggle: true, 
+                    showPasswordToggle: true,
                   ),
                   Visibility(
                     visible: isPasswordIncorrect,
@@ -170,8 +170,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                   password: PasswordC.text,
                                 ));
                           }
-                          
-                           else {
+                          if (state is UnAuthorized)
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text('Sign Up Required'),
+                                content: Text(
+                                    'Please sign up first before logging in.'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          else {
                             setState(() {
                               isPasswordIncorrect = true;
                             });
@@ -185,7 +199,64 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: height * 0.05,
+                    height: 20,
+                  ),
+                  Column(
+                    children: [
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'SignUp ',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: kMainColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            'with others',
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              context
+                                  .read<AuthenticationBloc>()
+                                  .add(SignInWithGoogleEvent());
+                            },
+                            child: const CircleAvatar(
+                              backgroundColor: kSecondaryColor,
+                              radius: 25,
+                              backgroundImage:
+                                  AssetImage("assets/images/google.png"),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          InkWell(
+                            onTap: () {
+                              context
+                                  .read<AuthenticationBloc>()
+                                  .add(signInWithFacebookEvent());
+                            },
+                            child: const CircleAvatar(
+                              radius: 25,
+                              backgroundImage:
+                                  AssetImage("assets/images/facebook.png"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

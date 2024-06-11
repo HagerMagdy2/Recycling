@@ -118,6 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: PasswordC,
                     hint: 'Enter your password',
                     icon: Icons.lock,
+                    showPasswordToggle: true, // Enable the toggle for password
                   ),
                   Visibility(
                     visible: isPasswordIncorrect,

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:firstly/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -86,7 +88,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   // Validate and update the password
                   _changePassword();
                 },
-                child: Text('Save'),
+                child: Text(
+                  'Save',
+                  style: TextStyle(color: kSecondaryColor),
+                ),
                 style: ElevatedButton.styleFrom(
                   //primary: kMainColor,
                   backgroundColor: kMainColor,

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/controller/home-page-controller.dart';
 import 'package:firstly/presintations/screens/home/add-frome-home.dart';
@@ -17,14 +18,25 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int index;
 
+  const HomeScreen({
+    Key? key,
+    this.index = 0,
+  });
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentIndex = 0;
+  late int currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.index;
+  }
+
   List<Widget> screens = [
     MyHomePage(),
     FavoriteScreen(),
@@ -99,26 +111,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icon(
                         Icons.home,
                       ),
-                      label: 'Home',
+                      label: tr('Home'),
                     ),
                     BottomNavigationBarItem(
                         icon: Icon(
                           Icons.favorite,
                         ),
-                        label: 'Favorite'),
+                        label: tr('Favorite')),
                     BottomNavigationBarItem(
                         icon: Icon(
                           Icons.lightbulb,
                         ),
-                        label: 'Learn'),
+                        label: tr('Learn')),
                     BottomNavigationBarItem(
                         icon: Icon(
                           Icons.move_up_rounded,
                         ),
-                        label: 'Your Products'),
+                        label: tr('Your Products')),
                   ],
                 ),
               ),
-            ));
-  }
+     ));
+}
 }

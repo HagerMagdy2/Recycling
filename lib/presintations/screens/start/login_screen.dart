@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: PasswordC,
                     hint: 'Enter your password',
                     icon: Icons.lock,
-                    showPasswordToggle: true, // Enable the toggle for password
+                    showPasswordToggle: true, 
                   ),
                   Visibility(
                     visible: isPasswordIncorrect,
@@ -169,7 +169,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   email: EmailC.text,
                                   password: PasswordC.text,
                                 ));
-                          } else {
+                          }
+                          
+                           else {
                             setState(() {
                               isPasswordIncorrect = true;
                             });

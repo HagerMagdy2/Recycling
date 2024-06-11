@@ -329,24 +329,25 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ListView(
                 children: [
                   GestureDetector(
-                    onTap: () => navigateToCategory(context, 0),
+                    onTap: () => navigateToCategory(context, 2),
                     child: ShowForYou(
                       product: Product(
                         image:
-                            'https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1714767572806.jpg?alt=media&token=da7134f5-8e70-4011-bf68-aa379d440731',
-                        name: 'Cooking Oil',
+                            'https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713741794884.jpg?alt=media&token=6d02d1cc-0cbb-4d7b-b851-52771e762335',
+                        name: 'Pepper Caffeine Container',
                         id: '',
                         userId: userId,
                         userName: '',
                         userEmail: '',
                         userPhone: '',
-                        price: 25,
-                        quantity: 2,
-                        availableQuantity: 5,
-                        category: 'oil',
+                        price: 10,
+                        quantity: 1,
+                        availableQuantity: 1,
+                        category: 'pepper',
                       ),
                     ),
                   ),
+                  
                   GestureDetector(
                     onTap: () => navigateToCategory(context, 1),
                     child: ShowForYou(
@@ -367,21 +368,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => navigateToCategory(context, 2),
+                    onTap: () => navigateToCategory(context, 0),
                     child: ShowForYou(
                       product: Product(
                         image:
-                            'https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713741794884.jpg?alt=media&token=6d02d1cc-0cbb-4d7b-b851-52771e762335',
-                        name: 'Pepper Caffeine Container',
+                            'https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1714767572806.jpg?alt=media&token=da7134f5-8e70-4011-bf68-aa379d440731',
+                        name: 'Cooking Oil',
                         id: '',
                         userId: userId,
                         userName: '',
                         userEmail: '',
                         userPhone: '',
-                        price: 10,
-                        quantity: 1,
-                        availableQuantity: 1,
-                        category: 'pepper',
+                        price: 25,
+                        quantity: 2,
+                        availableQuantity: 5,
+                        category: 'oil',
                       ),
                     ),
                   ),
@@ -391,7 +392,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       product: Product(
                         image:
                             'https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1717804503144.jpg?alt=media&token=e52e78c1-761e-40ce-a546-bafe89ae059a',
-                        name: 'BOHEMIA Candy Bowls',
+                        name: 'Candy Bowls',
                         id: '',
                         userId: userId,
                         userName: '',
@@ -404,6 +405,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
+                  
                   SizedBox(
                     height: 50,
                   )

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:firstly/presintations/screens/home/cart-page.dart';
+import 'package:firstly/presintations/screens/home/home_screen.dart';
 import 'package:firstly/presintations/screens/start/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,7 +58,7 @@ class _settingPageState extends State<settingPage> {
               fun: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FavoriteScreen()),
+                  MaterialPageRoute(builder: (context) => HomeScreen(index: 1,)),
                 );
               },
               color: Colors.blue,

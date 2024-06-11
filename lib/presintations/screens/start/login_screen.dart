@@ -182,7 +182,44 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: height * 0.05,
+                    height: 16,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          context
+                              .read<AuthenticationBloc>()
+                              .add(SignInWithGoogleEvent());
+                        },
+                        child: const CircleAvatar(
+                          backgroundColor: kSecondaryColor,
+                          radius: 25,
+                          backgroundImage:
+                              AssetImage("assets/images/google.png"),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                        height: 20,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          context
+                              .read<AuthenticationBloc>()
+                              .add(signInWithFacebookEvent());
+                        },
+                        child: const CircleAvatar(
+                          radius: 25,
+                          backgroundImage:
+                              AssetImage("assets/images/facebook.png"),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: height * 0.04,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -206,46 +243,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              Provider.of<AdminMode>(context, listen: false)
-                                  .changeIsAdmin(false);
-                            },
-                            child: Text(
-                              'I\'m an admin',
-                              style: TextStyle(
-                                color: Provider.of<AdminMode>(context).isAdmin
-                                    ? kMainColor
-                                    : Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              Provider.of<AdminMode>(context, listen: false)
-                                  .changeIsAdmin(true);
-                            },
-                            child: Text(
-                              'I\'m a user',
-                              style: TextStyle(
-                                color: Provider.of<AdminMode>(context).isAdmin
-                                    ? Colors.white
-                                    : kMainColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ),
             );

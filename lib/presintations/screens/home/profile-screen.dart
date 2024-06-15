@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/core/firebase-service.dart';
@@ -118,7 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
-        title: Text('My Profile', style: TextStyle(color: Colors.white)),
+        title: Text(tr('My Profile'), style: TextStyle(color: Colors.white)),
       ),
       body: Column(
         children: [
@@ -190,11 +191,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           SizedBox(height: 20),
-          buildUserInfoDisplay(userName ?? 'User Name', 'Name'),
+          buildUserInfoDisplay(userName ?? tr('User Name'), tr('Name')),
           SizedBox(height: 20),
-          buildUserInfoDisplay(userEmail ?? 'User Email', 'Email'),
+          buildUserInfoDisplay(userEmail ?? tr('User Email'), tr('Email')),
           SizedBox(height: 20),
-          buildUserInfoDisplay(userPhone ?? 'User Phone Number', 'Phone'),
+          buildUserInfoDisplay(userPhone ?? tr('User Phone Number'), tr('Phone')),
           SizedBox(height: 40),
           ElevatedButton.icon(
             onPressed: () async {
@@ -221,7 +222,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Icons.edit,
               color: Colors.white,
             ),
-            label: Text('Edit Profile', style: TextStyle(color: Colors.white)),
+            label: Text(tr('Edit Profile'), style: TextStyle(color: Colors.white)),
             style: ElevatedButton.styleFrom(
               backgroundColor: kMainColor,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),

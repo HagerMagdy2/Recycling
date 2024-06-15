@@ -150,7 +150,7 @@ class Page4 extends StatelessWidget {
                   Navigator.pushNamed(context, LoginScreen.id);
                 },
                 child: const Text(
-                  'Sign In',
+                  '                    Start                     ',
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 )),
           ),

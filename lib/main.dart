@@ -2,18 +2,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/authentication_remote_data_source.dart';
-import 'package:firstly/data/remotDs/compost-remot-ds.dart';
-import 'package:firstly/data/remotDs/oil_remot_ds.dart';
-import 'package:firstly/data/remotDs/papers-remot-ds.dart';
-import 'package:firstly/data/remotDs/plastic-remot-ds.dart';
+
 import 'package:firstly/data/remotDs/product_remote_data_source.dart';
 import 'package:firstly/presintations/bloc/authentication_bloc.dart';
-import 'package:firstly/presintations/bloc/compost_bloc.dart';
-import 'package:firstly/presintations/bloc/oils_bloc.dart';
-import 'package:firstly/presintations/bloc/papers_bloc.dart';
-import 'package:firstly/presintations/bloc/plastic_bloc.dart';
+import 'package:firstly/presintations/bloc/cart_bloc.dart';
+
 import 'package:firstly/presintations/bloc/products_bloc.dart';
 import 'package:firstly/presintations/provider/adminMode.dart';
+import 'package:firstly/presintations/screens/add-edit/edit-profile-screen.dart';
+import 'package:firstly/presintations/screens/helpPage/help.dart';
+import 'package:firstly/presintations/screens/home/my-product.dart';
 import 'package:firstly/presintations/screens/start/login_screen.dart';
 import 'package:firstly/presintations/screens/start/signup_screen.dart';
 import 'package:firstly/presintations/screens/start/start_screen.dart';
@@ -27,32 +25,22 @@ void main() async {
   await Firebase.initializeApp();
 
   runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider<AuthenticationBloc>(
-        create: (context) => AuthenticationBloc(AuthenticationRemoteDsImp()),
-      ),
-      BlocProvider<PlasticBloc>(
-        create: (context) => PlasticBloc(PlasticRemoteDsImp()),
-      ),
-      BlocProvider<ProductBloc>(
-        create: (context) => ProductBloc(ProductRemoteDsImp()),
-      ),
-      BlocProvider<CompostBloc>(
-        create: (context) => CompostBloc(CompostRemoteDsImp()),
-      ),
-      BlocProvider<PapersBloc>(
-        create: (context) => PapersBloc(PapersRemoteDsImp()),
-      ),
-      BlocProvider<OilsBloc>(
-        create: (context) => OilsBloc(OilRemoteDsImp()),
-      ),
-    ],
-    child: EasyLocalization(
+      providers: [
+        BlocProvider<AuthenticationBloc>(
+          create: (context) => AuthenticationBloc(AuthenticationRemoteDsImp()),
+        ),
+        BlocProvider<CartBloc>(
+          create: (context) => CartBloc(ProductRemoteDsImp()),
+        ),
+        BlocProvider<ProductBloc>(
+          create: (context) => ProductBloc(ProductRemoteDsImp()),
+        ),
+      ],
+      child: EasyLocalization(
           fallbackLocale: Locale('ar'),
           child: const MyApp(),
           supportedLocales: [Locale('en'), Locale('ar')],
-          path: 'assets/translations')
-  ));
+          path: 'assets/translations')));
 }
 
 class MyApp extends StatelessWidget {
@@ -69,7 +57,7 @@ class MyApp extends StatelessWidget {
         color: kMainColor,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-              seedColor: kMainColor, primary: kSecondaryColor),
+              seedColor: kSecondaryColor, primary: kMainColor),
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
@@ -78,6 +66,12 @@ class MyApp extends StatelessWidget {
           StartScreen.id: (context) => StartScreen(),
           SignupScreen.id: (context) => SignupScreen(),
           LoginScreen.id: (context) => LoginScreen(),
+          EditProfileScreen.id: (context) => EditProfileScreen(
+                currentEmail: '',
+                currentName: '',
+              ),
+          HelpScreen.id: (context) => HelpScreen(),
+           '/myProduct': (context) => MyProduct(),
         },
       ),
     );

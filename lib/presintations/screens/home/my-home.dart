@@ -105,9 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 200,
                     width: 400,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: kMainColor,
-                    ),
+                        gradient: kMainColorGradient,
+                        borderRadius: BorderRadius.circular(20)),
                     child: Padding(
                       padding: const EdgeInsets.only(
                           left: 10.0, right: 12.0, top: 50.0),
@@ -184,8 +183,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         fixedSize: const Size(140, 10),
                       ),
-                      child: const Text(
-                        'View Profile',
+                      child:  Text(
+                        tr('View Profile'),
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.white,
@@ -200,8 +199,8 @@ class _MyHomePageState extends State<MyHomePage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "      Materials",
+                Text(
+                  tr("      Materials"),
                   style: TextStyle(
                     fontSize: 22,
                     color: kMainColor1,
@@ -228,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 );
                               },
                               child: Matrial(
-                                title: "Glasses",
+                                title: tr("Glasses"),
                                 icon: Image.asset(
                                   "assets/images/icons-glasses.png",
                                   height: 50,
@@ -245,7 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 );
                               },
                               child: Matrial(
-                                title: "Plastic",
+                                title: tr("Plastic"),
                                 icon: Image.asset(
                                   "assets/images/icons-plastics.png",
                                   height: 50,
@@ -262,7 +261,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 );
                               },
                               child: Matrial(
-                                title: "Compost",
+                                title: tr("Compost"),
                                 icon: Image.asset(
                                   "assets/images/icons-carrots.png",
                                   height: 50,
@@ -279,7 +278,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 );
                               },
                               child: Matrial(
-                                title: "Papers",
+                                title: tr("Papers"),
                                 icon: Image.asset(
                                   "assets/images/icons-paper.png",
                                   height: 50,
@@ -295,7 +294,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 );
                               },
                               child: Matrial(
-                                title: "Oils",
+                                title: tr("Oils"),
                                 icon: Image.asset(
                                   "assets/images/icons-oils.png",
                                   height: 50,
@@ -312,9 +311,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
-                  "For you",
+                  tr("For you"),
                   style: TextStyle(
                     fontSize: 20,
                     color: kMainColor1,

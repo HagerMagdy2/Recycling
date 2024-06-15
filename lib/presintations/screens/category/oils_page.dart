@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/core/firebase-service.dart';
@@ -39,7 +40,7 @@ class _OilsCategoryPageState extends State<OilsCategoryPage> {
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
-          'Oils Page',
+          tr('Oils'),
           style: TextStyle(color: Colors.white),
         ),
         actions: [

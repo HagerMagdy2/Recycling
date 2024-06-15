@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/core/firebase-service.dart';
@@ -37,7 +38,7 @@ class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
-          'Glasses Page',
+          tr('Glasses'),
           style: TextStyle(color: Colors.white),
         ),
         actions: [
@@ -100,7 +101,7 @@ class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
                       itemCount: state.products.length,
                       itemBuilder: (context, i) {
                         final product = state.products[i];
-                        print('Product Category: ${product.category}');
+                        //   print('Product Category: ${product.category}');
                         // Check if the product user email matches the current user's email
                         User? currentUser = FirebaseAuth.instance.currentUser;
                         print('Current User Email: ${currentUser!.email}');
@@ -115,18 +116,18 @@ class _GlassesCategoryPageState extends State<GlassesCategoryPage> {
                         if (searchController.text.isNotEmpty &&
                             !product.name.toLowerCase().contains(
                                 searchController.text.toLowerCase())) {
-                          print(
-                              'Skipping product: ${product.name} because it does not match search query.');
+                          // print(
+                          //     'Skipping product: ${product.name} because it does not match search query.');
                           return SizedBox.shrink();
                         }
 
                         if (product.category.toLowerCase() != "glasses") {
-                          print(
-                              'Skipping product: ${product.name} because it is not in the "glasses" category.');
+                          // print(
+                          //     'Skipping product: ${product.name} because it is not in the "glasses" category.');
                           return SizedBox
                               .shrink(); // Skip displaying this product
                         }
-                        print('Displaying product: ${product.name}');
+                        //  print('Displaying product: ${product.name}');
                         return ShowProducts(product: product);
                       },
                     ),

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/presintations/screens/home/video_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class LearnScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Text(
-              'Videos',
+              tr('Videos'),
               style: TextStyle(
                   fontSize: 20, fontWeight: FontWeight.bold, color: kMainColor),
             ),
@@ -52,7 +53,7 @@ class LearnScreen extends StatelessWidget {
             ),
             SizedBox(height: 20), // Spacer between videos and articles
             Text(
-              'Articles',
+              tr('Articles'),
               style: TextStyle(
                   fontSize: 20, fontWeight: FontWeight.bold, color: kMainColor),
             ),

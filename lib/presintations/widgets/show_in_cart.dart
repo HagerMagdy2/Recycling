@@ -1,6 +1,7 @@
 // show_in_cart.dart
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
 import 'package:firstly/data/remotDs/product_remote_data_source.dart';
@@ -19,6 +20,23 @@ class ShowInCart extends StatefulWidget {
 }
 
 class _ShowInCartState extends State<ShowInCart> {
+  late bool isFavorite;
+  late bool isInCart;
+  @override
+  void initState() {
+    super.initState();
+
+    isFavorite = widget.product.isFav;
+    isInCart = widget.product.isInCart;
+    // Check if the product is in the cart item collection
+    // You'll need to replace 'checkIfInCart' with the appropriate method or logic
+    // checkIfInCart().then((inCart) {
+    //   setState(() {
+    //     isInCart = inCart;
+    //   });
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductBloc, ProductState>(
@@ -78,7 +96,7 @@ class _ShowInCartState extends State<ShowInCart> {
                         width: 3,
                       ),
                       Text(
-                        "EGP",
+                        tr("EGP"),
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
@@ -138,24 +156,27 @@ class _ShowInCartState extends State<ShowInCart> {
                     ],
                   ),
                   OutlinedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       ProductRemoteDsImp().updateProduct(
                           widget.product.copyWith(isInCart: false));
+
+                      // Dispatch the RemoveProductFromCart event
                       context.read<ProductBloc>().add(RemoveProductFromCart(
                           product: widget.product, id: widget.product.id));
 
+                      // Show a snackbar to indicate that the product has been removed from the cart
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Product removed from cart')),
                       );
+
                       setState(() {
                         // Update isInCart field locally
                         widget.product.isInCart = false;
                       });
                     },
-                    child: const Text('Remove from cart'),
+                    child: Text(tr('Remove from cart')),
                     style: OutlinedButton.styleFrom(
-                      primary: Colors.white,
-                      backgroundColor: kMainColor,
+                      foregroundColor: Colors.white, backgroundColor: kMainColor,
                       side: BorderSide(color: kMainColor),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4),

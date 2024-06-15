@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
@@ -19,14 +20,14 @@ class ShowFav extends StatefulWidget {
 class _ShowFavState extends State<ShowFav> {
   late bool isFavorite;
   late bool isInCart;
-  Future<bool> checkIfInCart() async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    // Logic to check if the product is in the cart item collection
-    // You can use your data source or any other method to perform this check
-    // For demonstration purposes, let's assume a hypothetical method called 'isInCart'
-    return await ProductRemoteDsImp()
-        .isInCart(widget.product.id, _auth.currentUser!);
-  }
+  // Future<bool> checkIfInCart() async {
+  //   final FirebaseAuth _auth = FirebaseAuth.instance;
+  //   // Logic to check if the product is in the cart item collection
+  //   // You can use your data source or any other method to perform this check
+  //   // For demonstration purposes, let's assume a hypothetical method called 'isInCart'
+  //   return await ProductRemoteDsImp()
+  //       .isInCart(widget.product.id, _auth.currentUser!);
+  // }
 
   @override
   void initState() {
@@ -99,7 +100,7 @@ class _ShowFavState extends State<ShowFav> {
                     ),
                     // Check if userName is not null
                     Text(
-                      'Added by: ${widget.product.userName}',
+                      tr('Added by: ') + '${widget.product.userName}',
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
@@ -107,7 +108,7 @@ class _ShowFavState extends State<ShowFav> {
                     ),
                     // Check if userEmail is not null
                     Text(
-                      'Email: ${widget.product.userEmail}',
+                      tr('Email: ') + '${widget.product.userEmail}',
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
@@ -151,11 +152,11 @@ class _ShowFavState extends State<ShowFav> {
                               );
                             }
                           },
-                          child: Text(
-                              isInCart ? 'Remove from cart' : 'Add to cart'),
+                          child: Text(isInCart
+                              ? tr('Remove from cart')
+                              : tr('Add to cart')),
                           style: OutlinedButton.styleFrom(
-                            primary: isInCart ? Colors.white : kMainColor,
-                            backgroundColor:
+                            foregroundColor: isInCart ? Colors.white : kMainColor, backgroundColor:
                                 isInCart ? kMainColor : Colors.white,
                             side: BorderSide(
                                 color: isInCart ? kMainColor : kMainColor),

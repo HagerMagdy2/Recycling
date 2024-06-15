@@ -1,1 +1,17 @@
-{"Arabic":"العربيه","English":"الانجليزيه","Languages":"اللغه","Log Out":"تسجيل خروج","About Us":"معلومات عنا"}
+{"Arabic":"العربية","English":"الانجليزية","Languages":"اللغة","Log Out":"تسجيل خروج",
+"About Us":"معلومات عنا","      Materials":"      الفئات",
+"Home" :"الرئيسية","Favorite":"المفضلة","Learn":"معلومات","Your Products":"منتجاتك",
+"Oils":"زيوت" ,"Papers":"ورق","Compost":"مواد غذائية" ,"Plastic":"بلاستيك",
+"Glasses":"زجاج","For you":"خصيصاً لك","Add to cart":" اضافة الى العربة" ,
+"Remove from cart":"ازالة من العربة","Add New Product":"أضافة منتج جديد",
+"Product Name":"أسم المنتج","Price":"السعر","quantity":"الكمية",
+"Add Product":"أضافة","Which category do you want to add?":"ما هي الفئة التي تريد إضافتها؟"
+,"Cart":"العربة", "Total Price: ": "المبلغ الكلى: ","EGP":"ج.م","Email: ":"الايميل: ",
+"Added by: ":"مضاف بواسطة: ","PRODUCT NAME":"اسم المنتج", "QTY":"الكمية","PRICE":"السعر","Profile":"الحساب الشخصي","Are you sure ?":"هل أنت متأكد","Yes":"نعم","No":"لا",
+"Language":"اللغة","Settings":"الاعدادات","LogOut":"تسجيل خروج","Location":"الموقع",
+"CONFIRM ORDER":"تأكيد الطلب","Checkout":"الدفع","Videos":"فيديوهات","Articles":"مقالات","Payment":"الدفع","Edit Personal Data":"تعديل البيانات الشخصية",
+"Help":"مساعدة","What happened ?":"ما مشكلتك؟","Submit":"ارسال","My Profile":"حسابي","Name":"الاسم",
+"Email":"البريد الالكتروني","Phone":"الهاتف","Edit Profile":"تعديل الحساب","Pick from Gallery":"اختيار من المعرض",
+"Take Photo":"التقاط صورة","Phone Number":"رقم الهاتف","Change Password":"تغيير كلمة السر","Save":"حفظ",
+"User Phone Number":"رقم الهاتف","User Name":"اسم المستخدم","User Email":"البريد الالكتروني للمستخدم","View Profile":"حسابي"
+}

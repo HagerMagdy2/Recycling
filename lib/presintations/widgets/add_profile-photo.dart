@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firstly/core/storage_helper.dart';
@@ -55,7 +56,7 @@ class _AddProfilePhotoState extends State<AddProfilePhoto> {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      "Pick from gallery",
+                      tr('Pick from Gallery'),
                       style: TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ],
@@ -74,7 +75,7 @@ class _AddProfilePhotoState extends State<AddProfilePhoto> {
                     ),
                     SizedBox(width: 10),
                     Text(
-                      "Take photo",
+                      tr('Take Photo'),
                       style: TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ],
@@ -130,5 +131,5 @@ class _AddProfilePhotoState extends State<AddProfilePhoto> {
     });
 
     Navigator.pop(context);
-  }
+ }
 }

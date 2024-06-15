@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstly/constants.dart';
@@ -83,7 +84,7 @@ class _AddPapersPageState extends State<AddPapersPage> {
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
-          'Add New Product',
+          tr('Add New Product'),
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
@@ -138,7 +139,7 @@ class _AddPapersPageState extends State<AddPapersPage> {
                       return null;
                     },
                     decoration: InputDecoration(
-                      labelText: 'Product Name',
+                      labelText: tr('Product Name'),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -168,7 +169,7 @@ class _AddPapersPageState extends State<AddPapersPage> {
                     },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: 'quantity',
+                      labelText: tr('quantity'),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -206,10 +207,11 @@ class _AddPapersPageState extends State<AddPapersPage> {
                                   price: num.parse(priceC.text),
                                   quantity: num.parse(quantityC.text),
                                   availableQuantity: num.parse(quantityC.text),
-                                  userId: userId, 
+                                  userId: userId,
                                   userName: userName,
                                   userEmail: userEmail,
-                                  userPhone: userPhone, category: 'papers', // Pass the userId here
+                                  userPhone: userPhone,
+                                  category: 'papers', // Pass the userId here
                                 ),
                               ),
                             );
@@ -221,7 +223,7 @@ class _AddPapersPageState extends State<AddPapersPage> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 12),
                       child: Text(
-                        'Add Product',
+                        tr('Add Product'),
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),

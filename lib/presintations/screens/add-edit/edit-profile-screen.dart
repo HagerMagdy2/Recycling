@@ -13,7 +13,7 @@ class EditProfileScreen extends StatefulWidget {
     required this.currentEmail,
     this.currentPhone, // Update constructor
   }) : super(key: key);
-
+  static String id = 'EditProfileScreen';
   @override
   _EditProfileScreenState createState() => _EditProfileScreenState();
 }
@@ -89,7 +89,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 );
               },
-              child: Text('Change Password'),
+              child: Text('Change Password',style: TextStyle(color: kSecondaryColor)),
               style: OutlinedButton.styleFrom(
                // primary: kMainColor,
                 backgroundColor: kMainColor,
@@ -110,7 +110,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   'phone': _phoneController.text.trim(), // Include phone number
                 });
               },
-              child: Text('Save'),
+              child: Text('Save',style: TextStyle(color: kSecondaryColor)),
               style: ElevatedButton.styleFrom(
                 //primary: kMainColor,
                 backgroundColor: kMainColor,

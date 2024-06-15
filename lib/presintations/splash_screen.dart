@@ -1,4 +1,5 @@
 import 'package:firstly/constants.dart';
+import 'package:firstly/presintations/screens/home/home_screen.dart';
 import 'package:firstly/presintations/screens/start/signup_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void navigateToNextScreen() {
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => SignupScreen()));
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
     });
   }
 
@@ -29,10 +30,10 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Colors.white,
       body: Center(
         child: Container(
-          height: 100,
-          width: 100,
+          height: 300,
+          width: 300,
           child: Image.asset(
-            'assets/images/1.png',
+            'assets/images/logo.png',
             fit: BoxFit.cover,
           ),
         ),

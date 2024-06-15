@@ -208,7 +208,7 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
                                   userId: userId, 
                                   userName: userName,
                                   userEmail: userEmail,
-                                  userPhone: userPhone, // Pass the userId here
+                                  userPhone: userPhone, category: 'glasses', // Pass the userId here
                                 ),
                               ),
                             );

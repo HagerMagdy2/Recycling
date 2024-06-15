@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/authentication_remote_data_source.dart';
@@ -12,23 +13,21 @@ import 'package:firstly/presintations/bloc/oils_bloc.dart';
 import 'package:firstly/presintations/bloc/papers_bloc.dart';
 import 'package:firstly/presintations/bloc/plastic_bloc.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
-import 'package:firstly/presintations/screens/payment/paypal.dart';
+import 'package:firstly/presintations/provider/adminMode.dart';
 import 'package:firstly/presintations/screens/start/login_screen.dart';
 import 'package:firstly/presintations/screens/start/signup_screen.dart';
 import 'package:firstly/presintations/screens/start/start_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-//import 'package:flutter_stripe/flutter_stripe.dart';
-
 import 'package:provider/provider.dart';
 
-
 void main() async {
-//   Stripe.publishableKey=ApiKeys.pusblishableKey;
   WidgetsFlutterBinding.ensureInitialized();
-   await Firebase.initializeApp();
+  await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MultiBlocProvider(
-    providers: [  
+    providers: [
       BlocProvider<AuthenticationBloc>(
         create: (context) => AuthenticationBloc(AuthenticationRemoteDsImp()),
       ),
@@ -48,27 +47,39 @@ void main() async {
         create: (context) => OilsBloc(OilRemoteDsImp()),
       ),
     ],
-    child: MyApp(),
+    child: EasyLocalization(
+          fallbackLocale: Locale('ar'),
+          child: const MyApp(),
+          supportedLocales: [Locale('en'), Locale('ar')],
+          path: 'assets/translations')
   ));
-} 
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-       initialRoute: StartScreen.id,
-      //initialRoute: CheckoutPage.id,
-      //initialRoute: CustomRadioButton.id,
-      routes: {
-        StartScreen.id: (context) => StartScreen(),
-        SignupScreen.id: (context) => SignupScreen(),
-        LoginScreen.id: (context) => LoginScreen(),
-        // HomeScreen.id: (context) => HomeScreen(),
-      //  CheckoutPage.id: (context) => CheckoutPage(),
-      },
+    return ChangeNotifierProvider<AdminMode>(
+      create: (context) => AdminMode(),
+      child: MaterialApp(
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        color: kMainColor,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: kMainColor, primary: kSecondaryColor),
+          useMaterial3: true,
+        ),
+        debugShowCheckedModeBanner: false,
+        initialRoute: StartScreen.id,
+        routes: {
+          StartScreen.id: (context) => StartScreen(),
+          SignupScreen.id: (context) => SignupScreen(),
+          LoginScreen.id: (context) => LoginScreen(),
+        },
+      ),
     );
   }
 }

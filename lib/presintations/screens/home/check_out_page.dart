@@ -1,4 +1,3 @@
-
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
 import 'package:firstly/presintations/screens/payment/payment_gateway.dart';
@@ -23,9 +22,17 @@ class _CheckOutPageState extends State<CheckOutPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController notesController = TextEditingController();
+  late num totalPrice =0;
+    num getTotalPrice() {
+    //double totalPrice = 0.0;
+    for (var product in widget.cartProducts) {
+      totalPrice += product.price * product.quantity;
+    }
+    return totalPrice;
+  }
   void _continuePayment() {
-     num totalprice = getTotalPrice().toDouble();
-    PaymobManager().payWithPaymob(totalprice.toInt()).then((paymentKey) {
+    // num totalprice = getTotalPrice().toDouble();
+    PaymobManager().payWithPaymob(totalPrice.toInt()).then((paymentKey) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -35,14 +42,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
     });
   }
 
-  double getTotalPrice() {
-    double totalPrice = 0.0;
-    for (var product in widget.cartProducts) {
-      totalPrice += product.price * product.quantity;
-    }
-    return totalPrice;
-  }
- num totalPrice = 50;
+
+
   InputDecoration _buildInputDecoration(String labelText) {
     return InputDecoration(
       labelText: labelText,
@@ -130,7 +131,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PaymentPage(totalprice: 10)),
+                      builder: (context) => PaymentPage(totalprice:totalPrice )),
                 );
               },
               child: Text(
@@ -222,13 +223,13 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         //  emailPersonal:sb-st7md30520465@personal.example.com pass:123456789
                         //  emailBissness:sb-pr743330543964@business.example.com pass:123456789
                         
-                      transactions: const [
+                        transactions:  [
                           {
                             "amount": {
-                              "total": 'totalPrice',
+                              "total": '$totalPrice',
                               "currency": "USD",
                               "details": {
-                                "subtotal":'totalPrice',
+                                "subtotal":'$totalPrice',
                                 "shipping": '0',
                                 "shipping_discount": 0
                               }
@@ -240,22 +241,15 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             //       "INSTANT_FUNDING_SOURCE"
                             // },
                             "item_list": {
-                              "items": [
-                                {
-                                  "name": "Apple",
-                                  "quantity": 5,
-                                  "price": '5',
-                                  "currency": "USD"
-                                },
-                                {
-                                  "name": "Pineapple",
-                                  "quantity": 5,
-                                  "price": '5',
-                                  "currency": "USD"
-                                }
-                              ],
+                            "items": widget.cartProducts.map((product) => {
+    "name": product.name,
+    "quantity": product.quantity,
+     "price": product.price,
 
-                              // shipping address is not required though
+"currency": "USD"
+    // ... other item details (optional)
+  }).toList(),
+  // shipping address is not required though
                               //   "shipping_address": {
                               //     "recipient_name": "Raman Singh",
                               //     "line1": "Delhi",
@@ -269,6 +263,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             }
                           }
                         ],
+
+
                         note: "Contact us for any questions on your order.",
                         onSuccess: (Map params) async {
                           print("onSuccess: $params");
@@ -453,3 +449,4 @@ class _CheckOutPageState extends State<CheckOutPage> {
     );
   }
 }
+

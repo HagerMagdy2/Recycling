@@ -12,7 +12,7 @@ class CustomTextField extends StatefulWidget {
     required this.icon,
     required this.hint,
     this.controller,
-    this.showPasswordToggle = false, 
+    this.showPasswordToggle = false, // default is no toggle
   });
 
   @override
@@ -57,7 +57,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           return null;
         },
         cursorColor: kMainColor,
-        obscureText: widget.hint == 'Enter your password' && _obscureText, 
+        obscureText: widget.hint == 'Enter your password' && _obscureText, // Hide password text conditionally
         decoration: InputDecoration(
           prefixIcon: Icon(
             widget.icon,

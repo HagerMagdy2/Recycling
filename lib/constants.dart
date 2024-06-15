@@ -25,5 +25,5 @@ final kMainColor1Gradient = LinearGradient(
     Color.fromARGB(255, 21, 102, 74).withOpacity(0.8),
     Color.fromARGB(255, 13, 82, 59).withOpacity(0.8),
     Color.fromARGB(255, 5, 61, 44).withOpacity(0.8),
-],
+  ],
 );

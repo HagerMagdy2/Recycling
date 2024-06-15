@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firstly/constants.dart';
@@ -10,7 +11,6 @@ import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
 import 'package:firstly/presintations/screens/category/glasses_page.dart';
 import 'package:firstly/presintations/screens/category/oils_page.dart';
-import 'package:firstly/presintations/screens/home/home_screen.dart';
 import 'package:firstly/presintations/widgets/add_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -84,7 +84,7 @@ class _AddOilsPageState extends State<AddOilsPage> {
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
-          'Add New Product',
+          tr('Add New Product'),
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
@@ -139,7 +139,7 @@ class _AddOilsPageState extends State<AddOilsPage> {
                       return null;
                     },
                     decoration: InputDecoration(
-                      labelText: 'Product Name',
+                      labelText: tr('Product Name'),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -154,7 +154,7 @@ class _AddOilsPageState extends State<AddOilsPage> {
                     },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: 'Price',
+                      labelText: tr('Price'),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -169,7 +169,7 @@ class _AddOilsPageState extends State<AddOilsPage> {
                     },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: 'quantity',
+                      labelText: tr('quantity'),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -194,7 +194,7 @@ class _AddOilsPageState extends State<AddOilsPage> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => HomeScreen(index: 3,),
+                            builder: (context) => OilsCategoryPage(),
                           ),
                         );
                         print(userName);
@@ -207,10 +207,11 @@ class _AddOilsPageState extends State<AddOilsPage> {
                                   price: num.parse(priceC.text),
                                   quantity: num.parse(quantityC.text),
                                   availableQuantity: num.parse(quantityC.text),
-                                  userId: userId, 
+                                  userId: userId,
                                   userName: userName,
                                   userEmail: userEmail,
-                                  userPhone: userPhone, category: 'oils', // Pass the userId here
+                                  userPhone: userPhone,
+                                  category: 'oils', // Pass the userId here
                                 ),
                               ),
                             );
@@ -222,7 +223,7 @@ class _AddOilsPageState extends State<AddOilsPage> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 12),
                       child: Text(
-                        'Add Product',
+                        tr('Add Product'),
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                     ),

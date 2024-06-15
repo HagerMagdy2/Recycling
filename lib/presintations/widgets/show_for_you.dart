@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firstly/data/models/product.dart';
@@ -16,6 +17,10 @@ class ShowForYou extends StatefulWidget {
 class _ShowForYouState extends State<ShowForYou> {
   @override
   Widget build(BuildContext context) {
+    final NumberFormat numberFormat = NumberFormat.currency(
+      locale: EasyLocalization.of(context)?.locale?.toString() ?? 'en_US',
+      symbol: tr('EGP'),
+    );
     return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         return Container(
@@ -39,7 +44,8 @@ class _ShowForYouState extends State<ShowForYou> {
                 height: 100,
                 margin: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50), // Circular border for image
+                  borderRadius:
+                      BorderRadius.circular(50), // Circular border for image
                   image: DecorationImage(
                     image: NetworkImage(widget.product.image),
                     fit: BoxFit.cover,
@@ -62,7 +68,7 @@ class _ShowForYouState extends State<ShowForYou> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      '${widget.product.price} EGP',
+                      '${widget.product.price} ' + tr('EGP'),
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,

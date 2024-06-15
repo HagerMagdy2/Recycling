@@ -119,7 +119,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   controller: PasswordC,
                   hint: 'Enter your password',
                   icon: Icons.lock,
-                  showPasswordToggle: true, 
                 ),
                 const SizedBox(
                   height: 10,

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -12,7 +13,7 @@ class HelpScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kMainColor,
-        title:  Text('Help Me',
+        title:  Text(tr('Help'),
           style: TextStyle(fontSize: 24,
             color: Colors.white,),
         ),
@@ -28,7 +29,7 @@ class HelpScreen extends StatelessWidget {
               SizedBox(height: 10,
               ),
               TextFeild_(
-                text: 'What happened ?',
+                text: tr('What happened ?'),
                 keyboardType:TextInputType.multiline,
                 maxLine: null ,
                 maxLength: 200,
@@ -38,7 +39,7 @@ class HelpScreen extends StatelessWidget {
                 onPressed: () {
                   // Pass the problem massage to admin
                 },
-                child: Text('Submit', style: TextStyle(
+                child: Text(tr('Submit'), style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,

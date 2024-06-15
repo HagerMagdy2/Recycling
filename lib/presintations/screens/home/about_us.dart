@@ -48,7 +48,7 @@ class _AboutUsScreenState extends State<AboutUsScreen>
                 ),
                 AboutUsUIItem(
                   title: 'Developers',
-                  details: 'Team Be Green',
+                  details: 'Mai Atef & Arwa Ayman & Hagar Magdy ',
                 ),
                 AboutUsUIItem(
                   title: 'Facebook',

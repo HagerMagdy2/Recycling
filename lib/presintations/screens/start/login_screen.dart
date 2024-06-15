@@ -44,6 +44,23 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (_) => const HomeScreen()),
               );
+            } else if (state is AuthError) {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('Error'),
+                  content: Text(
+                      'No account exists with this email. Please sign up first.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                ),
+              );
             }
           },
           builder: (context, state) {
@@ -104,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: height * 0.1,
                   ),
                   CustomTextField(
                     controller: EmailC,
@@ -118,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: PasswordC,
                     hint: 'Enter your password',
                     icon: Icons.lock,
-                    showPasswordToggle: true,
+                    showPasswordToggle: true, // Enable the toggle for password
                   ),
                   Visibility(
                     visible: isPasswordIncorrect,
@@ -169,23 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   email: EmailC.text,
                                   password: PasswordC.text,
                                 ));
-                          }
-                          if (state is UnAuthorized)
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: Text('Sign Up Required'),
-                                content: Text(
-                                    'Please sign up first before logging in.'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: Text('OK'),
-                                  ),
-                                ],
-                              ),
-                            );
-                          else {
+                          } else {
                             setState(() {
                               isPasswordIncorrect = true;
                             });
@@ -199,64 +200,44 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 16,
                   ),
-                  Column(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'SignUp ',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: kMainColor,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            'with others',
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                          )
-                        ],
+                      InkWell(
+                        onTap: () {
+                          context
+                              .read<AuthenticationBloc>()
+                              .add(SignInWithGoogleEvent());
+                        },
+                        child: const CircleAvatar(
+                          backgroundColor: kSecondaryColor,
+                          radius: 25,
+                          backgroundImage:
+                              AssetImage("assets/images/google.png"),
+                        ),
                       ),
                       const SizedBox(
-                        height: 10,
+                        width: 20,
+                        height: 20,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              context
-                                  .read<AuthenticationBloc>()
-                                  .add(SignInWithGoogleEvent());
-                            },
-                            child: const CircleAvatar(
-                              backgroundColor: kSecondaryColor,
-                              radius: 25,
-                              backgroundImage:
-                                  AssetImage("assets/images/google.png"),
-                            ),
-                          ),
-                          const SizedBox(width: 20),
-                          InkWell(
-                            onTap: () {
-                              context
-                                  .read<AuthenticationBloc>()
-                                  .add(signInWithFacebookEvent());
-                            },
-                            child: const CircleAvatar(
-                              radius: 25,
-                              backgroundImage:
-                                  AssetImage("assets/images/facebook.png"),
-                            ),
-                          ),
-                        ],
+                      InkWell(
+                        onTap: () {
+                          context
+                              .read<AuthenticationBloc>()
+                              .add(signInWithFacebookEvent());
+                        },
+                        child: const CircleAvatar(
+                          radius: 25,
+                          backgroundImage:
+                              AssetImage("assets/images/facebook.png"),
+                        ),
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: 20,
+                    height: height * 0.04,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -280,46 +261,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              Provider.of<AdminMode>(context, listen: false)
-                                  .changeIsAdmin(false);
-                            },
-                            child: Text(
-                              'I\'m an admin',
-                              style: TextStyle(
-                                color: Provider.of<AdminMode>(context).isAdmin
-                                    ? kMainColor
-                                    : Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              Provider.of<AdminMode>(context, listen: false)
-                                  .changeIsAdmin(true);
-                            },
-                            child: Text(
-                              'I\'m a user',
-                              style: TextStyle(
-                                color: Provider.of<AdminMode>(context).isAdmin
-                                    ? Colors.white
-                                    : kMainColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ),
             );

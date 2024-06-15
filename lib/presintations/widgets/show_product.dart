@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
@@ -18,12 +19,14 @@ class ShowProducts extends StatefulWidget {
 class _ShowProductsState extends State<ShowProducts> {
   late bool isFavorite;
   late bool isInCart;
-
-  Future<bool> checkIfInCart() async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    return await ProductRemoteDsImp()
-        .isInCart(widget.product.id, _auth.currentUser!);
-  }
+  // Future<bool> checkIfInCart() async {
+  //   final FirebaseAuth _auth = FirebaseAuth.instance;
+  //   // Logic to check if the product is in the cart item collection
+  //   // You can use your data source or any other method to perform this check
+  //   // For demonstration purposes, let's assume a hypothetical method called 'isInCart'
+  //   return await ProductRemoteDsImp()
+  //       .isInCart(widget.product.id, _auth.currentUser!);
+  // }
 
   @override
   void initState() {
@@ -38,20 +41,8 @@ class _ShowProductsState extends State<ShowProducts> {
     return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         return Container(
-          decoration: BoxDecoration(
-            color: Colors.white70, 
-            borderRadius: BorderRadius.circular(15), 
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: Offset(0, 3), 
-              ),
-            ],
-          ),
+          color: Colors.grey[200],
           margin: const EdgeInsets.all(7),
-          padding: const EdgeInsets.all(10), // Add some padding inside the container
           child: Row(
             children: [
               Container(
@@ -82,21 +73,21 @@ class _ShowProductsState extends State<ShowProducts> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      '${widget.product.price} EGP',
+                      '${widget.product.price}' + tr('EGP'),
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       ),
                     ),
                     Text(
-                      'Added by: ${widget.product.userName}',
+                      tr('Added by: ') + '${widget.product.userName}',
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
                       ),
                     ),
                     Text(
-                      'Email: ${widget.product.userEmail}',
+                      tr('Email: ') + '${widget.product.userEmail}',
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
@@ -111,23 +102,34 @@ class _ShowProductsState extends State<ShowProducts> {
                               isInCart = !isInCart;
                             });
                             if (isInCart) {
-                              ProductRemoteDsImp().updateProduct(widget.product.copyWith(isInCart: true, isFav: isFavorite));
-                              ProductRemoteDsImp().addToCart(widget.product.copyWith(quantity: 1));
+                              ProductRemoteDsImp().updateProduct(widget.product
+                                  .copyWith(isInCart: true, isFav: isFavorite));
+                              ProductRemoteDsImp().addToCart(
+                                  widget.product.copyWith(quantity: 1));
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Product added to cart')),
+                                SnackBar(
+                                    content: Text('Product added to cart')),
                               );
                             } else {
-                              ProductRemoteDsImp().updateProduct(widget.product.copyWith(isInCart: false, isFav: isFavorite));
-                              ProductRemoteDsImp().removeProductFromCart(widget.product.id);
+                              ProductRemoteDsImp().updateProduct(widget.product
+                                  .copyWith(
+                                      isInCart: false, isFav: isFavorite));
+                              ProductRemoteDsImp()
+                                  .removeProductFromCart(widget.product.id);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Product removed from cart')),
+                                SnackBar(
+                                    content: Text('Product removed from cart')),
                               );
                             }
                           },
-                          child: Text(isInCart ? 'Remove from cart' : 'Add to cart'),
+                          child: Text(isInCart
+                              ? tr('Remove from cart')
+                              : tr('Add to cart')),
                           style: OutlinedButton.styleFrom(
-                            foregroundColor: isInCart ? Colors.white : kMainColor, backgroundColor: isInCart ? kMainColor : Colors.white,
-                            side: BorderSide(color: isInCart ? kMainColor : kMainColor),
+                            foregroundColor: isInCart ? Colors.white : kMainColor, backgroundColor:
+                                isInCart ? kMainColor : Colors.white,
+                            side: BorderSide(
+                                color: isInCart ? kMainColor : kMainColor),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(4),
                             ),
@@ -141,23 +143,33 @@ class _ShowProductsState extends State<ShowProducts> {
                             color: isFavorite ? Colors.red : null,
                           ),
                           onPressed: () {
-                            print("Before adding to favorites - isFav: $isFavorite, isInCart: $isInCart");
+                            print(
+                                "Before adding to favorites - isFav: $isFavorite, isInCart: $isInCart");
                             setState(() {
                               isFavorite = !isFavorite;
                             });
-                            print("After adding to favorites - isFav: $isFavorite, isInCart: $isInCart");
+                            print(
+                                "After adding to favorites - isFav: $isFavorite, isInCart: $isInCart");
 
                             if (isFavorite) {
-                              ProductRemoteDsImp().updateProduct(widget.product.copyWith(isFav: true, isInCart: isInCart));
-                              ProductRemoteDsImp().addToFavorites(widget.product.copyWith(isFav: true));
+                              ProductRemoteDsImp().updateProduct(widget.product
+                                  .copyWith(isFav: true, isInCart: isInCart));
+                              ProductRemoteDsImp().addToFavorites(
+                                  widget.product.copyWith(isFav: true));
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Product added to favorites')),
+                                SnackBar(
+                                    content:
+                                        Text('Product added to favorites')),
                               );
                             } else {
-                              ProductRemoteDsImp().updateProduct(widget.product.copyWith(isFav: false, isInCart: isInCart));
-                              ProductRemoteDsImp().removeFromFavorites(widget.product.id);
+                              ProductRemoteDsImp().updateProduct(widget.product
+                                  .copyWith(isFav: false, isInCart: isInCart));
+                              ProductRemoteDsImp()
+                                  .removeFromFavorites(widget.product.id);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Product removed from favorites')),
+                                SnackBar(
+                                    content:
+                                        Text('Product removed from favorites')),
                               );
                             }
                           },

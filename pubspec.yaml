@@ -65,7 +65,7 @@ dependencies:
   easy_localization: ^3.0.7
   animated_text_kit: ^4.2.2
   animated_text_field: ^0.0.1+2
-  simple_animations: 4.2.0
+  simple_animations: ^4.2.0
   flutter_animated_button: ^2.0.3
   flutter_staggered_animations: ^1.0.0
 

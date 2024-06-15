@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/presintations/screens/add-edit/change-pass.dart';
@@ -5,15 +6,16 @@ import 'package:firstly/presintations/screens/add-edit/change-pass.dart';
 class EditProfileScreen extends StatefulWidget {
   final String currentName;
   final String currentEmail;
-  final String? currentPhone; // Add current phone number
+  final String? currentPhone;
 
   const EditProfileScreen({
     Key? key,
     required this.currentName,
     required this.currentEmail,
-    this.currentPhone, // Update constructor
+    this.currentPhone,
   }) : super(key: key);
   static String id = 'EditProfileScreen';
+
   @override
   _EditProfileScreenState createState() => _EditProfileScreenState();
 }
@@ -21,22 +23,21 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _nameController;
   late TextEditingController _emailController;
-  late TextEditingController _phoneController; // Add phone controller
+  late TextEditingController _phoneController;
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.currentName);
     _emailController = TextEditingController(text: widget.currentEmail);
-    _phoneController = TextEditingController(
-        text: widget.currentPhone ?? ''); // Initialize phone controller
+    _phoneController = TextEditingController(text: widget.currentPhone ?? '');
   }
 
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
-    _phoneController.dispose(); // Dispose phone controller
+    _phoneController.dispose();
     super.dispose();
   }
 
@@ -46,7 +47,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
-        title: Text('Edit Profile'),
+        title: Text(tr('Edit Profile')),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -56,7 +57,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             TextFormField(
               controller: _nameController,
               decoration: InputDecoration(
-                labelText: 'Name',
+                labelText: tr('Name'),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -64,24 +65,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             TextFormField(
               controller: _emailController,
               decoration: InputDecoration(
-                labelText: 'Email',
+                labelText: tr('Email'),
                 border: OutlineInputBorder(),
               ),
             ),
             SizedBox(height: 16.0),
             TextFormField(
-              // Add phone number field
               controller: _phoneController,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                labelText: 'Phone Number',
+                labelText: tr('Phone Number'),
                 border: OutlineInputBorder(),
               ),
             ),
             SizedBox(height: 24.0),
             OutlinedButton(
               onPressed: () {
-                // Navigate to the change password screen
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -89,9 +88,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 );
               },
-              child: Text('Change Password',style: TextStyle(color: kSecondaryColor)),
+              child: Text(
+                tr('Change Password'),
+                style: TextStyle(color: kSecondaryColor),
+              ),
               style: OutlinedButton.styleFrom(
-               // primary: kMainColor,
                 backgroundColor: kMainColor,
                 padding: EdgeInsets.symmetric(vertical: 16.0),
                 side: BorderSide(color: kMainColor),
@@ -103,16 +104,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
-                // Pass back the updated data to the previous screen
                 Navigator.pop(context, {
                   'name': _nameController.text.trim(),
                   'email': _emailController.text.trim(),
-                  'phone': _phoneController.text.trim(), // Include phone number
+                  'phone': _phoneController.text.trim(),
                 });
               },
-              child: Text('Save',style: TextStyle(color: kSecondaryColor)),
+              child: Text(tr('Save'), style: TextStyle(color: kSecondaryColor)),
               style: ElevatedButton.styleFrom(
-                //primary: kMainColor,
                 backgroundColor: kMainColor,
                 padding: EdgeInsets.symmetric(vertical: 16.0),
                 shape: RoundedRectangleBorder(

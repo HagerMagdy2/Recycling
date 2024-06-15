@@ -1,8 +1,6 @@
+import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'dart:convert';
-import 'package:encrypt/encrypt.dart' as encrypt;
 
 class FirebaseService {
   static Future<String?> verifyPhoneNumber(String phoneNumber) async {
@@ -73,7 +71,7 @@ class FirebaseService {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userId)
-          .update({'phoneNumber': encryptedPhoneNumber});
+          .set({'phoneNumber': encryptedPhoneNumber}, SetOptions(merge: true));
     } catch (e) {
       print("Failed to save user phone number: $e");
       throw e;
@@ -128,7 +126,8 @@ class FirebaseService {
 class EncryptionService {
   static final key = encrypt.Key.fromLength(32); // 32 bytes key for AES-256
   static final iv = encrypt.IV.fromLength(16); // 16 bytes IV for AES-256-CBC
-  static final encrypter = encrypt.Encrypter(encrypt.AES(key));
+  static final encrypter =
+      encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc));
 
   static String encryptPhoneNumber(String phoneNumber) {
     final encrypted = encrypter.encrypt(phoneNumber, iv: iv);
@@ -136,7 +135,12 @@ class EncryptionService {
   }
 
   static String decryptPhoneNumber(String encryptedPhoneNumber) {
-    final encrypted = encrypt.Encrypted.fromBase64(encryptedPhoneNumber);
-    return encrypter.decrypt(encrypted, iv: iv);
+    try {
+      final encrypted = encrypt.Encrypted.fromBase64(encryptedPhoneNumber);
+      return encrypter.decrypt(encrypted, iv: iv);
+    } catch (e) {
+      print("Error decrypting phone number: $e");
+      throw e; // Rethrow the error to propagate it
+    }
   }
 }

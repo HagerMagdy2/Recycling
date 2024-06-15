@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firstly/presintations/screens/home/cart-page.dart';
 import 'package:firstly/presintations/screens/home/home_screen.dart';
 import 'package:firstly/presintations/screens/start/signup_screen.dart';
@@ -11,9 +12,7 @@ import '../../bloc/authentication_bloc.dart';
 import '../../widgets/setting.dart';
 import '../add-edit/edit-profile-screen.dart';
 import '../helpPage/help.dart';
-import '../home/favorite_screen.dart';
 import '../home/profile-screen.dart';
-import '../start/login_screen.dart';
 
 class settingPage extends StatefulWidget {
   const settingPage({super.key});
@@ -34,7 +33,7 @@ class _settingPageState extends State<settingPage> {
             padding: const EdgeInsets.all(40.0),
             child: Center(
               child: Text(
-                'Setting',
+                tr('Settings'),
                 style: TextStyle(
                   fontSize: 50,
                   color: kMainColor1,
@@ -52,18 +51,21 @@ class _settingPageState extends State<settingPage> {
               },
               color: Colors.orange,
               icon: Icons.person,
-              text: 'Profile',
+              text: tr('Profile'),
               context: context),
           MenuPage(
               fun: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomeScreen(index: 1,)),
+                  MaterialPageRoute(
+                      builder: (context) => HomeScreen(
+                            index: 1,
+                          )),
                 );
               },
               color: Colors.blue,
               icon: Icons.favorite,
-              text: 'Favorites',
+              text: tr('Favorite'),
               context: context),
           MenuPage(
               fun: () {
@@ -74,12 +76,12 @@ class _settingPageState extends State<settingPage> {
               },
               color: Colors.pink,
               icon: Icons.payments_outlined,
-              text: 'Payment',
+              text: tr('Payment'),
               context: context),
           MenuPage(
               color: Colors.purple,
               icon: Icons.edit_note_outlined,
-              text: 'Edit Personal Data',
+              text: tr('Edit Personal Data'),
               fun: () {
                 Navigator.pushNamed(context, EditProfileScreen.id);
               },
@@ -87,7 +89,7 @@ class _settingPageState extends State<settingPage> {
           MenuPage(
               color: Colors.teal,
               icon: Icons.help_outline_outlined,
-              text: 'Help',
+              text: tr('Help'),
               fun: () {
                 Navigator.pushNamed(context, HelpScreen.id);
               },
@@ -95,7 +97,7 @@ class _settingPageState extends State<settingPage> {
           MenuPage(
               color: Colors.red,
               icon: Icons.logout,
-              text: 'LogOut',
+              text: tr('LogOut'),
               fun: () {
                 showDialog(
                     context: context,
@@ -105,7 +107,7 @@ class _settingPageState extends State<settingPage> {
                         child: AlertDialog(
                           title: Row(
                             children: [
-                              Text('LogOut'),
+                              Text(tr('LogOut')),
                               SizedBox(
                                 height: 15,
                               ),
@@ -115,7 +117,7 @@ class _settingPageState extends State<settingPage> {
                               )
                             ],
                           ),
-                          content: Text("Are you sure ?"),
+                          content: Text(tr('Are you sure ?')),
                           actions: <Widget>[
                             Container(
                               child: Row(
@@ -124,7 +126,7 @@ class _settingPageState extends State<settingPage> {
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
-                                      child: Text("No",
+                                      child: Text(tr('No'),
                                           style: TextStyle(color: kMainColor))),
                                   const Spacer(),
                                   TextButton(
@@ -139,7 +141,7 @@ class _settingPageState extends State<settingPage> {
                                                 SignupScreen()),
                                       );
                                     },
-                                    child: Text("Yes",
+                                    child: Text(tr('Yes'),
                                         style: TextStyle(color: kMainColor)),
                                   ),
                                 ],

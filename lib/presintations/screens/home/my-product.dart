@@ -17,7 +17,6 @@ class MyProduct extends StatefulWidget {
 
 class _MyProductState extends State<MyProduct> {
   @override
-  
   void initState() {
     super.initState();
     // Fetch user products when the widget is initialized

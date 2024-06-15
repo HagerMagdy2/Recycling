@@ -18,14 +18,25 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int index;
 
+  const HomeScreen({
+    Key? key,
+    this.index = 0,
+  });
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentIndex = 0;
+  late int currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.index;
+  }
+
   List<Widget> screens = [
     MyHomePage(),
     FavoriteScreen(),

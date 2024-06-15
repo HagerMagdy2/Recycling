@@ -44,6 +44,23 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (_) => const HomeScreen()),
               );
+            } else if (state is AuthError) {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('Error'),
+                  content: Text(
+                      'No account exists with this email. Please sign up first.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                ),
+              );
             }
           },
           builder: (context, state) {
@@ -118,6 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: PasswordC,
                     hint: 'Enter your password',
                     icon: Icons.lock,
+                    showPasswordToggle: true, // Enable the toggle for password
                   ),
                   Visibility(
                     visible: isPasswordIncorrect,

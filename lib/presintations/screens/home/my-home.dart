@@ -105,9 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 200,
                     width: 400,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: kMainColor,
-                    ),
+                        gradient: kMainColorGradient,
+                        borderRadius: BorderRadius.circular(20)),
                     child: Padding(
                       padding: const EdgeInsets.only(
                           left: 10.0, right: 12.0, top: 50.0),
@@ -329,6 +328,44 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ListView(
                 children: [
                   GestureDetector(
+                    onTap: () => navigateToCategory(context, 0),
+                    child: ShowForYou(
+                      product: Product(
+                        image:
+                            'https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1714767572806.jpg?alt=media&token=da7134f5-8e70-4011-bf68-aa379d440731',
+                        name: 'Cooking Oil',
+                        id: '',
+                        userId: userId,
+                        userName: '',
+                        userEmail: '',
+                        userPhone: '',
+                        price: 25,
+                        quantity: 2,
+                        availableQuantity: 5,
+                        category: 'oil',
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => navigateToCategory(context, 1),
+                    child: ShowForYou(
+                      product: Product(
+                        image:
+                            'https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713741072235.jpg?alt=media&token=0654e890-f6a1-4345-8531-847c6fb9e8ea',
+                        name: 'plastic food containers',
+                        id: '',
+                        userId: userId,
+                        userName: '',
+                        userEmail: '',
+                        userPhone: '',
+                        price: 90,
+                        quantity: 3,
+                        availableQuantity: 4,
+                        category: 'plastic',
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
                     onTap: () => navigateToCategory(context, 2),
                     child: ShowForYou(
                       product: Product(
@@ -363,44 +400,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         quantity: 2,
                         availableQuantity: 5,
                         category: 'glass',
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => navigateToCategory(context, 1),
-                    child: ShowForYou(
-                      product: Product(
-                        image:
-                            'https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713741072235.jpg?alt=media&token=0654e890-f6a1-4345-8531-847c6fb9e8ea',
-                        name: 'plastic food containers',
-                        id: '',
-                        userId: userId,
-                        userName: '',
-                        userEmail: '',
-                        userPhone: '',
-                        price: 90,
-                        quantity: 3,
-                        availableQuantity: 4,
-                        category: 'plastic',
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => navigateToCategory(context, 0),
-                    child: ShowForYou(
-                      product: Product(
-                        image:
-                            'https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1714767572806.jpg?alt=media&token=da7134f5-8e70-4011-bf68-aa379d440731',
-                        name: 'Cooking Oil',
-                        id: '',
-                        userId: userId,
-                        userName: '',
-                        userEmail: '',
-                        userPhone: '',
-                        price: 25,
-                        quantity: 2,
-                        availableQuantity: 5,
-                        category: 'oil',
                       ),
                     ),
                   ),

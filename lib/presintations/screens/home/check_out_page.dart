@@ -1,6 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
-import 'package:firstly/presintations/screens/home/current_location_screen.dart';
 import 'package:firstly/presintations/screens/home/location.dart';
 import 'package:firstly/presintations/screens/payment/payment_gateway.dart';
 import 'package:firstly/presintations/screens/payment/paymob_manager.dart';
@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 
 class CheckOutPage extends StatefulWidget {
-  final num totalprice = 10;
   const CheckOutPage({Key? key, required this.cartProducts}) : super(key: key);
   final List<Product> cartProducts;
 
@@ -23,8 +22,19 @@ class _CheckOutPageState extends State<CheckOutPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController notesController = TextEditingController();
+  num getTotalPrice() {
+    num totalPrice = 0; // Initialize totalPrice inside the method
+
+    for (var product in widget.cartProducts) {
+      totalPrice += product.price * product.quantity;
+    }
+
+    return totalPrice;
+  }
+
   void _continuePayment() {
-    PaymobManager().payWithPaymob(widget.totalprice.toInt()).then((paymentKey) {
+    num totalprice = getTotalPrice().toDouble();
+    PaymobManager().payWithPaymob(totalprice.toInt()).then((paymentKey) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -32,14 +42,6 @@ class _CheckOutPageState extends State<CheckOutPage> {
         ),
       );
     });
-  }
-
-  double getTotalPrice() {
-    double totalPrice = 0.0;
-    for (var product in widget.cartProducts) {
-      totalPrice += product.price * product.quantity;
-    }
-    return totalPrice;
   }
 
   InputDecoration _buildInputDecoration(String labelText) {
@@ -129,7 +131,8 @@ class _CheckOutPageState extends State<CheckOutPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => PaymentPage(totalprice: 10)),
+                      builder: (context) =>
+                          PaymentPage(totalprice: getTotalPrice())),
                 );
               },
               child: Text(
@@ -219,13 +222,14 @@ class _CheckOutPageState extends State<CheckOutPage> {
 
                         //  emailPersonal:sb-st7md30520465@personal.example.com pass:123456789
                         //  emailBissness:sb-pr743330543964@business.example.com pass:123456789
-                        transactions: const [
+
+                        transactions: [
                           {
                             "amount": {
-                              "total": '2',
+                              "total": '$getTotalPrice()',
                               "currency": "USD",
                               "details": {
-                                "subtotal": '2',
+                                "subtotal": '$getTotalPrice()',
                                 "shipping": '0',
                                 "shipping_discount": 0
                               }
@@ -237,21 +241,16 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             //       "INSTANT_FUNDING_SOURCE"
                             // },
                             "item_list": {
-                              "items": [
-                                {
-                                  "name": "Apple",
-                                  "quantity": 1,
-                                  "price": '1',
-                                  "currency": "USD"
-                                },
-                                {
-                                  "name": "Pineapple",
-                                  "quantity": 1,
-                                  "price": '1',
-                                  "currency": "USD"
-                                }
-                              ],
+                              "items": widget.cartProducts
+                                  .map((product) => {
+                                        "name": product.name,
+                                        "quantity": product.quantity,
+                                        "price": product.price,
 
+                                        "currency": "USD"
+                                        // ... other item details (optional)
+                                      })
+                                  .toList(),
                               // shipping address is not required though
                               //   "shipping_address": {
                               //     "recipient_name": "Raman Singh",
@@ -266,6 +265,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             }
                           }
                         ],
+
                         note: "Contact us for any questions on your order.",
                         onSuccess: (Map params) async {
                           print("onSuccess: $params");
@@ -351,7 +351,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       width: 30,
                     ),
                     Text(
-                      "QTY",
+                      tr("QTY"),
                       style: TextStyle(
                         color: kMainColor,
                         fontWeight: FontWeight.bold,
@@ -361,7 +361,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       width: 78,
                     ),
                     Text(
-                      "PRODUCT NAME",
+                      tr("PRODUCT NAME"),
                       style: TextStyle(
                         color: kMainColor,
                         fontWeight: FontWeight.bold,
@@ -371,7 +371,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       width: 50,
                     ),
                     Text(
-                      "PRICE",
+                      tr("PRICE"),
                       style: TextStyle(
                         color: kMainColor,
                         fontWeight: FontWeight.bold,
@@ -407,7 +407,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         width: 70,
                       ),
                       Text(
-                        "Total Price",
+                        tr("Total Price: "),
                         style: TextStyle(
                           color: kMainColor,
                           fontWeight: FontWeight.bold,
@@ -418,7 +418,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         width: 40,
                       ),
                       Text(
-                        "${getTotalPrice().toStringAsFixed(2)} EGP",
+                        "${getTotalPrice().toStringAsFixed(2)} " + tr("EGP"),
                         style: TextStyle(
                           color: kMainColor,
                           fontWeight: FontWeight.bold,
@@ -472,7 +472,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

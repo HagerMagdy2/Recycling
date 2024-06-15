@@ -100,7 +100,7 @@ class _ShowFavState extends State<ShowFav> {
                     ),
                     // Check if userName is not null
                     Text(
-                      'Added by: ${widget.product.userName}',
+                      tr('Added by: ') + '${widget.product.userName}',
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
@@ -108,7 +108,7 @@ class _ShowFavState extends State<ShowFav> {
                     ),
                     // Check if userEmail is not null
                     Text(
-                      'Email: ${widget.product.userEmail}',
+                      tr('Email: ') + '${widget.product.userEmail}',
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,

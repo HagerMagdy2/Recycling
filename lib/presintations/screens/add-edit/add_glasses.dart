@@ -10,6 +10,8 @@ import 'package:firstly/presintations/bloc/products_bloc.dart';
 import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
 import 'package:firstly/presintations/screens/category/glasses_page.dart';
+import 'package:firstly/presintations/screens/home/home_screen.dart';
+import 'package:firstly/presintations/screens/home/my-product.dart';
 import 'package:firstly/presintations/widgets/add_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -191,11 +193,12 @@ class _AddGlassesPageState extends State<AddGlassesPage> {
                     onPressed: () {
                       if (key.currentState!.validate()) {
                         Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => GlassesCategoryPage(),
-                          ),
-                        );
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(
+                                index: 3,
+                              ),
+                            ));
                         print(userName);
                         context.read<ProductBloc>().add(
                               AddProduct(

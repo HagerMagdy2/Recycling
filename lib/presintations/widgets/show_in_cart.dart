@@ -42,18 +42,7 @@ class _ShowInCartState extends State<ShowInCart> {
     return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         return Container(
-          decoration: BoxDecoration(
-            color: Colors.white70,
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: Offset(0, 3),
-              ),
-            ],
-          ),
+          color: Colors.grey[200],
           margin: const EdgeInsets.all(7),
           child: Row(
             children: [
@@ -96,7 +85,7 @@ class _ShowInCartState extends State<ShowInCart> {
                         width: 3,
                       ),
                       Text(
-                        "EGP",
+                        tr("EGP"),
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 16,

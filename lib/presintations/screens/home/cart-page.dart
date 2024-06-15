@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
 import 'package:firstly/presintations/bloc/products_bloc.dart';
@@ -34,7 +35,7 @@ class _CartPageState extends State<CartPage> {
         foregroundColor: Colors.white,
         backgroundColor: kMainColor,
         title: Text(
-          'Cart Page',
+          tr('Cart'),
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -80,7 +81,9 @@ class _CartPageState extends State<CartPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Total Price: ${calculateTotalPrice(state.products)} EGP',
+                            tr('Total Price: ') +
+                                ' ${calculateTotalPrice(state.products)}' +
+                                tr("EGP"),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -100,7 +103,7 @@ class _CartPageState extends State<CartPage> {
                               primary: kMainColor,
                             ),
                             child: Text(
-                              'Checkout',
+                              tr('Checkout'),
                               style: TextStyle(color: kSecondaryColor),
                             ),
                           ),
@@ -125,5 +128,5 @@ class _CartPageState extends State<CartPage> {
       totalPrice += product.price * product.quantity;
     }
     return totalPrice;
-}
+  }
 }

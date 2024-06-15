@@ -11,6 +11,8 @@ import 'package:firstly/presintations/bloc/products_event.dart';
 import 'package:firstly/presintations/bloc/products_state.dart';
 import 'package:firstly/presintations/screens/category/glasses_page.dart';
 import 'package:firstly/presintations/screens/category/oils_page.dart';
+import 'package:firstly/presintations/screens/home/home_screen.dart';
+import 'package:firstly/presintations/screens/home/my-product.dart';
 import 'package:firstly/presintations/widgets/add_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -169,7 +171,7 @@ class _AddOilsPageState extends State<AddOilsPage> {
                     },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText:  tr('quantity'),
+                      labelText: tr('quantity'),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -194,7 +196,9 @@ class _AddOilsPageState extends State<AddOilsPage> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => OilsCategoryPage(),
+                            builder: (context) => HomeScreen(
+                              index: 3,
+                            ),
                           ),
                         );
                         print(userName);
@@ -207,10 +211,11 @@ class _AddOilsPageState extends State<AddOilsPage> {
                                   price: num.parse(priceC.text),
                                   quantity: num.parse(quantityC.text),
                                   availableQuantity: num.parse(quantityC.text),
-                                  userId: userId, 
+                                  userId: userId,
                                   userName: userName,
                                   userEmail: userEmail,
-                                  userPhone: userPhone, category: 'oils', // Pass the userId here
+                                  userPhone: userPhone,
+                                  category: 'oils', // Pass the userId here
                                 ),
                               ),
                             );

@@ -34,13 +34,6 @@ class _ShowProductsState extends State<ShowProducts> {
 
     isFavorite = widget.product.isFav;
     isInCart = widget.product.isInCart;
-    // Check if the product is in the cart item collection
-    // You'll need to replace 'checkIfInCart' with the appropriate method or logic
-    // checkIfInCart().then((inCart) {
-    //   setState(() {
-    //     isInCart = inCart;
-    //   });
-    // });
   }
 
   @override
@@ -48,21 +41,8 @@ class _ShowProductsState extends State<ShowProducts> {
     return BlocBuilder<ProductBloc, ProductState>(
       builder: (context, state) {
         return Container(
-          decoration: BoxDecoration(
-            color: Colors.white70,
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: Offset(0, 3),
-              ),
-            ],
-          ),
+          color: Colors.grey[200],
           margin: const EdgeInsets.all(7),
-          padding:
-              const EdgeInsets.all(10), // Add some padding inside the container
           child: Row(
             children: [
               Container(
@@ -93,21 +73,21 @@ class _ShowProductsState extends State<ShowProducts> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      '${widget.product.price} EGP',
+                      '${widget.product.price}' + tr('EGP'),
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       ),
                     ),
                     Text(
-                      'Added by: ' '${widget.product.userName}',
+                      tr('Added by: ') + '${widget.product.userName}',
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
                       ),
                     ),
                     Text(
-                      'Email: ${widget.product.userEmail}',
+                      tr('Email: ') + '${widget.product.userEmail}',
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.grey,
@@ -122,9 +102,8 @@ class _ShowProductsState extends State<ShowProducts> {
                               isInCart = !isInCart;
                             });
                             if (isInCart) {
-                              // Update only isInCart status
-                              ProductRemoteDsImp().updateProduct(
-                                  widget.product.copyWith(isInCart: true));
+                              ProductRemoteDsImp().updateProduct(widget.product
+                                  .copyWith(isInCart: true, isFav: isFavorite));
                               ProductRemoteDsImp().addToCart(
                                   widget.product.copyWith(quantity: 1));
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -132,15 +111,14 @@ class _ShowProductsState extends State<ShowProducts> {
                                     content: Text('Product added to cart')),
                               );
                             } else {
-                              // Update only isInCart status
-                              ProductRemoteDsImp().updateProduct(
-                                  widget.product.copyWith(isInCart: false));
+                              ProductRemoteDsImp().updateProduct(widget.product
+                                  .copyWith(
+                                      isInCart: false, isFav: isFavorite));
                               ProductRemoteDsImp()
                                   .removeProductFromCart(widget.product.id);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                    content:
-                                        Text(tr('Product removed from cart'))),
+                                    content: Text('Product removed from cart')),
                               );
                             }
                           },
@@ -175,9 +153,8 @@ class _ShowProductsState extends State<ShowProducts> {
                                 "After adding to favorites - isFav: $isFavorite, isInCart: $isInCart");
 
                             if (isFavorite) {
-                              // Update only isFav status
-                              ProductRemoteDsImp().updateProduct(
-                                  widget.product.copyWith(isFav: true));
+                              ProductRemoteDsImp().updateProduct(widget.product
+                                  .copyWith(isFav: true, isInCart: isInCart));
                               ProductRemoteDsImp().addToFavorites(
                                   widget.product.copyWith(isFav: true));
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -186,9 +163,8 @@ class _ShowProductsState extends State<ShowProducts> {
                                         Text('Product added to favorites')),
                               );
                             } else {
-                              // Update only isFav status
-                              ProductRemoteDsImp().updateProduct(
-                                  widget.product.copyWith(isFav: false));
+                              ProductRemoteDsImp().updateProduct(widget.product
+                                  .copyWith(isFav: false, isInCart: isInCart));
                               ProductRemoteDsImp()
                                   .removeFromFavorites(widget.product.id);
                               ScaffoldMessenger.of(context).showSnackBar(

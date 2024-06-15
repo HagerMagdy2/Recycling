@@ -98,7 +98,7 @@ class AddFromHome extends StatelessWidget {
       {
         'title': tr("Oils"),
         'image': "assets/images/icons-oils.png",
-        'destination': null
+        'destination': AddOilsPage(),
       },
     ];
 

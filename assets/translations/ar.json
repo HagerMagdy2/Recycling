@@ -6,4 +6,6 @@
 "Remove from cart":"ازالة من العربه","Add New Product":"أضافة منتج جديد",
 "Product Name":"أسم المنتج","Price":"السعر","quantity":"الكمية",
 "Add Product":"أضافه","Which category do you want to add?":"ما هي الفئة التي تريد إضافتها؟"
+,"Cart":"العربة", "Total Price: ": "المبلغ الكلى: ","EGP":"ج.م","Email: ":"الايميل: ",
+"Added by: ":"مضاف بواسطة: ","Checkout":"تأكيد","PRODUCT NAME":"اسم المنتج", "QTY":"الكميه","PRICE":"السعر"
 }

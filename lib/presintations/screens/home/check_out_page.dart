@@ -1,7 +1,12 @@
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firstly/constants.dart';
 import 'package:firstly/data/models/product.dart';
 import 'package:firstly/presintations/screens/home/location.dart';
+
+import 'package:firstly/constants.dart';
+import 'package:firstly/data/models/product.dart';
+
 import 'package:firstly/presintations/screens/payment/payment_gateway.dart';
 import 'package:firstly/presintations/screens/payment/paymob_manager.dart';
 import 'package:firstly/presintations/screens/payment/paypal.dart';
@@ -10,8 +15,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_paypal_checkout/flutter_paypal_checkout.dart';
 
 class CheckOutPage extends StatefulWidget {
+
   const CheckOutPage({Key? key, required this.cartProducts}) : super(key: key);
   final List<Product> cartProducts;
+
+  const CheckOutPage({Key? key, required this.cartProducts}) : super(key: key);
+  final List<Product> cartProducts;
+  
+
 
   @override
   State<CheckOutPage> createState() => _CheckOutPageState();
@@ -22,6 +33,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController notesController = TextEditingController();
+
   num getTotalPrice() {
     num totalPrice = 0; // Initialize totalPrice inside the method
 
@@ -35,6 +47,19 @@ class _CheckOutPageState extends State<CheckOutPage> {
   void _continuePayment() {
     num totalprice = getTotalPrice().toDouble();
     PaymobManager().payWithPaymob(totalprice.toInt()).then((paymentKey) {
+
+  late num totalPrice =0;
+    num getTotalPrice() {
+    //double totalPrice = 0.0;
+    for (var product in widget.cartProducts) {
+      totalPrice += product.price * product.quantity;
+    }
+    return totalPrice;
+  }
+  void _continuePayment() {
+    // num totalprice = getTotalPrice().toDouble();
+    PaymobManager().payWithPaymob(totalPrice.toInt()).then((paymentKey) {
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -43,6 +68,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
       );
     });
   }
+
+
+
+
 
   InputDecoration _buildInputDecoration(String labelText) {
     return InputDecoration(
@@ -131,8 +160,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
+
                       builder: (context) =>
                           PaymentPage(totalprice: getTotalPrice())),
+
+                      builder: (context) => PaymentPage(totalprice:totalPrice )),
+
                 );
               },
               child: Text(
@@ -223,6 +256,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         //  emailPersonal:sb-st7md30520465@personal.example.com pass:123456789
                         //  emailBissness:sb-pr743330543964@business.example.com pass:123456789
 
+
                         transactions: [
                           {
                             "amount": {
@@ -230,6 +264,16 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               "currency": "USD",
                               "details": {
                                 "subtotal": '$getTotalPrice()',
+
+                        
+                        transactions:  [
+                          {
+                            "amount": {
+                              "total": '$totalPrice',
+                              "currency": "USD",
+                              "details": {
+                                "subtotal":'$totalPrice',
+
                                 "shipping": '0',
                                 "shipping_discount": 0
                               }
@@ -241,6 +285,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             //       "INSTANT_FUNDING_SOURCE"
                             // },
                             "item_list": {
+
                               "items": widget.cartProducts
                                   .map((product) => {
                                         "name": product.name,
@@ -252,6 +297,17 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                       })
                                   .toList(),
                               // shipping address is not required though
+
+                            "items": widget.cartProducts.map((product) => {
+    "name": product.name,
+    "quantity": product.quantity,
+     "price": product.price,
+
+"currency": "USD"
+    // ... other item details (optional)
+  }).toList(),
+  // shipping address is not required though
+
                               //   "shipping_address": {
                               //     "recipient_name": "Raman Singh",
                               //     "line1": "Delhi",
@@ -441,6 +497,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       ),
                     ),
                   ),
+
                   SizedBox(
                     height: 10,
                   ),
@@ -473,6 +530,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       ],
                     ),
                   ),
+
                 ],
               ),
             ),
@@ -482,3 +540,4 @@ class _CheckOutPageState extends State<CheckOutPage> {
     );
   }
 }
+

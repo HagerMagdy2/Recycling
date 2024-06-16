@@ -21,7 +21,7 @@ class LearnScreen extends StatelessWidget {
                   fontSize: 20, fontWeight: FontWeight.bold, color: kMainColor),
             ),
             SizedBox(
-              height: 20,
+              height: 15,
             ),
             Expanded(
               child: StreamBuilder(
@@ -51,14 +51,14 @@ class LearnScreen extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(height: 20), // Spacer between videos and articles
+            SizedBox(height: 15), // Spacer between videos and articles
             Text(
               tr('Articles'),
               style: TextStyle(
                   fontSize: 20, fontWeight: FontWeight.bold, color: kMainColor),
             ),
             SizedBox(
-              height: 30,
+              height: 15,
             ),
             Expanded(
               child: StreamBuilder(

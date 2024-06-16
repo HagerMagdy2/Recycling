@@ -33,9 +33,13 @@ class _CheckOutPageState extends State<CheckOutPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController notesController = TextEditingController();
+<<<<<<< HEAD
+  late num totalPrice = 0;
+=======
 
+>>>>>>> 1f75ed218b06bd42ef38d9693fd7f69fc9197195
   num getTotalPrice() {
-    num totalPrice = 0; // Initialize totalPrice inside the method
+    // Initialize totalPrice inside the method
 
     for (var product in widget.cartProducts) {
       totalPrice += product.price * product.quantity;
@@ -45,6 +49,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
   }
 
   void _continuePayment() {
+<<<<<<< HEAD
+    //num totalprice = getTotalPrice().toDouble();
+    PaymobManager().payWithPaymob(totalPrice.toInt()).then((paymentKey) {
+=======
     num totalprice = getTotalPrice().toDouble();
     PaymobManager().payWithPaymob(totalprice.toInt()).then((paymentKey) {
 
@@ -60,6 +68,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
     // num totalprice = getTotalPrice().toDouble();
     PaymobManager().payWithPaymob(totalPrice.toInt()).then((paymentKey) {
 
+>>>>>>> 1f75ed218b06bd42ef38d9693fd7f69fc9197195
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -157,6 +166,9 @@ class _CheckOutPageState extends State<CheckOutPage> {
           actions: [
             TextButton(
               onPressed: () {
+<<<<<<< HEAD
+                _showPaymentDialog();
+=======
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -167,6 +179,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       builder: (context) => PaymentPage(totalprice:totalPrice )),
 
                 );
+>>>>>>> 1f75ed218b06bd42ef38d9693fd7f69fc9197195
               },
               child: Text(
                 'Confirm',
@@ -189,8 +202,163 @@ class _CheckOutPageState extends State<CheckOutPage> {
       },
     );
   }
+void _showPaymentDialog() {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        height: 200, // Adjust height as needed
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          children: [
+            Text(
+              'Pay',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 12.0),
+            Expanded(
+              child: ListView(
+                children: [
+                  GestureDetector(
+                    onTap: () =>   _continuePayment(),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/images/paymobLogo.png',
+                            width: 50,
+                            height: 50,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Pay With Paymob',
+                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => PaypalCheckout(sandboxMode: true,
+                        clientId:
+                            "AftxijrSfWNnLyyVF_3jKzbyqpwDMhJZbU8IXaYcpLdW6d2CBwyAx9rKZ57waYdAY40kPaU2V2SH5p2V",
+                        secretKey:
+                            "EM8uOZf_WELwN2h7JCubnux9SL5mX_meISEEPKuqdh71-E6PQFjtLtNsxZcWYInXcHmyoEyKiHhMjreE",
+                        returnURL: "success.snippetcoder.com",
+                        cancelURL: "cancel.snippetcoder.com",
 
-  void _showPaymentDialog() {
+                        //  emailPersonal:sb-st7md30520465@personal.example.com pass:123456789
+                        //  emailBissness:sb-pr743330543964@business.example.com pass:123456789
+
+                        transactions: [
+                          {
+                            "amount": {
+                              "total": '$totalPrice',
+                              "currency": "USD",
+                              "details": {
+                                "subtotal": '$totalPrice',
+                                "shipping": '0',
+                                "shipping_discount": 0
+                              }
+                            },
+                            "description":
+                                "The payment transaction description.",
+                            // "payment_options": {
+                            //   "allowed_payment_method":
+                            //       "INSTANT_FUNDING_SOURCE"
+                            // },
+                            "item_list": {
+                              "items": widget.cartProducts
+                                  .map((product) => {
+                                        "name": product.name,
+                                        "quantity": product.quantity,
+                                        "price": product.price,
+
+                                        "currency": "USD"
+                                        // ... other item details (optional)
+                                      })
+                                  .toList(),
+                              // shipping address is not required though
+                              //   "shipping_address": {
+                              //     "recipient_name": "Raman Singh",
+                              //     "line1": "Delhi",
+                              //     "line2": "",
+                              //     "city": "Delhi",
+                              //     "country_code": "IN",
+                              //     "postal_code": "11001",
+                              //     "phone": "+00000000",
+                              //     "state": "Texas"
+                              //  },
+                            }
+                          }
+                        ],
+
+                        note: "Contact us for any questions on your order.",
+                        onSuccess: (Map params) async {
+                          print("onSuccess: $params");
+                          // Navigate to the success page
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SuccessPage()),
+                          );
+                        },
+                        onError: (error) {
+                          print("onError: $error");
+                          // Navigate to the failure page
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FailurePage()),
+                          );
+                        },
+                        onCancel: () {
+                          print('cancelled:');
+                        },
+                      ),
+                      ),
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.white,
+                      ),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/images/paypal.png',
+                            width: 50,
+                            height: 50,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Pay With Paypal',
+                            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  // Add more similar structures for other payment options
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+  void _showpaymentDialog() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -260,9 +428,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         transactions: [
                           {
                             "amount": {
-                              "total": '$getTotalPrice()',
+                              "total": '$totalPrice',
                               "currency": "USD",
                               "details": {
+<<<<<<< HEAD
+                                "subtotal": '$totalPrice',
+=======
                                 "subtotal": '$getTotalPrice()',
 
                         
@@ -274,6 +445,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               "details": {
                                 "subtotal":'$totalPrice',
 
+>>>>>>> 1f75ed218b06bd42ef38d9693fd7f69fc9197195
                                 "shipping": '0',
                                 "shipping_discount": 0
                               }
@@ -485,7 +657,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   ),
                   SizedBox(height: 50),
                   ElevatedButton(
-                    onPressed: _showPaymentDialog,
+                    onPressed: _showConfirmationDialog,
                     style: ElevatedButton.styleFrom(
                       fixedSize: Size(500, 50),
                       backgroundColor: kMainColor,
@@ -540,4 +712,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
     );
   }
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 1f75ed218b06bd42ef38d9693fd7f69fc9197195

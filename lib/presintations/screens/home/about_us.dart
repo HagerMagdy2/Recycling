@@ -43,19 +43,19 @@ class _AboutUsScreenState extends State<AboutUsScreen>
               children: <Widget>[
                 SizedBox(height: 10), // Add some space below the app bar
                 AboutUsUIItem(
-                  title: 'Phone',
+                  title: tr('Phone'),
                   details: '01119257229',
                 ),
                 AboutUsUIItem(
-                  title: 'Developers',
+                  title: tr('Developers'),
                   details: 'Mai Atef & Arwa Ayman & Hagar Magdy ',
                 ),
                 AboutUsUIItem(
-                  title: 'Facebook',
+                  title:tr('Facebook'),
                   details: 'LINK',
                 ),
                 AboutUsUIItem(
-                  title: 'Version',
+                  title: tr('Version'),
                   details: '1.0.0',
                 ),
               ],

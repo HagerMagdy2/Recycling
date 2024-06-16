@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firstly/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -81,7 +82,7 @@ class _LocationState extends State<Location> {
         backgroundColor: kMainColor,
         foregroundColor: Colors.white,
         title: Text(
-          'Pick Your Location',
+          tr('Pick Your Location'),
         ),
       ),
       body: Stack(
@@ -131,7 +132,7 @@ class _LocationState extends State<Location> {
                   ),
                   SizedBox(width: 5),
                   Text(
-                    'Save',
+                    tr('Save'),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 15,
@@ -154,7 +155,7 @@ class _LocationState extends State<Location> {
                 child: Row(
                   children: [
                     Text(
-                      'Selected Address:',
+                      tr('Selected Address:'),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),

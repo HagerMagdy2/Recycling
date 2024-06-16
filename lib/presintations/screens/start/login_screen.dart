@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firstly/constants.dart';
@@ -48,15 +49,15 @@ class _LoginScreenState extends State<LoginScreen> {
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text('Error'),
+                  title: Text(tr('Error')),
                   content: Text(
-                      'No account exists with this email. Please sign up first.'),
+                      tr('No account exists with this email. Please sign up first.')),
                   actions: [
                     TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('OK'),
+                      child: Text(tr('OK')),
                     ),
                   ],
                 ),
@@ -125,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   CustomTextField(
                     controller: EmailC,
-                    hint: 'Enter your email',
+                    hint: tr('Enter your email'),
                     icon: Icons.email,
                   ),
                   SizedBox(
@@ -133,13 +134,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   CustomTextField(
                     controller: PasswordC,
-                    hint: 'Enter your password',
+                    hint: tr('Enter your password'),
                     icon: Icons.lock,
                     showPasswordToggle: true, // Enable the toggle for password
                   ),
                   Visibility(
                     visible: isPasswordIncorrect,
-                    child: const Padding(
+                    child:  Padding(
                       padding: EdgeInsets.only(left: 20.0),
                       child: Padding(
                         padding: EdgeInsets.only(left: 16),
@@ -151,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(width: 5),
                             Text(
-                              'Incorrect password',
+                            tr('Incorrect password'),
                               style: TextStyle(
                                 color: Colors.red,
                                 fontSize: 12.0,
@@ -193,8 +194,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         }
                       },
-                      child: const Text(
-                        'Login',
+                      child:  Text(
+                        tr('Login'),
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -242,16 +243,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Don\'t have an account ? ',
+                       Text(
+                        tr('Don\'t have an account ? '),
                         style: TextStyle(color: Colors.black, fontSize: 16),
                       ),
                       GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, SignupScreen.id);
                         },
-                        child: const Text(
-                          'Signup',
+                        child:  Text(
+                          tr('Signup'),
                           style: TextStyle(
                             fontSize: 16,
                             color: kMainColor,

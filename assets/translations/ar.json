@@ -13,5 +13,9 @@
 "Help":"مساعدة","What happened ?":"ما مشكلتك؟","Submit":"ارسال","My Profile":"حسابي","Name":"الاسم",
 "Email":"البريد الالكتروني","Phone":"الهاتف","Edit Profile":"تعديل الحساب","Pick from Gallery":"اختيار من المعرض",
 "Take Photo":"التقاط صورة","Phone Number":"رقم الهاتف","Change Password":"تغيير كلمة السر","Save":"حفظ",
-"User Phone Number":"رقم الهاتف","User Name":"اسم المستخدم","User Email":"البريد الالكتروني للمستخدم","View Profile":"حسابي"
+"User Phone Number":"رقم الهاتف","User Name":"اسم المستخدم","User Email":"البريد الالكتروني للمستخدم","View Profile":"حسابي",
+"Developers":"المبرمجون","Facebook":"فيسبوك","Version":"الاصدار","No account exists with this email. Please sign up first.":"لا يوجد حساب لهذا البريد من فضلك قم بانشاء حساب",
+"Error":"خطأ","OK":"موافق","Enter your email":"ادخل بريدك الالكتروني","Enter your password":"ادخل كلمة المرور","Incorrect password":"كلمة المرور غير صحيحة","Don't have an account ? ":"ليس لدي حساب",
+"Signup":"انشاء حساب","Login":"تسجيل دخول","Enter your name":"ادخل اسمك","  Sign up":"انشاء حساب","with others":"مع الاخرين","Do have an account ? ":"لدي حساب بالفعل",
+"Pick Your Location":"حدد موقعك","Selected Address:":"الموقع المحدد"
 }

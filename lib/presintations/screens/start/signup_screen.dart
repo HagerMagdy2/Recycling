@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firstly/presintations/bloc/authentication_bloc.dart';
 import 'package:firstly/presintations/screens/start/login_screen.dart';
 import 'package:firstly/presintations/screens/home/home_screen.dart';
@@ -54,7 +55,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     width: 200,
                     repeat: true,
                   ),
-                if (state is AuthError) const Text('Error'),
+                if (state is AuthError)  Text(tr('Error')),
                 Padding(
                   padding: const EdgeInsets.only(top: 45),
                   child: Container(
@@ -102,14 +103,14 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 CustomTextField(
                     controller: NameC,
-                    hint: 'Enter your name',
+                    hint: tr('Enter your name'),
                     icon: Icons.perm_identity),
                 SizedBox(
                   height: height * 0.02,
                 ),
                 CustomTextField(
                   controller: EmailC,
-                  hint: 'Enter your email',
+                  hint: tr('Enter your email'),
                   icon: Icons.email,
                 ),
                 SizedBox(
@@ -117,7 +118,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 CustomTextField(
                   controller: PasswordC,
-                  hint: 'Enter your password',
+                  hint: tr('Enter your password'),
                   icon: Icons.lock,
                 ),
                 const SizedBox(
@@ -142,8 +143,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ));
                           }
                         },
-                        child: const Text(
-                          'Sign up',
+                        child:  Text(
+                          tr('Sign up'),
                           style: TextStyle(color: Colors.white),
                         )),
                   ),
@@ -152,18 +153,18 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 Column(
                   children: [
-                    const Row(
+                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'SignUp ',
+                          tr('SignUp '),
                           style: TextStyle(
                               fontSize: 16,
                               color: kMainColor,
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          'with others',
+                          tr('with others'),
                           style: TextStyle(color: Colors.black, fontSize: 16),
                         )
                       ],
@@ -210,16 +211,16 @@ class _SignupScreenState extends State<SignupScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      'Do have an account ? ',
+                     Text(
+                      tr('Do have an account ? '),
                       style: TextStyle(color: Colors.black, fontSize: 16),
                     ),
                     GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, LoginScreen.id);
                         },
-                        child: const Text(
-                          'Login',
+                        child:  Text(
+                          tr('Login'),
                           style: TextStyle(
                               fontSize: 16,
                               color: kMainColor,

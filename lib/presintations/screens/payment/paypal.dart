@@ -1,3 +1,4 @@
+import 'package:firstly/presintations/screens/payment/DeliveryPage.dart';
 import 'package:firstly/presintations/screens/payment/payment_gateway.dart';
 import 'package:firstly/presintations/screens/payment/paymob_manager.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter/material.dart';
 class PaymentPage extends StatefulWidget {
   static String id = 'CheckoutPage';
   final num totalprice;
-  const PaymentPage({super.key,required this.totalprice});
+  const PaymentPage({super.key, required this.totalprice});
 
   @override
   State<PaymentPage> createState() => _CheckoutPageState();

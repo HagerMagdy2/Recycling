@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firstly/constants.dart';
@@ -44,23 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
             if (state is Authorized) {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (_) => const HomeScreen()),
-              );
-            } else if (state is AuthError) {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text(tr('Error')),
-                  content: Text(
-                      tr('No account exists with this email. Please sign up first.')),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(tr('OK')),
-                    ),
-                  ],
-                ),
               );
             }
           },
@@ -122,11 +104,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: height * 0.1,
+                    height: 50,
                   ),
                   CustomTextField(
                     controller: EmailC,
-                    hint: tr('Enter your email'),
+                    hint: 'Enter your email',
                     icon: Icons.email,
                   ),
                   SizedBox(
@@ -134,13 +116,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   CustomTextField(
                     controller: PasswordC,
-                    hint: tr('Enter your password'),
+                    hint: 'Enter your password',
                     icon: Icons.lock,
-                    showPasswordToggle: true, // Enable the toggle for password
+                    showPasswordToggle: true,
                   ),
                   Visibility(
                     visible: isPasswordIncorrect,
-                    child:  Padding(
+                    child: const Padding(
                       padding: EdgeInsets.only(left: 20.0),
                       child: Padding(
                         padding: EdgeInsets.only(left: 16),
@@ -152,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(width: 5),
                             Text(
-                            tr('Incorrect password'),
+                              'Incorrect password',
                               style: TextStyle(
                                 color: Colors.red,
                                 fontSize: 12.0,
@@ -187,72 +169,108 @@ class _LoginScreenState extends State<LoginScreen> {
                                   email: EmailC.text,
                                   password: PasswordC.text,
                                 ));
-                          } else {
+                          }
+                          if (state is UnAuthorized)
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text('Sign Up Required'),
+                                content: Text(
+                                    'Please sign up first before logging in.'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          else {
                             setState(() {
                               isPasswordIncorrect = true;
                             });
                           }
                         }
                       },
-                      child:  Text(
-                        tr('Login'),
+                      child: const Text(
+                        'Login',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 16,
+                    height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Column(
                     children: [
-                      InkWell(
-                        onTap: () {
-                          context
-                              .read<AuthenticationBloc>()
-                              .add(SignInWithGoogleEvent());
-                        },
-                        child: const CircleAvatar(
-                          backgroundColor: kSecondaryColor,
-                          radius: 25,
-                          backgroundImage:
-                              AssetImage("assets/images/google.png"),
-                        ),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'SignUp ',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: kMainColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            'with others',
+                            style: TextStyle(color: Colors.black, fontSize: 16),
+                          )
+                        ],
                       ),
                       const SizedBox(
-                        width: 20,
-                        height: 20,
+                        height: 10,
                       ),
-                      InkWell(
-                        onTap: () {
-                          context
-                              .read<AuthenticationBloc>()
-                              .add(signInWithFacebookEvent());
-                        },
-                        child: const CircleAvatar(
-                          radius: 25,
-                          backgroundImage:
-                              AssetImage("assets/images/facebook.png"),
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              context
+                                  .read<AuthenticationBloc>()
+                                  .add(SignInWithGoogleEvent());
+                            },
+                            child: const CircleAvatar(
+                              backgroundColor: kSecondaryColor,
+                              radius: 25,
+                              backgroundImage:
+                                  AssetImage("assets/images/google.png"),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          InkWell(
+                            onTap: () {
+                              context
+                                  .read<AuthenticationBloc>()
+                                  .add(signInWithFacebookEvent());
+                            },
+                            child: const CircleAvatar(
+                              radius: 25,
+                              backgroundImage:
+                                  AssetImage("assets/images/facebook.png"),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: height * 0.04,
+                    height: 20,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                       Text(
-                        tr('Don\'t have an account ? '),
+                      const Text(
+                        'Don\'t have an account ? ',
                         style: TextStyle(color: Colors.black, fontSize: 16),
                       ),
                       GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, SignupScreen.id);
                         },
-                        child:  Text(
-                          tr('Signup'),
+                        child: const Text(
+                          'Signup',
                           style: TextStyle(
                             fontSize: 16,
                             color: kMainColor,
@@ -262,6 +280,46 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Provider.of<AdminMode>(context, listen: false)
+                                  .changeIsAdmin(false);
+                            },
+                            child: Text(
+                              'I\'m an admin',
+                              style: TextStyle(
+                                color: Provider.of<AdminMode>(context).isAdmin
+                                    ? kMainColor
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Provider.of<AdminMode>(context, listen: false)
+                                  .changeIsAdmin(true);
+                            },
+                            child: Text(
+                              'I\'m a user',
+                              style: TextStyle(
+                                color: Provider.of<AdminMode>(context).isAdmin
+                                    ? Colors.white
+                                    : kMainColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               ),
             );

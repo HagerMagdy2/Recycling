@@ -29,36 +29,37 @@ class AppDrawer extends StatelessWidget {
                 height: 200,
               ),
               Positioned(
-                //bottom: 35,
-                //  left: 100,
+                bottom: 15,
+                 left: 60,
                 child: Transform.rotate(
                   angle: 0.0,
                   child: Image.asset(
                     'assets/images/logo.png',
-                    width: 250,
-                    height: 250,
-                    color: Colors.white,
+                    width: 170,
+                    height: 200,
+                    color: kMainColor,
+                    
                   ),
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(top: 55),
+                padding: EdgeInsets.only(top: 55,left: 40),
                 child: Text(
                   'Be',
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Colors.white,
                     fontSize: 50,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(top: 100),
+                padding: EdgeInsets.only(top: 100,left: 40),
                 child: Text(
                   'Green',
                   style: TextStyle(
                     fontSize: 50,
-                    color: kMainColor,
+                    color: Colors.white,
                     fontWeight: FontWeight.w900,
                   ),
                 ),

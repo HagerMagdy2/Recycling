@@ -58,20 +58,20 @@ class _LocationState extends State<Location> {
     setState(() {
       markers.add(Marker(
         markerId: MarkerId('currentLocation'),
-        position: LatLng(position.latitude, position.longitude),
+        position: LatLng(30.0131, 31.2089), // Cairo University, Giza, Egypt
       ));
     });
 
     // Move the camera to the current location.
     final GoogleMapController mapController = await _controller.future;
-    mapController.animateCamera(
-        CameraUpdate.newLatLng(LatLng(position.latitude, position.longitude)));
+    mapController.animateCamera(CameraUpdate.newLatLng(
+        LatLng(30.0131, 31.2089))); // Cairo University, Giza, Egypt
 
     // Get the address of the current location.
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+        30.0131, 31.2089); // Cairo University, Giza, Egypt
     setState(() {
-      selectedAddress = placemarks[0].name ?? 'Unknown';
+      selectedAddress = '${placemarks[0].name}, ${placemarks[0].country}';
     });
   }
 
@@ -99,12 +99,13 @@ class _LocationState extends State<Location> {
               List<Placemark> placemarks = await placemarkFromCoordinates(
                   location.latitude, location.longitude);
               setState(() {
-                selectedAddress = placemarks[0].name ?? 'Unknown';
+                selectedAddress =
+                    '${placemarks[0].name}, ${placemarks[0].country}';
               });
             },
             initialCameraPosition: CameraPosition(
-              target: LatLng(30.1, 30.1),
-              zoom: 14.0, // Adjust the initial zoom level.
+              target: LatLng(30.0131, 31.2089),
+              zoom: 18.0, // Adjust the initial zoom level.
             ),
             markers: markers,
             onMapCreated: (GoogleMapController controller) {

@@ -183,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         fixedSize: const Size(140, 10),
                       ),
-                      child:  Text(
+                      child: Text(
                         tr('View Profile'),
                         style: TextStyle(
                           fontSize: 12,
@@ -328,6 +328,46 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ListView(
                 children: [
                   GestureDetector(
+                    onTap: () => navigateToCategory(context, 3),
+                    child: ShowForYou(
+                      product: Product(
+                        image:
+                            'https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1717805316695.jpg?alt=media&token=d179fbba-b245-407e-8bee-777d490a56bf',
+                        name: 'Jar',
+                        id: '',
+                        userId: userId,
+                        userName: '',
+                        userEmail: '',
+                        userPhone: '',
+                        price: 50,
+                        quantity: 2,
+                        availableQuantity: 5,
+                        category: 'glass',
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => navigateToCategory(context, 1),
+                    child: ShowForYou(
+                      product: Product(
+                        image:
+                            'https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1717802757874.jpg?alt=media&token=b82ea5cd-6622-404f-a63a-911be310b6db',
+                        name: 'Red Bucket',
+                        id: '',
+                        userId: userId,
+                        userName: '',
+                        userEmail: '',
+                        userPhone: '',
+                        price: 35,
+                        quantity: 3,
+                        availableQuantity: 4,
+                        category: 'plastic',
+                      ),
+                    ),
+                  ),
+                  
+                  
+                  GestureDetector(
                     onTap: () => navigateToCategory(context, 0),
                     child: ShowForYou(
                       product: Product(
@@ -347,25 +387,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => navigateToCategory(context, 1),
-                    child: ShowForYou(
-                      product: Product(
-                        image:
-                            'https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1713741072235.jpg?alt=media&token=0654e890-f6a1-4345-8531-847c6fb9e8ea',
-                        name: 'plastic food containers',
-                        id: '',
-                        userId: userId,
-                        userName: '',
-                        userEmail: '',
-                        userPhone: '',
-                        price: 90,
-                        quantity: 3,
-                        availableQuantity: 4,
-                        category: 'plastic',
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
                     onTap: () => navigateToCategory(context, 2),
                     child: ShowForYou(
                       product: Product(
@@ -381,25 +402,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         quantity: 1,
                         availableQuantity: 1,
                         category: 'pepper',
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => navigateToCategory(context, 3),
-                    child: ShowForYou(
-                      product: Product(
-                        image:
-                            'https://firebasestorage.googleapis.com/v0/b/recycling-ab7d2.appspot.com/o/product_images%2F1717804503144.jpg?alt=media&token=e52e78c1-761e-40ce-a546-bafe89ae059a',
-                        name: 'BOHEMIA Candy Bowls',
-                        id: '',
-                        userId: userId,
-                        userName: '',
-                        userEmail: '',
-                        userPhone: '',
-                        price: 120,
-                        quantity: 2,
-                        availableQuantity: 5,
-                        category: 'glass',
                       ),
                     ),
                   ),
